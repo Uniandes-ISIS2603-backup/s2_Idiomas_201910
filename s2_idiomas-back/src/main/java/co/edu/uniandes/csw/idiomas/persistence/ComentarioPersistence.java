@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.idiomas.persistence;
 
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,16 +41,34 @@ public class ComentarioPersistence {
     }
 
     public List<ComentarioEntity> findAll() {
-        TypedQuery<ComentarioEntity> query = em.createQuery("select ID from COMENTARIOENTITY WHERE TITULO = 'MUNDO'", ComentarioEntity.class);
-         LOGGER.log(Level.INFO, "Consultando todos los comentarios: " + query.getResultList().get(0));
-         System.out.println("Consultando todos los comentarios: " + query.getResultList().get(0).getAutor());
+        LOGGER.log(Level.INFO, "Consultando todas las actividades");
+        // Se crea un query para buscar todos los comentarios en la base de datos.
+        TypedQuery query = em.createQuery("select u from ComentarioEntity u", ComentarioEntity.class);
+        // Se hace uso del método getResultList() que obtiene una lista de actividades.
         return query.getResultList();
     }
+    
 
     public void delete(Long commentId) {
         LOGGER.log(Level.INFO, "Borrando el libro con id={0}", commentId);
         ComentarioEntity comentarioEntity = em.find(ComentarioEntity.class, commentId);
         em.remove(comentarioEntity);
+    }
+    
+        /**
+     * Devuelve todas las organizaciones de la base de datos.
+     *
+     * @return una lista con todas las organizaciones que encuentre en la base
+     * de datos, "select u from OrganizationEntity u" es como un "select * from
+     * OrganizationEntity;" - "SELECT * FROM table_name" en SQL.
+     */
+    public List<ComentarioEntity> findDate(Date fecha1, Date fecha2) {
+        LOGGER.log(Level.INFO, "Consultando todas las organizaciones");
+        // Se crea un query para buscar todas las organizaciones en la base de datos.
+        
+        TypedQuery<ComentarioEntity> query = em.createQuery("select u from ComentarioEntity u where u.fecha between :fecha1 AND :fecha2", ComentarioEntity.class).setParameter("fecha1", fecha1).setParameter("fecha2", fecha2);                             
+        // Note que en el query se hace uso del método getResultList() que obtiene una lista de organizaciones.
+        return query.getResultList();
     }
     
         /**

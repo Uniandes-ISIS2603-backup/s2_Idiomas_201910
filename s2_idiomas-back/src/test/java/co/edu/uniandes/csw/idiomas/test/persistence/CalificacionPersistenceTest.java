@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.idiomas.test.persistence;
 
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.CalificacionEntity;
 import co.edu.uniandes.csw.idiomas.persistence.CalificacionPersistence;
 import java.util.ArrayList;
@@ -74,10 +75,10 @@ public class CalificacionPersistenceTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
     /**
      * Configuración inicial de la prueba.
      */
+    
     @Before
     public void configTest() {
         try {
@@ -95,7 +96,7 @@ public class CalificacionPersistenceTest {
             }
         }
     }
-
+    
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
@@ -111,6 +112,7 @@ public class CalificacionPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
+
             em.persist(entity);
             data.add(entity);
         }
@@ -129,7 +131,9 @@ public class CalificacionPersistenceTest {
 
         CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());
 
-        Assert.assertTrue(Objects.equals(newEntity.getCalificacion(), entity.getCalificacion()));
+        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
+        Assert.assertEquals(newEntity.getMensaje(), entity.getMensaje());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
     }
 
     /**
@@ -178,7 +182,7 @@ public class CalificacionPersistenceTest {
         CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());
         
         Assert.assertEquals(resp.getId(), newEntity.getId());
-        Assert.assertTrue(Objects.equals(entity.getCalificacion(), newEntity.getCalificacion()));
+        Assert.assertEquals(resp.getCalificacion(), newEntity.getCalificacion());
         Assert.assertEquals(resp.getMensaje(), newEntity.getMensaje());
     }
 

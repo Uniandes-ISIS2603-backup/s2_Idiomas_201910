@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
+import co.edu.uniandes.csw.idiomas.entities.CalificacionActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -29,6 +30,12 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
      * esta actividad.
      */
     private List<UsuarioDTO> asistentes;
+    
+    /**
+     * Lista de tipo CalificacionActividadDTO contiene las calificaciones que están
+     * asociados con esta actividad.
+     */
+    private List<CalificacionActividadDTO> calificacionA;
     
     /**
      * Lista de tipo ComentarioDTO contiene los comentarios que están
@@ -73,6 +80,14 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
                 comentarioA.add(new ComentarioDTO(entityComentarios));
             }
         }
+        if (actividadEntity.getCalificaciones() != null)
+        {
+            calificacionA = new ArrayList();
+            for (CalificacionActividadEntity entityCalificaciones : actividadEntity.getCalificaciones())
+            {
+                calificacionA.add(new CalificacionActividadDTO(entityCalificaciones));
+            }
+        }
     }
     
     // ------------------------------------------------------------------------
@@ -103,6 +118,13 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
             }
             actividadEntity.setComentarios(comentariosEntity);
         }
+        if (getCalificacionA() != null) {
+            List<CalificacionActividadEntity> calificacionesEntity = new ArrayList<>();
+            for (CalificacionActividadDTO dtoCalificacion : getCalificacionA()) {
+                calificacionesEntity.add(dtoCalificacion.toEntity());
+            }
+            actividadEntity.setCalificaciones(calificacionesEntity);
+        }
         return actividadEntity;
     }
     
@@ -119,6 +141,20 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
     public void setAsistentes(List<UsuarioDTO> asistentes) {
         this.asistentes = asistentes;
     }
+    
+    /**
+     * @return the calificacionA
+     */
+    public List<CalificacionActividadDTO> getCalificacionA() {
+        return calificacionA;
+    }
+
+    /**
+     * @param calificacionA the calificacionA to set
+     */
+    public void setCalificacionA(List<CalificacionActividadDTO> calificacionA) {
+        this.calificacionA = calificacionA;
+    }
 
     /**
      * @return the comentarioA
@@ -133,5 +169,4 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
     public void setComentarioA(List<ComentarioDTO> comentarioA) {
         this.comentarioA = comentarioA;
     }
-    
 }

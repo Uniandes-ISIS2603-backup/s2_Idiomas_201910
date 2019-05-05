@@ -59,12 +59,13 @@ public class ComentarioLogic {
      */
     public List<ComentarioEntity> getComentarios() 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos las Comentarios" + persistence.findAll().get(0).getId() + "dsadsa");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos las Comentarios");
         // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
         List<ComentarioEntity> Comentarios = persistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todas las Comentarios");
         return Comentarios;
     }
+  
     
     public void deleteComment(Long commentId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la comentario con id = {0}", commentId); 
@@ -92,6 +93,18 @@ public class ComentarioLogic {
             LOGGER.log(Level.SEVERE, "La Comentario con el id = {0} no existe", ComentariosId);
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar la Comentario con id = {0}", ComentariosId);
+        return ComentarioEntity;
+    }
+    
+        public List<ComentarioEntity> getComentarioDate(Date fecha1, Date fecha2) 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la Comentario con id = {0}");
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        List<ComentarioEntity> ComentarioEntity = persistence.findDate(fecha1, fecha2);
+        if (ComentarioEntity == null) {
+            LOGGER.log(Level.SEVERE, "La Comentario con el id = {0} no existe");
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la Comentario con id = {0}");
         return ComentarioEntity;
     }
     

@@ -15,9 +15,9 @@ import javax.inject.Inject;
  */
 public class CalificacionDTO implements Serializable {
 
-    private Long id;
-    private Integer calificacion;
-    private String mensaje;
+    Long id;
+    Integer calificacion;
+    String mensaje;
     
     public CalificacionDTO()
     {
@@ -80,7 +80,9 @@ public class CalificacionDTO implements Serializable {
     public CalificacionEntity toEntity()
     {
         CalificacionEntity cal = new CalificacionEntity();
-//        cal.setCalificacion(calificacion);
+        cal.setId(id);
+        cal.setCalificacion(calificacion);
+        cal.setMensaje(mensaje);
         return cal;
     }
     

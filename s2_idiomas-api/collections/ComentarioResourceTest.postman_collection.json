@@ -82,6 +82,29 @@
 		},
 		{
 			"name": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/comments/1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e26c5487-7fad-4784-9b3c-b6165ea7d867",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7210b488-c7bf-4a8f-b360-6ba349fa1ced",
+						"exec": [
+							"",
+							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -100,7 +123,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/comments/1",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/comments/22",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -110,7 +133,7 @@
 						"s2_idiomas-api",
 						"api",
 						"comments",
-						"1"
+						"22"
 					]
 				}
 			},
@@ -190,6 +213,52 @@
 						"api",
 						"comments",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/comments/fechas?fecha1=2019/04/29&fecha2=2019/05/01",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/comments/fechas?fecha1=2019/04/29&fecha2=2019/05/01",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"comments",
+						"fechas"
+					],
+					"query": [
+						{
+							"key": "fecha1",
+							"value": "2019/04/29"
+						},
+						{
+							"key": "fecha2",
+							"value": "2019/05/01"
+						}
 					]
 				}
 			},

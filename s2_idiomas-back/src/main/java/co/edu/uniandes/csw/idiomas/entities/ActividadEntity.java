@@ -76,6 +76,13 @@ private char subTypeId;
     private List<ComentarioEntity> comentarios = new ArrayList<>();
     
     /**
+     * Atributo que representa las calificaciones de la actividad.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "actividad", cascade = CascadeType.PERSIST)
+    private List<CalificacionActividadEntity> calificaciones = new ArrayList<>();
+    
+    /**
      * Atributo que representa los asistentes de la actividad.
      */
     @PodamExclude
@@ -88,13 +95,6 @@ private char subTypeId;
     @PodamExclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CoordinadorEntity> coordinadores = new ArrayList<>();
-    
-    /**
-     * Atributo que representa la calificacion de la actividad.
-     */
-    @PodamExclude
-    @OneToOne
-    private CalificacionEntity calificacion;
     
     // ------------------------------------------------------------------
     // Constructor
@@ -145,7 +145,20 @@ private char subTypeId;
     public void setComentarios(List<ComentarioEntity> comentarios) {
         this.comentarios = comentarios;
     }
+    /**
+     * @return the calificaciones
+     */
+    public List<CalificacionActividadEntity> getCalificaciones() {
+        return calificaciones;
+    }
 
+    /**
+     * @param calificaciones the calificaciones to set
+     */
+    public void setCalificaciones(List<CalificacionActividadEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+    
     /**
      * @return the nombre
      */
@@ -172,20 +185,6 @@ private char subTypeId;
      */
     public void setAsistentes(List<UsuarioEntity> asistentes) {
         this.asistentes = asistentes;
-    }
-
-    /**
-     * @return the calificacion
-     */
-    public CalificacionEntity getCalificacion() {
-        return calificacion;
-    }
-
-    /**
-     * @param calificacion the calificacion to set
-     */
-    public void setCalificacion(CalificacionEntity calificacion) {
-        this.calificacion = calificacion;
     }
 
     /**
@@ -255,5 +254,7 @@ private char subTypeId;
     public void setSubTypeId(char subTypeId) {
         this.subTypeId = subTypeId;
     }
+
+    
     
 }

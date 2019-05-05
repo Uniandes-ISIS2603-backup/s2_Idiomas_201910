@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.idiomas.tests.postman;
 
 /**
  *
- * @author se.gamboa/201713080
+ * @author se.gamboa
  */
 import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.idiomas.dtos.CascaraDTO;
@@ -30,9 +30,9 @@ import org.junit.runner.RunWith;
  * @author ISIS2603
  */
 @RunWith(Arquillian.class)
-public class ComentarioIT {
+public class CalificacionIT {
 
-    private static final String COLLECTION = "ComentarioResourceTest.postman_collection";
+    private static final String COLLECTION = "CalificacionResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

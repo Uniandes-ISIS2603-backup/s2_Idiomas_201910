@@ -47,11 +47,6 @@ public class ActividadDTO implements Serializable{
     private String motivacion;
     
     /**
-     * Atributo que contiene la calificación de la actividad
-     */
-    private CalificacionDTO calificacion;
-    
-    /**
      * Atributo que contiene el tipo
      */
     private char pTipo;
@@ -83,14 +78,6 @@ public class ActividadDTO implements Serializable{
             this.fecha = pActividadEntity.getFecha();
             this.motivacion = pActividadEntity.getMotivacion();
             this.nombre = pActividadEntity.getNombre();
-//            if (pActividadEntity.getCalificacion() != null)
-//            {
-//                this.calificacion = new CalificacionDTO(pActividadEntity.getCalificacion());
-//            }
-//            else
-//            {
-//                this.calificacion = null;
-//            }
             this.pTipo = pActividadEntity.getSubTypeId();
         }
     }
@@ -170,21 +157,6 @@ public class ActividadDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
-    }
-    
-
-    /**
-     * @return the calificacion
-     */
-    public CalificacionDTO getCalificacion() {
-        return calificacion;
-    }
-
-    /**
-     * @param calificacion the calificacion to set
-     */
-    public void setCalificacion(CalificacionDTO calificacion) {
-        this.calificacion = calificacion;
     }
 
     /**

@@ -28,6 +28,7 @@ public class ComentarioDTO implements Serializable {
             this.texto = entity.getTexto();
             this.fecha = entity.getFecha();
             this.titulo = entity.getTitulo();
+            
         }
     }
 

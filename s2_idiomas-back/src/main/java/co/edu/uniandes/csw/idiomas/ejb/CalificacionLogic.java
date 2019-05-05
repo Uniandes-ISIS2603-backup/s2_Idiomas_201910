@@ -45,7 +45,7 @@ public class CalificacionLogic {
             }
             if (newCalificacionEntity.getMensaje() != null)
             {
-                if(newCalificacionEntity.getMensaje().length() > 300)
+                if(newCalificacionEntity.getMensaje().length() > 250)
                 {
                     throw new BusinessLogicException("El mensaje supera el número de caracteres permitidos");
                 }

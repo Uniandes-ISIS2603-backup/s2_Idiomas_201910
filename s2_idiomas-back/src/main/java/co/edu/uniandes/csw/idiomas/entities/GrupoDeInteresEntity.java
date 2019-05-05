@@ -6,11 +6,18 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
  * @author estudiante
  */
+@Entity
 public class GrupoDeInteresEntity extends BaseEntity implements Serializable{
     /**
      * idioma del grupo
@@ -28,7 +35,14 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable{
      * blog del grupo
      */
     Long blog;
-
+    
+    /**
+     * Atributo que representa las calificaciones de la actividad.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "grupo", cascade = CascadeType.PERSIST)
+    private List<CalificacionGrupoEntity> calificaciones = new ArrayList<>();
+    
     /**
      * Connstructor vacio de un Entity
      */
@@ -92,5 +106,21 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable{
     public void setBlog(Long blog) {
         this.blog = blog;
     }
+
+    /**
+     * @return the calificaciones
+     */
+    public List<CalificacionGrupoEntity> getCalificaciones() {
+        return calificaciones;
+    }
+
+    /**
+     * @param calificaciones the calificaciones to set
+     */
+    public void setCalificaciones(List<CalificacionGrupoEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+    
+    
 
 }

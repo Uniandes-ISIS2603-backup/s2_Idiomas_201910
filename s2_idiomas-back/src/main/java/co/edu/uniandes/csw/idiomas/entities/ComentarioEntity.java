@@ -20,10 +20,6 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  * @author se.gamboa
  */
 @Entity
-
-
-
-
 public class ComentarioEntity extends BaseEntity implements Serializable {
 
     private String texto;
@@ -31,7 +27,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
-    
     private Date fecha;
 
     @PodamExclude
@@ -137,6 +132,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     public void setCalificaciones(CalificacionEntity calificaciones) {
         this.calificaciones = calificaciones;
     }
+    
     
 
     /**

@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.idiomas.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,13 @@ public class AdministradorEntity implements Serializable {
     
     Long contrasenia;
     String nombre;
+    
+    /**
+     * Atributo que representa las calificaciones de la actividad.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "administrador", cascade = CascadeType.PERSIST)
+    private List<CalificacionAdministradorEntity> calificaciones = new ArrayList<>();
     
     /**
      * Atributo que representa los grupos administradps.
