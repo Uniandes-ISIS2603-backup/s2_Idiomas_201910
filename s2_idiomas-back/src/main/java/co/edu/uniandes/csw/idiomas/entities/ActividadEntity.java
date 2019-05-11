@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
-import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,10 +21,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.apache.commons.logging.Log;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
@@ -74,13 +71,6 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL)
     private List<ComentarioEntity> comentarios = new ArrayList<>();
-
-    /**
-     * Atributo que representa las calificaciones de la actividad.
-     */
-    @PodamExclude
-    @OneToMany(mappedBy = "actividad", cascade = CascadeType.PERSIST)
-    private List<CalificacionEntity> calificaciones = new ArrayList<>();
     
     /**
      * Atributo que representa los asistentes de la actividad.
@@ -142,20 +132,6 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      */
     public void setComentarios(List<ComentarioEntity> comentarios) {
         this.comentarios = comentarios;
-    }
-
-    /**
-     * @return the calificaciones
-     */
-    public List<CalificacionEntity> getCalificaciones() {
-        return calificaciones;
-    }
-
-    /**
-     * @param calificaciones the calificaciones to set
-     */
-    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
-        this.calificaciones = calificaciones;
     }
 
     /**

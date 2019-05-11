@@ -6,15 +6,10 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -25,13 +20,6 @@ public class AdministradorEntity implements Serializable {
     
     Long contrasenia;
     String nombre;
-    
-    /**
-     * Atributo que representa las calificaciones de la actividad.
-     */
-    @PodamExclude
-    @OneToMany(mappedBy = "administrador", cascade = CascadeType.PERSIST)
-    private List<CalificacionEntity> calificaciones = new ArrayList<>();
     
     /**
      * Atributo que representa los grupos administradps.
@@ -90,20 +78,6 @@ public class AdministradorEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return the calificaciones
-     */
-    public List<CalificacionEntity> getCalificaciones() {
-        return calificaciones;
-    }
-
-    /**
-     * @param calificaciones the calificaciones to set
-     */
-    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
-        this.calificaciones = calificaciones;
     }
 
     @Override

@@ -38,10 +38,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private ActividadEntity actividad;
     
-    @PodamExclude
-    @ManyToOne
-    private CalificacionEntity calificaciones;
-    
     /**
      * Constructor vacío de ComentarioEntity.
      */
@@ -117,20 +113,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
      */
     public void setActividad(ActividadEntity actividad) {
         this.actividad = actividad;
-    }
-    
-    /**
-     * @return the calificaciones
-     */
-    public CalificacionEntity getCalificaciones() {
-        return calificaciones;
-    }
-
-    /**
-     * @param calificaciones the calificaciones to set
-     */
-    public void setCalificaciones(CalificacionEntity calificaciones) {
-        this.calificaciones = calificaciones;
     }
     
     
