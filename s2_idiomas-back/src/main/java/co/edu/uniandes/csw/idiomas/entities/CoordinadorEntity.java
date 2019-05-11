@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -30,13 +29,6 @@ public class CoordinadorEntity  implements Serializable
     @PodamExclude
     @ManyToMany(mappedBy = "coordinadores", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ActividadEntity> actividadesCoordinadas = new ArrayList<>();
-    
-    /**
-     * Atributo que representa las calificaciones de la actividad.
-     */
-    @PodamExclude
-    @OneToMany(mappedBy = "coordinador", cascade = CascadeType.PERSIST)
-    private List<CalificacionEntity> calificaciones = new ArrayList<>();
     
     /**
      * Connstructor vacio de un Entity
@@ -104,20 +96,6 @@ public class CoordinadorEntity  implements Serializable
             return this.getId().hashCode();
         }
         return super.hashCode();
-    }
-
-    /**
-     * @return the calificaciones
-     */
-    public List<CalificacionEntity> getCalificaciones() {
-        return calificaciones;
-    }
-
-    /**
-     * @param calificaciones the calificaciones to set
-     */
-    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
-        this.calificaciones = calificaciones;
     }
     
     
