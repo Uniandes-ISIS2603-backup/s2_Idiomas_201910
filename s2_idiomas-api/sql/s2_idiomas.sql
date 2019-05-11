@@ -12,7 +12,6 @@ delete from ActividadEntity;
 Select * from ActividadEntity;
 Select * from ComentarioEntity;
 Select * from UsuarioEntity;
-SELECT ID, FECHA, TEXTO, TITULO, ACTIVIDAD_ID, AUTOR_ID, CALIFICACIONES_ID FROM COMENTARIOENTITY;
 
 
 delete from UsuarioEntity;
