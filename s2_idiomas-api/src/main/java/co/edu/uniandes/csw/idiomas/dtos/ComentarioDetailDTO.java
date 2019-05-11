@@ -11,7 +11,6 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
 
     private PersonaDTO autor;
     private ActividadDTO actividad;
-    private CalificacionDTO calificaciones;
 
     public ComentarioDetailDTO(ComentarioEntity entity) {
         super(entity);
@@ -24,11 +23,6 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
             this.actividad = new ActividadDTO(entity.getActividad());
         } else {
             this.actividad = null;
-        }
-        if (entity.getCalificaciones() != null) {
-            this.calificaciones = new CalificacionDTO(entity.getCalificaciones());
-        } else {
-            this.calificaciones = null;
         }
 
     }
@@ -45,9 +39,6 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
         }
         if (getActividad() != null) {
             entity.setActividad(this.getActividad().toEntity());
-        }
-        if (getCalificaciones() != null) {
-            entity.setCalificaciones(this.getCalificaciones().toEntity());
         }
         return entity;
     }
@@ -78,20 +69,6 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
      */
     public void setActividad(ActividadDTO actividad) {
         this.actividad = actividad;
-    }
-
-    /**
-     * @return the calificaciones
-     */
-    public CalificacionDTO getCalificaciones() {
-        return calificaciones;
-    }
-
-    /**
-     * @param calificaciones the calificaciones to set
-     */
-    public void setCalificaciones(CalificacionDTO calificaciones) {
-        this.calificaciones = calificaciones;
     }
 
 }
