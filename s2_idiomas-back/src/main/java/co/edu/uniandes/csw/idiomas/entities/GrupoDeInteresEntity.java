@@ -23,19 +23,15 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
-import co.edu.uniandes.csw.idiomas.podam.DateStrategy;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
-import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  * Clase que representa un grupoDeInteres en la persistencia y permite su serialización
@@ -50,24 +46,40 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable {
     // -------------------------------------------------------------------------
     
     /**
-     * 
+     * Atributo que representa el idioma del grupo.
      */
+    private String idioma;
 
-    @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
-    private Date birthDate;
+    /**
+     * Atributo que representa el nombre del grupo.
+     */
+    private String nombre;
+    
+    /**
+     * Atributo que representa la descripción del grupo.
+     */
+    private String descripcion;
 
+    /**
+     * Atributo que representa el administrador del grupo.
+     */
     @PodamExclude
-    @ManyToMany(mappedBy = "gruposDeInteres")
-    private List<BookEntity> books = new ArrayList<>();
+    @OneToOne
+    private AdministradorEntity administrador;
 
+    /**
+     * Atributo que representa los usuarios asociados con el grupo de interés.
+     */
     @PodamExclude
-    @OneToMany(mappedBy = "grupoDeInteres",fetch=FetchType.LAZY)
-    private List<PrizeEntity> prizes = new ArrayList<>();
-
-    private String name;
-    private String description;
-    private String image;
+    @ManyToMany(mappedBy = "gruposDeInteres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UsuarioEntity> usuarios;
+    
+    /**
+     * Atributo que representa las actividades asociados con el grupo de interés.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL)
+    private List<ActividadEntity> actividades;
 
     /**
      * Devuelve el nombre del grupoDeInteres.

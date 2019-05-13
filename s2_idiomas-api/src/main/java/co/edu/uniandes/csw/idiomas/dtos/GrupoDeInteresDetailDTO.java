@@ -25,7 +25,6 @@ package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.bookstore.entities.BookEntity;
 import co.edu.uniandes.csw.bookstore.entities.PrizeEntity;
-import co.edu.uniandes.csw.idiomas.dtos.GrupoDeInteresDTO;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -52,12 +51,6 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
      * el grupo de interés.
      */
     private List<UsuarioDTO> usuarios;
-    
-    /**
-     * Lista, relación, de cero a muchos comentarios, contiene los comentarios 
-     * asociados con el grupo de interés.
-     */
-    // Mirar si se va a implementar
     
     /**
      * Lista, relación, de cero a muchas actividades, contiene las actividades
@@ -122,40 +115,32 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
         return grupoDeInteresEntity;
     }
 
-    /**
-     * Obtiene la lista de libros del autor
-     *
-     * @return the books
+/**
+     * @return the usuarios
      */
-    public List<BookDTO> getBooks() {
-        return books;
+    public List<UsuarioDTO> getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * Modifica la lista de libros para el autor
-     *
-     * @param books the books to set
+     * @param usuarios the usuarios to set
      */
-    public void setBooks(List<BookDTO> books) {
-        this.books = books;
+    public void setUsuarios(List<UsuarioDTO> usuarios) {
+        this.usuarios = usuarios;
     }
 
     /**
-     * Obtiene la lista de premios del autor
-     *
-     * @return the prizes
+     * @return the actividades
      */
-    public List<PrizeDTO> getPrizes() {
-        return prizes;
+    public List<ActividadDTO> getActividades() {
+        return actividades;
     }
 
     /**
-     * Modifica la lista de premios para el autor
-     *
-     * @param prizes the prizes to set
+     * @param actividades the actividades to set
      */
-    public void setPrizes(List<PrizeDTO> prizes) {
-        this.prizes = prizes;
+    public void setActividades(List<ActividadDTO> actividades) {
+        this.actividades = actividades;
     }
 
     @Override

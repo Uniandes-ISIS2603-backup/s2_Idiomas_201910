@@ -28,9 +28,9 @@ public class UsuarioEntity  implements Serializable{
     private Long contrasenia;
     private String nombre;
     
-//    @PodamExclude
-//    @ManyToMany(mappedBy = "usuarios")
-//    private List<gruposDeintereEntity> grupos = new ArrayList<>();
+    @PodamExclude
+    @ManyToMany(mappedBy = "usuarios")
+    private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
 
     public List<ActividadEntity> getActividades() {
         return actividades;
