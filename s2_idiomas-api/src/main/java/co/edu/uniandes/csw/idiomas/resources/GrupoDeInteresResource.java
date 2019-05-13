@@ -7,10 +7,7 @@ package co.edu.uniandes.csw.idiomas.resources;
 
 import co.edu.uniandes.csw.idiomas.dtos.GrupoDeInteresDTO;
 import co.edu.uniandes.csw.idiomas.dtos.GrupoDeInteresDetailDTO;
-//import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
-//import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;

@@ -1,100 +1,179 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
+import co.edu.uniandes.csw.idiomas.podam.DateStrategy;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
+ * Clase que representa un grupoDeInteres en la persistencia y permite su serialización
  *
- * @author estudiante
+ * @author g.cubillosb
  */
 @Entity
-public class GrupoDeInteresEntity extends BaseEntity implements Serializable{
-    /**
-     * idioma del grupo
-     */
-    String idioma;
-    /**
-     * administrador del grupo
-     */
-    String administrador;
-    /**
-     * calificacion del grupo
-     */
-    Long calificacion;
-    /**
-     * blog del grupo
-     */
-    Long blog;
+public class GrupoDeInteresEntity extends BaseEntity implements Serializable {
+    
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
     
     /**
-     * Connstructor vacio de un Entity
-     */
-    public GrupoDeInteresEntity()
-    {
-        
-    }
-    /**
      * 
-     * @return idioma
      */
-    public String getIdioma() {
-        return idioma;
-    }
-    /**
-     * 
-     * @param idioma 
-     */
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
-    }
-   /**
-     * 
-     * @return administrador
-     */
-    public String getAdministrador() {
-        return administrador;
-    }
-    /**
-     * 
-     * @param administrador 
-     */
-    public void setAdministrador(String administrador) {
-        this.administrador = administrador;
-    }
-   /**
-     * 
-     * @return calificacion
-     */
-    public Long getCalificacion() {
-        return calificacion;
-    }
-    /**
-     * 
-     * @param calificacion 
-     */
-    public void setCalificacion(Long calificacion) {
-        this.calificacion = calificacion;
-    }
-   /**
-     * 
-     * @return blog
-     */
-    public Long getBlog() {
-        return blog;
-    }
-    /**
-     * 
-     * @param blog 
-     */
-    public void setBlog(Long blog) {
-        this.blog = blog;
-    }
-    
-    
 
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
+    private Date birthDate;
+
+    @PodamExclude
+    @ManyToMany(mappedBy = "gruposDeInteres")
+    private List<BookEntity> books = new ArrayList<>();
+
+    @PodamExclude
+    @OneToMany(mappedBy = "grupoDeInteres",fetch=FetchType.LAZY)
+    private List<PrizeEntity> prizes = new ArrayList<>();
+
+    private String name;
+    private String description;
+    private String image;
+
+    /**
+     * Devuelve el nombre del grupoDeInteres.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Modifica el nombre del grupoDeInteres.
+     *
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Obtiene el atributo birthDate.
+     *
+     * @return atributo birthDate.
+     */
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * Establece el valor del atributo birthDate.
+     *
+     * @param birthDate nuevo valor del atributo
+     */
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    /**
+     * Obtiene la colección de books.
+     *
+     * @return colección books.
+     */
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    /**
+     * Establece el valor de la colección de books.
+     *
+     * @param books nuevo valor de la colección.
+     */
+    public void setBooks(List<BookEntity> books) {
+        this.books = books;
+    }
+
+    /**
+     * Obtiene la colección de premios.
+     *
+     * @return colección prizes.
+     */
+    public List<PrizeEntity> getPrizes() {
+        return prizes;
+    }
+
+    /**
+     * Establece el valor de la colección de prizes.
+     *
+     * @param prizes nuevo valor de la colección.
+     */
+    public void setPrizes(List<PrizeEntity> prizes) {
+        this.prizes = prizes;
+    }
+
+    /**
+     * Devuelve la descripción del grupoDeInteres
+     *
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Modifica la descripción del grupoDeInteres
+     *
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Devuelve la imagen del grupoDeInteres
+     *
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * Modifica la imagen del grupoDeInteres
+     *
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
