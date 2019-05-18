@@ -34,7 +34,7 @@ public class UsuarioGrupoLogic {
      * Variable para acceder a la persistencia de la aplicación. Es una inyección de dependencias.
      */
     @Inject
-    private GrupoDeInteresPersistence grupoUsuarioPersistence;
+    private GrupoDeInteresPersistence grupoPersistence;
     
     /**
      * Variable para acceder a la persistencia de la aplicación. Es una inyección de dependencias.
@@ -56,12 +56,12 @@ public class UsuarioGrupoLogic {
     public GrupoDeInteresEntity addGrupo(Long usuariosId, Long gruposId) {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle un grupo a la usuario con id = {0}", usuariosId);
         UsuarioEntity usuarioEntity = usuarioPersistence.find(usuariosId);
-        GrupoDeInteresEntity grupoUsuarioEntity = grupoUsuarioPersistence.find(gruposId);
-        usuarioEntity.getGrupos().add(grupoUsuarioEntity);
+        GrupoDeInteresEntity grupoEntity = grupoPersistence.find(gruposId);
+        usuarioEntity.getGrupos().add(grupoEntity);
         //hay que hablar con luis
-//        grupoUsuarioEntity.getUsuarios.add(usuarioEntity);
+//        grupoEntity.getUsuarios.add(usuarioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle un libro al usuario con id = {0}", usuariosId);
-        return grupoUsuarioPersistence.find(gruposId);
+        return grupoPersistence.find(gruposId);
     }
     
     /**
@@ -88,8 +88,8 @@ public class UsuarioGrupoLogic {
     public GrupoDeInteresEntity getGrupo(Long usuariosId, Long gruposId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el libro con id = {0} del usuario con id = " + usuariosId, gruposId);
         List<GrupoDeInteresEntity> grupos = usuarioPersistence.find(usuariosId).getGrupos();
-        GrupoDeInteresEntity grupoUsuarioEntity = grupoUsuarioPersistence.find(gruposId);
-        int index = grupos.indexOf(grupoUsuarioEntity);
+        GrupoDeInteresEntity grupoEntity = grupoPersistence.find(gruposId);
+        int index = grupos.indexOf(grupoEntity);
         LOGGER.log(Level.INFO, "Termina proceso de consultar el libro con id = {0} del usuario con id = " + usuariosId, gruposId);
         if (index >= 0) {
             return grupos.get(index);
@@ -108,21 +108,21 @@ public class UsuarioGrupoLogic {
     public List<GrupoDeInteresEntity> replaceGrupos(Long usuarioId, List<GrupoDeInteresEntity> grupos) {
         LOGGER.log(Level.INFO, "Inicia proceso de reemplazar los grupos asocidos al usuario con id = {0}", usuarioId);
         UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
-        List<GrupoDeInteresEntity> grupoUsuarioList = grupoUsuarioPersistence.findAll();
+        List<GrupoDeInteresEntity> grupoList = grupoPersistence.findAll();
         
-        for (GrupoDeInteresEntity grupoUsuario : grupoUsuarioList) {
-            if (grupos.contains(grupoUsuario))
+        for (GrupoDeInteresEntity grupo : grupoList) {
+            if (grupos.contains(grupo))
             {
-//                if (!grupoUsuario.getUsuarios().contains(usuarioEntity))
+//                if (!grupo.getUsuarios().contains(usuarioEntity))
 //                {
-//                    grupoUsuario.getUsuarios().add(usuarioEntity);
+//                    grupo.getUsuarios().add(usuarioEntity);
 //                }
             }
             else
             {
-//                if (grupoUsuario.getUsuarios().contains(usuarioEntity))
+//                if (grupo.getUsuarios().contains(usuarioEntity))
 //                {
-//                    grupoUsuario.getUsuarios().remove(usuarioEntity);
+//                    grupo.getUsuarios().remove(usuarioEntity);
 //                }
                 
             }
@@ -142,9 +142,9 @@ public class UsuarioGrupoLogic {
     public void removeGrupo(Long usuariosId, Long gruposId) {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un libro del usuario con id = {0}", usuariosId);
         UsuarioEntity usuarioEntity = usuarioPersistence.find(usuariosId);
-        GrupoDeInteresEntity grupoUsuarioEntity = grupoUsuarioPersistence.find(gruposId);
-        usuarioEntity.getGrupos().remove(grupoUsuarioEntity);
-//        grupoUsuarioEntity.getUsuarios().remove(usuarioEntity);
+        GrupoDeInteresEntity grupoEntity = grupoPersistence.find(gruposId);
+        usuarioEntity.getGrupos().remove(grupoEntity);
+//        grupoEntity.getUsuarios().remove(usuarioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de borrar un libro del usuario con id = {0}", usuariosId);
     }
 }

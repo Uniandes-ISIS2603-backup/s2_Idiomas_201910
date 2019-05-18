@@ -29,7 +29,7 @@ public class UsuarioEntity  implements Serializable{
     private String nombre;
     
     @PodamExclude
-    @ManyToMany(mappedBy = "usuarios")
+    @ManyToMany
     private List<GrupoDeInteresEntity> grupos = new ArrayList<>();
 
     public List<GrupoDeInteresEntity> getGrupos() {
