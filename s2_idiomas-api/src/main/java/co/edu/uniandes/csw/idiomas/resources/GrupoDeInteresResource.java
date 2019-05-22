@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.idiomas.dtos.GrupoDeInteresDetailDTO;
 import co.edu.uniandes.csw.idiomas.ejb.GrupoDeInteresLogic;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
+import co.edu.uniandes.csw.idiomas.mappers.WebApplicationExceptionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
