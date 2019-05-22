@@ -86,9 +86,14 @@ public class GrupoDeInteresDTO implements Serializable {
     public GrupoDeInteresDTO(GrupoDeInteresEntity grupoDeInteresEntity) {
         if (grupoDeInteresEntity != null) {
             this.id = grupoDeInteresEntity.getId();
-            this.idioma = grupoDeInteresEntity.get
-            
-
+            this.idioma = grupoDeInteresEntity.getIdioma();
+            if (grupoDeInteresEntity.getAdministrador() != null) {
+                this.administrador = new AdministradorDTO(grupoDeInteresEntity.getAdministrador());
+            } else {
+                this.administrador = null;
+            }
+            this.descripcion = grupoDeInteresEntity.getDescripcion();
+            this.nombre = grupoDeInteresEntity.getIdioma();
         }
     }
 
@@ -102,11 +107,14 @@ public class GrupoDeInteresDTO implements Serializable {
      */
     public GrupoDeInteresEntity toEntity() {
         GrupoDeInteresEntity grupoDeInteresEntity = new GrupoDeInteresEntity();
+        if (this.getAdministrador() != null)
+        {
+            grupoDeInteresEntity.setAdministrador(this.getAdministrador().toEntity());
+        }
+        grupoDeInteresEntity.setDescripcion(this.getDescripcion());
         grupoDeInteresEntity.setId(this.getId());
-        grupoDeInteresEntity.setName(this.getName());
-        grupoDeInteresEntity.setBirthDate(this.getBirthDate());
-        grupoDeInteresEntity.setDescription(this.description);
-        grupoDeInteresEntity.setImage(this.image);
+        grupoDeInteresEntity.setIdioma(this.getIdioma());
+        grupoDeInteresEntity.setNombre(this.getNombre());
         return grupoDeInteresEntity;
     }
 
