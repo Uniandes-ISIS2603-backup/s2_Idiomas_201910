@@ -24,7 +24,6 @@ SOFTWARE.
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -39,7 +38,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author g.cubillosb
  */
 @Entity
-public class GrupoDeInteresEntity extends BaseEntity implements Serializable {
+public class GrupoDeInteresEntity extends BaseEntity implements Serializable 
+{
     
     // -------------------------------------------------------------------------
     // Atributos
@@ -80,112 +80,117 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL)
     private List<ActividadEntity> actividades;
+    
+    /**
+     * Atributo que representa los comentarios asociados con el grupo de interés.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL)
+    private List<ComentarioEntity> comentarios;
+    
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
 
     /**
-     * Devuelve el nombre del grupoDeInteres.
-     *
-     * @return the name
+     * @return the idioma
      */
-    public String getName() {
-        return name;
+    public String getIdioma() {
+        return idioma;
     }
 
     /**
-     * Modifica el nombre del grupoDeInteres.
-     *
-     * @param name the name to set
+     * @param idioma the idioma to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
 
     /**
-     * Obtiene el atributo birthDate.
-     *
-     * @return atributo birthDate.
+     * @return the nombre
      */
-    public Date getBirthDate() {
-        return birthDate;
+    public String getNombre() {
+        return nombre;
     }
 
     /**
-     * Establece el valor del atributo birthDate.
-     *
-     * @param birthDate nuevo valor del atributo
+     * @param nombre the nombre to set
      */
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     /**
-     * Obtiene la colección de books.
-     *
-     * @return colección books.
+     * @return the descripcion
      */
-    public List<BookEntity> getBooks() {
-        return books;
+    public String getDescripcion() {
+        return descripcion;
     }
 
     /**
-     * Establece el valor de la colección de books.
-     *
-     * @param books nuevo valor de la colección.
+     * @param descripcion the descripcion to set
      */
-    public void setBooks(List<BookEntity> books) {
-        this.books = books;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     /**
-     * Obtiene la colección de premios.
-     *
-     * @return colección prizes.
+     * @return the administrador
      */
-    public List<PrizeEntity> getPrizes() {
-        return prizes;
+    public AdministradorEntity getAdministrador() {
+        return administrador;
     }
 
     /**
-     * Establece el valor de la colección de prizes.
-     *
-     * @param prizes nuevo valor de la colección.
+     * @param administrador the administrador to set
      */
-    public void setPrizes(List<PrizeEntity> prizes) {
-        this.prizes = prizes;
+    public void setAdministrador(AdministradorEntity administrador) {
+        this.administrador = administrador;
     }
 
     /**
-     * Devuelve la descripción del grupoDeInteres
-     *
-     * @return the description
+     * @return the usuarios
      */
-    public String getDescription() {
-        return description;
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * Modifica la descripción del grupoDeInteres
-     *
-     * @param description the description to set
+     * @param usuarios the usuarios to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
     }
 
     /**
-     * Devuelve la imagen del grupoDeInteres
-     *
-     * @return the image
+     * @return the actividades
      */
-    public String getImage() {
-        return image;
+    public List<ActividadEntity> getActividades() {
+        return actividades;
     }
 
     /**
-     * Modifica la imagen del grupoDeInteres
-     *
-     * @param image the image to set
+     * @param actividades the actividades to set
      */
-    public void setImage(String image) {
-        this.image = image;
+    public void setActividades(List<ActividadEntity> actividades) {
+        this.actividades = actividades;
     }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
+    }
+    
 }

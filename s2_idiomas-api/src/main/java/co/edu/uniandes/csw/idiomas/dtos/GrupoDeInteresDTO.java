@@ -36,6 +36,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author g.cubillosb
  */
 public class GrupoDeInteresDTO implements Serializable {
+    
     // -------------------------------------------------------------------------
     // Atributos
     // -------------------------------------------------------------------------
@@ -85,10 +86,8 @@ public class GrupoDeInteresDTO implements Serializable {
     public GrupoDeInteresDTO(GrupoDeInteresEntity grupoDeInteresEntity) {
         if (grupoDeInteresEntity != null) {
             this.id = grupoDeInteresEntity.getId();
-            this.name = grupoDeInteresEntity.getName();
-            this.birthDate = grupoDeInteresEntity.getBirthDate();
-            this.description = grupoDeInteresEntity.getDescription();
-            this.image = grupoDeInteresEntity.getImage();
+            this.idioma = grupoDeInteresEntity.get
+            
 
         }
     }
