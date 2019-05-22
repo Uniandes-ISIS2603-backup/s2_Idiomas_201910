@@ -23,8 +23,8 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.idiomas.dtos;
 
-import co.edu.uniandes.csw.bookstore.entities.BookEntity;
-import co.edu.uniandes.csw.bookstore.entities.PrizeEntity;
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
+import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -57,6 +57,12 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
      * asociadas con el grupo de interés.
      */
     private List<ActividadDTO> actividades;
+    
+     /**
+     * Lista, relación, de cero a muchos comentarios, contiene los comentarios
+     * asociadas con el grupo de interés.
+     */
+    private List<ComentarioDTO> comentarios;
 
     // ------------------------------------------------------------------------
     // Constructor
@@ -79,11 +85,23 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
      */
     public GrupoDeInteresDetailDTO(GrupoDeInteresEntity grupoDeInteresEntity) {
         super(grupoDeInteresEntity);
-        if (grupoDeInteresEntity != null) {
+        if (grupoDeInteresEntity.getUsuarios() != null) {
             usuarios = new ArrayList<>();
             for (UsuarioEntity entityUsuarios : grupoDeInteresEntity.getUsuarios())
             {
                 usuarios.add(new UsuarioDTO(entityUsuarios));
+            }
+        }
+        if (grupoDeInteresEntity.getActividades() != null) {
+            actividades = new ArrayList<>();
+            for (ActividadEntity entityActividad : grupoDeInteresEntity.getActividades()) {
+                actividades.add(new ActividadDTO(entityActividad));
+            }
+        }
+        if (grupoDeInteresEntity.getComentarios() != null) {
+            comentarios = new ArrayList<>();
+            for (ComentarioEntity entityComentario : grupoDeInteresEntity.getComentarios()) {
+                comentarios.add(new ComentarioDTO(entityComentario));
             }
         }
     }
@@ -98,19 +116,26 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
     @Override
     public GrupoDeInteresEntity toEntity() {
         GrupoDeInteresEntity grupoDeInteresEntity = super.toEntity();
-        if (books != null) {
-            List<BookEntity> booksEntity = new ArrayList<>();
-            for (BookDTO dtoBook : books) {
-                booksEntity.add(dtoBook.toEntity());
+        if (getUsuarios() != null) {
+            List<UsuarioEntity> usuariosEntity = new ArrayList<>();
+            for (UsuarioDTO dtoUsuario : getUsuarios()) {
+                usuariosEntity.add(dtoUsuario.toEntity());
             }
-            grupoDeInteresEntity.setBooks(booksEntity);
+            grupoDeInteresEntity.setUsuarios(usuariosEntity);
         }
-        if (prizes != null) {
-            List<PrizeEntity> prizesEntity = new ArrayList<>();
-            for (PrizeDTO dtoPrize : prizes) {
-                prizesEntity.add(dtoPrize.toEntity());
+        if (getActividades() != null) {
+            List<ActividadEntity> actividadesEntity = new ArrayList<>();
+            for (ActividadDTO dtoActividad : getActividades()) {
+                actividadesEntity.add(dtoActividad.toEntity());
             }
-            grupoDeInteresEntity.setPrizes(prizesEntity);
+            grupoDeInteresEntity.setActividades(actividadesEntity);
+        }
+        if (getComentarios() != null) {
+            List<ComentarioEntity> comentariosEntity = new ArrayList<>();
+            for (ComentarioDTO dtoComentario : getComentarios()) {
+                comentariosEntity.add(dtoComentario.toEntity());
+            }
+            grupoDeInteresEntity.setComentarios(comentariosEntity);
         }
         return grupoDeInteresEntity;
     }
@@ -146,5 +171,19 @@ public class GrupoDeInteresDetailDTO extends GrupoDeInteresDTO implements Serial
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioDTO> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
     }
 }
