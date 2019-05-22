@@ -182,7 +182,7 @@ public class GrupoDeInteresResource {
      * Error de lógica que se genera cuando no se encuentra la grupoDeInteres.
      */
     @Path("{gruposDeInteresId: \\d+}/comentarios")
-    public Class<ComentarioResource> getGrupoDeInteresComentariosResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
+    public Class<GrupoDeInteresComentariosResource> getGrupoDeInteresComentariosResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
         if (grupoDeInteresLogic.getGrupoDeInteres(gruposDeInteresId) == null) {
             throw new WebApplicationException("El recurso /gruposDeInteres/" + gruposDeInteresId + " no existe.", 404);
         }
@@ -204,7 +204,7 @@ public class GrupoDeInteresResource {
      * Error de lógica que se genera cuando no se encuentra la grupoDeInteres.
      */
     @Path("{gruposDeInteresId: \\d+}/usuarios")
-    public Class<ComentarioResource> getGrupoDeInteresUsuariosResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
+    public Class<GrupoDeInteresUsuariosResource> getGrupoDeInteresUsuariosResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
         if (grupoDeInteresLogic.getGrupoDeInteres(gruposDeInteresId) == null) {
             throw new WebApplicationException("El recurso /gruposDeInteres/" + gruposDeInteresId + " no existe.", 404);
         }
@@ -226,7 +226,7 @@ public class GrupoDeInteresResource {
      * Error de lógica que se genera cuando no se encuentra la grupoDeInteres.
      */
     @Path("{gruposDeInteresId: \\d+}/actividades")
-    public Class<ComentarioResource> getGrupoDeInteresActividadesResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
+    public Class<GrupoDeInteresActividadesResource> getGrupoDeInteresActividadesResource(@PathParam("gruposDeInteresId") Long gruposDeInteresId) {
         if (grupoDeInteresLogic.getGrupoDeInteres(gruposDeInteresId) == null) {
             throw new WebApplicationException("El recurso /gruposDeInteres/" + gruposDeInteresId + " no existe.", 404);
         }
