@@ -16,6 +16,7 @@ public class ComentarioDTO implements Serializable {
     private Long id;
     private String titulo;
     private ActividadDTO actividad;
+    private PersonaDTO autor;
     
 
     /**
@@ -29,14 +30,17 @@ public class ComentarioDTO implements Serializable {
             this.texto = entity.getTexto();
             this.fecha = entity.getFecha();
             this.titulo = entity.getTitulo();
-            if(entity.getActividad() !=null)
-            {
-                this.actividad = new ActividadDTO(entity.getActividad());
-            }
-            else
-            {
-                this.actividad = null;
-            }
+           // if(entity.getActividad() !=null)
+           // {
+           //     this.actividad = new ActividadDTO(entity.getActividad());
+           // }
+           // else
+           // {
+           //     this.actividad = null;
+           // }
+           // if(entity.getAutor()!=null){
+           //    this.autor=new PersonaDTO(entity.getAutor());
+           // }
             
         }
     }
@@ -100,6 +104,12 @@ public class ComentarioDTO implements Serializable {
         entity.setFecha(this.getFecha());
         entity.setTexto(this.getTexto());
         entity.setTitulo(this.getTitulo());
+        //if(this.actividad!=null){
+        //entity.setActividad(this.getActividad().toEntity());
+        //}
+        //if(this.autor!=null){
+        //    entity.setAutor(this.getAutor().toEntity());
+        //}
         return entity;
     }
 
@@ -112,9 +122,27 @@ public class ComentarioDTO implements Serializable {
 
     /**
      * @param titulo the titulo to set
-     */
+    */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+/**
+    public void setActividad(ActividadDTO actividad){
+        this.actividad=actividad;
+    }
+    
+    public ActividadDTO getActividad(){
+        return actividad;
+    }
 
+
+    public PersonaDTO getAutor() {
+        return autor;
+    }
+
+
+    public void setAutor(PersonaDTO autor) {
+        this.autor = autor;
+    }
+         */
 }
