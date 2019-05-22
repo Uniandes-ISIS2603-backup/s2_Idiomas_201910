@@ -193,4 +193,18 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
         this.comentarios = comentarios;
     }
     
+    /**
+     * Equals de la clase
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        GrupoDeInteresEntity fobj = (GrupoDeInteresEntity) obj;
+        return this.getDescripcion().equals(fobj.getDescripcion())
+                && this.getNombre().equals(fobj.getNombre())
+                && this.getIdioma().equals(fobj.getIdioma());
+    }
+    
 }

@@ -65,7 +65,7 @@ public class ActividadLogic {
 //        }
         // Verifica la regla de negocio que dice que una actividad no puede ser idéntica a otra actividad.
         if (persistence.findByName(actividadEntity.getNombre()) != null
-                /*&&persistence.findByName(actividadEntity.getNombre()).equals(actividadEntity)*/)
+                &&persistence.findByName(actividadEntity.getNombre()).equals(actividadEntity))
         {
             throw new BusinessLogicException("La actividad ya existe.");         
         }

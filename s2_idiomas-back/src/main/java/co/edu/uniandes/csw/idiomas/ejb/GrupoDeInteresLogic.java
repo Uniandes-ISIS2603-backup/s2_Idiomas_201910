@@ -57,19 +57,25 @@ public class GrupoDeInteresLogic {
         if (!validateName(grupoDeInteresEntity.getNombre())) {
             throw new BusinessLogicException("El nombre es inválido.");
         }
-
-        // Verifica la regla de negocio que dice que una grupoDeInteres debe tener un coordinador.
-//        if (grupoDeInteresEntity.getCoordinadores().isEmpty())
-//        {
-//            throw new BusinessLogicException("La grupoDeInteres debe tener un coordinador.");
-//        }
-        // Verifica la regla de negocio que dice que una grupoDeInteres no puede ser idéntica a otra grupoDeInteres.
-        if (persistence.findByName(grupoDeInteresEntity.getNombre()) != null
-                /*&&persistence.findByName(grupoDeInteresEntity.getNombre()).equals(grupoDeInteresEntity)*/)
-        {
-            throw new BusinessLogicException("La grupoDeInteres ya existe.");         
+        // Verifica la regla de negocio que dice que el idioma de la grupoDeInteres no puede ser vacío.
+        if (!validateName(grupoDeInteresEntity.getIdioma())) {
+            throw new BusinessLogicException("El idioma es inválido.");
         }
-
+        // Verifica la regla de negocio que dice que la descripción de la grupoDeInteres no puede ser vacío.
+        if (!validateName(grupoDeInteresEntity.getDescripcion())) {
+            throw new BusinessLogicException("La descripción es inválida.");
+        }
+        // Verifica la regla de negocio que dice que un grupoDeInteres debe tener un administrador.
+        if (grupoDeInteresEntity.getAdministrador() == null)
+        {
+            throw new BusinessLogicException("El grupo debe tener un administrador.");
+        }
+        // Verifica la regla de negocio que dice que un grupoDeInteres no puede ser idéntico a otro grupoDeInteres.
+        if (persistence.findByName(grupoDeInteresEntity.getNombre()) != null
+                &&persistence.findByName(grupoDeInteresEntity.getNombre()).equals(grupoDeInteresEntity))
+        {
+            throw new BusinessLogicException("El grupoDeInteres ya existe.");         
+        }
         // Invoca la persistencia para crear la grupoDeInteres
         persistence.create(grupoDeInteresEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la grupoDeInteres");
@@ -120,19 +126,30 @@ public class GrupoDeInteresLogic {
      */
     public GrupoDeInteresEntity updateGrupoDeInteres(Long pGruposDeInteresId, GrupoDeInteresEntity grupoDeInteresEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la grupoDeInteres con id = {0}", pGruposDeInteresId);
+        // Verifica la regla de negocio que dice que el nombre de la grupoDeInteres no puede ser vacío.
         if (!validateName(grupoDeInteresEntity.getNombre())) {
             throw new BusinessLogicException("El nombre es inválido.");
         }
-        // Verifica la regla de negocio que dice que una grupoDeInteres debe tener un coordinador.
-//        if (grupoDeInteresEntity.getCoordinadores().isEmpty())
-//        {
-//            throw new BusinessLogicException("La grupoDeInteres debe tener un coordinador.");
-//        }
-        // Verifica la regla de negocio que dice que una grupoDeInteres no puede ser idéntica a otra grupoDeInteres.
-        if (persistence.findByName(grupoDeInteresEntity.getNombre()) != null
-                && persistence.findByName(grupoDeInteresEntity.getNombre()).equals(grupoDeInteresEntity)) {
-            throw new BusinessLogicException("La grupoDeInteres ya existe.");
+        // Verifica la regla de negocio que dice que el idioma de la grupoDeInteres no puede ser vacío.
+        if (!validateName(grupoDeInteresEntity.getIdioma())) {
+            throw new BusinessLogicException("El idioma es inválido.");
         }
+        // Verifica la regla de negocio que dice que la descripción de la grupoDeInteres no puede ser vacío.
+        if (!validateName(grupoDeInteresEntity.getDescripcion())) {
+            throw new BusinessLogicException("La descripción es inválida.");
+        }
+        // Verifica la regla de negocio que dice que un grupoDeInteres debe tener un administrador.
+        if (grupoDeInteresEntity.getAdministrador() == null)
+        {
+            throw new BusinessLogicException("El grupo debe tener un administrador.");
+        }
+        // Verifica la regla de negocio que dice que un grupoDeInteres no puede ser idéntico a otro grupoDeInteres.
+        if (persistence.findByName(grupoDeInteresEntity.getNombre()) != null
+                &&persistence.findByName(grupoDeInteresEntity.getNombre()).equals(grupoDeInteresEntity))
+        {
+            throw new BusinessLogicException("El grupoDeInteres ya existe.");         
+        }
+        
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
         GrupoDeInteresEntity newEntity = persistence.update(grupoDeInteresEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la grupoDeInteres con id = {0}", grupoDeInteresEntity.getId());
