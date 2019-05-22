@@ -163,8 +163,8 @@ public class ComentarioResource {
     public ComentarioDetailDTO updateComentario(@PathParam("ComentariosId") Long ComentariosId, ComentarioDetailDTO Comentario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ComentarioResource updateComentario: input: id:{0} , Comentario: {1}", new Object[]{ComentariosId, Comentario});
         Comentario.setId(ComentariosId);
-        Comentario.setFecha(ComentarioLogic.getComentario(ComentariosId).getFecha());
-        Comentario.setTitulo(ComentarioLogic.getComentario(ComentariosId).getTitulo());
+        //Comentario.setFecha(ComentarioLogic.getComentario(ComentariosId).getFecha());
+        //Comentario.setTitulo(ComentarioLogic.getComentario(ComentariosId).getTitulo());
 
         if (ComentarioLogic.getComentario(ComentariosId) == null) {
             throw new WebApplicationException("El recurso /Comentarios/" + ComentariosId + " no existe.", 404);
