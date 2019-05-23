@@ -59,11 +59,11 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable
      */
     public ActividadDetailDTO(ActividadEntity actividadEntity) {
         super(actividadEntity);
-        if (actividadEntity.getAsistentes() != null) {
+        if (actividadEntity.getUsuarios()!= null) {
             usuarios = new ArrayList<>();
-            for (UsuarioEntity entityAsistentes : actividadEntity.getAsistentes())
+            for (UsuarioEntity dtoUsuarios : actividadEntity.getUsuarios())
             {
-                usuarios.add(new UsuarioDTO(entityAsistentes));
+                usuarios.add(new UsuarioDTO(dtoUsuarios));
             }
         }
         if (actividadEntity.getComentarios() != null)
@@ -95,7 +95,7 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable
             for (UsuarioDTO dtoUsuario : getUsuarios()) {
                 usuarioEntity.add(dtoUsuario.toEntity());
             }
-            actividadEntity.setAsistentes(usuarioEntity);
+            actividadEntity.setUsuarios(usuarioEntity);
         }
         if (getComentarios() != null) {
             List<ComentarioEntity> comentariosEntity = new ArrayList<>();
