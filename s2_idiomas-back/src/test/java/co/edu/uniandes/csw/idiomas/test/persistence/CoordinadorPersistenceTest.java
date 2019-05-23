@@ -13,11 +13,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,48 +25,50 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
+ * Pruebas de persistencia de Coordinador
  *
- * @author j.barbosaj 201717575
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
-public class CoordinadorPersistenceTest 
-{
+public class CoordinadorPersistenceTest {
     
-     
-     /**
-     * Inyección de la dependencia a la clase CoordinadorPersistence cuyos métodos
-     * se van a probar.
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+
+    /**
+     * Inyecta la dependencia de CoordinadorPersistence.
      */
     @Inject
     private CoordinadorPersistence coordinadorPersistence;
-    
-     /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
+
+    /**
+     * Contexto de persistencia que se va a utilizar para acceder a la base
+     * de datos.
      */
-    @PersistenceContext 
+    @PersistenceContext
     private EntityManager em;
-    
-     /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
+
+    /**
+     * Variable para marcar las transacciones del "em" (Entity Manager) cuando
+     * se crean/borran datos.
      */
     @Inject
     UserTransaction utx;
-    
-     /**
-     * Lista que tiene los datos de prueba.
+
+    /**
+     * Lista de los datos de prueba.
      */
-    private List<CoordinadorEntity> data = new ArrayList<CoordinadorEntity>();
+    private List<CoordinadorEntity> data = new ArrayList<>();
     
-    
-    
-     /**
-     *
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Coordinador, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -76,8 +78,7 @@ public class CoordinadorPersistenceTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -98,7 +99,7 @@ public class CoordinadorPersistenceTest
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
@@ -119,24 +120,23 @@ public class CoordinadorPersistenceTest
             data.add(entity);
         }
     }
-    
+
     /**
-     * Prueva el crear
+     * Prueba para crear un Coordinador.
      */
     @Test
-    public void createCoordinadorTest()
-    {
+    public void createCoordinadorTest() {
         PodamFactory factory = new PodamFactoryImpl();
         CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
         CoordinadorEntity result = coordinadorPersistence.create(newEntity);
-        
-         Assert.assertNotNull(result);
-         
-         CoordinadorEntity entity = em.find(CoordinadorEntity.class, result.getId());
+
+        Assert.assertNotNull(result);
+
+        CoordinadorEntity entity = em.find(CoordinadorEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
-    
+
     /**
      * Prueba para consultar la lista de Coordinadores.
      */
@@ -165,7 +165,7 @@ public class CoordinadorPersistenceTest
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
         Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
-       }
+    }
 
     /**
      * Prueba para actualizar un Coordinador.
@@ -182,10 +182,8 @@ public class CoordinadorPersistenceTest
 
         CoordinadorEntity resp = em.find(CoordinadorEntity.class, entity.getId());
         
-        Assert.assertEquals(resp.getId(), newEntity.getId());
-        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(resp.getContrasenia(), newEntity.getContrasenia());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
     }
 
     /**
@@ -200,7 +198,7 @@ public class CoordinadorPersistenceTest
     }
     
     /**
-     * Prueba para consultasr un Coordinador por nombre.
+     * Prueba para consultar un Coordinador por nombre.
      */
     @Test
     public void findCoordinadorByNameTest() {
@@ -215,3 +213,4 @@ public class CoordinadorPersistenceTest
         Assert.assertNull(newEntity);
     }
 }
+

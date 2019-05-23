@@ -1,47 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
+import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author estudiante
+ * Clase que extiende de {@link CoordinadorDTO} para manejar las relaciones entre
+ * CoordinadorDTO y otros DTOs. Para el contenido de una coordinador ir a la
+ * documentación de {@link CoordinadorDTO}
+ * @author g.cubillosb
  */
-public class CoordinadorDetailDTO extends CoordinadorDTO implements Serializable
+public class CoordinadorDetailDTO extends CoordinadorDTO implements Serializable 
 {
-    private List<ActividadDTO> activiadesCoordinadas;
     
-    public CoordinadorDetailDTO()
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Lista de tipo ActividadDTO contiene las actividades asociadas con
+     * esta coordinador.
+     */
+    private List<ActividadDTO> actividades;
+    
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Constructor vacío
+     */
+    public CoordinadorDetailDTO () 
     {
         super();
     }
-    
-    public CoordinadorDetailDTO(CoordinadorEntity coordinadorEntity)
-    {
+
+    /**
+     * Crea un objeto CoordinadorDetailDTO a partir de un objeto CoordinadorEntity
+     * incluyendo los atributos de CoordinadorDTO.
+     *
+     * @param coordinadorEntity Entidad CoordinadorEntity desde la cual se va a crear el
+     * nuevo objeto.
+     *
+     */
+    public CoordinadorDetailDTO(CoordinadorEntity coordinadorEntity) {
         super(coordinadorEntity);
-        if (coordinadorEntity != null) {
-            activiadesCoordinadas = new ArrayList<>();
-            for (ActividadEntity entityActividades : coordinadorEntity.getActividadesCoordinadas() ){
-//                esto ya es repetitivo XD
-//                activiadesCoordinadas.add(new ActividadDTO(entityActividades));
-            }            
-        }
-    }
-
-    public List<ActividadDTO> getActiviadesCoordinadas() 
-    {
-        return activiadesCoordinadas;
-    }
-
-    public void setActiviadesCoordinadas(List<ActividadDTO> activiadesCoordinadas) 
-    {
-        this.activiadesCoordinadas = activiadesCoordinadas;
     }
     
-     /**
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+
+    /**
      * Convierte un objeto CoordinadorDetailDTO a CoordinadorEntity incluyendo los
      * atributos de CoordinadorDTO.
      *
@@ -49,17 +67,30 @@ public class CoordinadorDetailDTO extends CoordinadorDTO implements Serializable
      *
      */
     @Override
-    public CoordinadorEntity toEntity() {
-        CoordinadorEntity authorEntity = super.toEntity();
-        if (activiadesCoordinadas != null) {
+    public CoordinadorEntity toEntity() 
+    {
+        CoordinadorEntity coordinadorEntity = super.toEntity();
+        if (getActividades()!= null) {
             List<ActividadEntity> actividadesEntity = new ArrayList<>();
-            for (ActividadDTO dtoActividad : activiadesCoordinadas) {
-//                lo mismo XD
-//                actividadesEntity.add(dtoActividad.toEntity());
+            for (ActividadDTO dtoActividades : getActividades()) {
+                actividadesEntity.add(dtoActividades.toEntity());
             }
-            authorEntity.setActividadesCoordinadas(actividadesEntity);
+            coordinadorEntity.setActividades(actividadesEntity);
         }
-        
-        return authorEntity;
+        return coordinadorEntity;
+    }
+
+    /**
+     * @return the actividades
+     */
+    public List<ActividadDTO> getActividades() {
+        return actividades;
+    }
+
+    /**
+     * @param actividades the actividades to set
+     */
+    public void setActividades(List<ActividadDTO> actividades) {
+        this.actividades = actividades;
     }
 }
