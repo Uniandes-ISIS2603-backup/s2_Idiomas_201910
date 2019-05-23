@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1b33aaa6-8392-4b7a-a839-9792b9f50d27",
+		"_postman_id": "0fdf4531-d0e8-46ce-aec7-79c8a3fe0cf1",
 		"name": "Actividad-Tests",
 		"description": "Colección de pruebas sobre el recurso Author",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -36,7 +36,7 @@
 					"raw": "{\n\t\"nombre\": \"El nombre\",\n\t\"fecha\": \"2019-03-20T05:00:00Z[UTC]\",\n    \"descripcion\": \"La descripcion\",\n    \"motivacion\": \"La motivacion\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -45,7 +45,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad"
+						"actividades"
 					]
 				},
 				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -82,7 +82,7 @@
 					"raw": "{\n\t\"nombre\": \"El nombre2\",\n\t\"fecha\": \"2019-03-20T05:00:00Z[UTC]\",\n    \"descripcion\": \"La descripcion2\",\n    \"motivacion\": \"La motivacion\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -91,7 +91,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad"
+						"actividades"
 					]
 				},
 				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -126,7 +126,7 @@
 					"raw": "{\n\t\"nombre\": \"\",\n\t\"fecha\": \"1966-07-22T00:00:00-05:00\",\n    \"descripcion\": \"La descripcion\",\n    \"motivacion\": \"La motivacion\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -135,7 +135,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad"
+						"actividades"
 					]
 				},
 				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -170,7 +170,7 @@
 					"raw": "{\n\t\"nombre\": \"El nombre\",\n\t\"fecha\": \"2019-03-20T05:00:00Z[UTC]\",\n    \"descripcion\": \"La descripcion\",\n    \"motivacion\": \"La motivacion\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -179,7 +179,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad"
+						"actividades"
 					]
 				},
 				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
@@ -210,7 +210,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -219,7 +219,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad"
+						"actividades"
 					]
 				},
 				"description": "Consulta todos las actividades de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de actividades en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
@@ -250,7 +250,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -259,7 +259,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"{{new_id_a}}"
 					]
 				},
@@ -289,7 +289,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -298,7 +298,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"0"
 					]
 				},
@@ -335,7 +335,7 @@
 					"raw": "{\n    \"descripcion\": \"La descripcion\",\n    \"fecha\": \"1966-07-22T00:00:00Z[UTC]\",\n    \"motivacion\": \"La motivaciono\",\n    \"nombre\": \"El nombre\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -344,7 +344,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"{{new_id_a}}"
 					]
 				},
@@ -380,7 +380,7 @@
 					"raw": "{\n    \"descripcion\": \"La descripcion\",\n    \"fecha\": \"1966-07-22T00:00:00Z[UTC]\",\n    \"motivacion\": \"La motivaciono\",\n    \"nombre\": \"\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -389,7 +389,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"{{new_id_a}}"
 					]
 				},
@@ -425,7 +425,7 @@
 					"raw": "{\n    \"descripcion\": \"La descripcion3\",\n    \"fecha\": \"1966-07-22T00:00:00Z[UTC]\",\n    \"motivacion\": \"La motivacion3\",\n    \"nombre\": \"El nombre3\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -434,7 +434,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"0"
 					]
 				},
@@ -464,7 +464,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -473,7 +473,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"{{new_id_a}}"
 					]
 				},
@@ -503,7 +503,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_a2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -512,7 +512,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"{{new_id_a2}}"
 					]
 				},
@@ -543,7 +543,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividad/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -552,7 +552,7 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"actividad",
+						"actividades",
 						"0"
 					]
 				},

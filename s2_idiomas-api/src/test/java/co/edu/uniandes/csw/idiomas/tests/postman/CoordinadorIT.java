@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class CoordinadorIT {
 
-    private static final String COLLECTION = "Cascara-Tests.postman_collection";
+    private static final String COLLECTION = "Coordinador-Tests.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

@@ -57,12 +57,6 @@ public class ActividadLogic {
         if (!validateName(actividadEntity.getNombre())) {
             throw new BusinessLogicException("El nombre es inválido.");
         }
-
-        // Verifica la regla de negocio que dice que una actividad debe tener un coordinador.
-//        if (actividadEntity.getCoordinadores().isEmpty())
-//        {
-//            throw new BusinessLogicException("La actividad debe tener un coordinador.");
-//        }
         // Verifica la regla de negocio que dice que una actividad no puede ser idéntica a otra actividad.
         if (persistence.findByName(actividadEntity.getNombre()) != null
                 &&persistence.findByName(actividadEntity.getNombre()).equals(actividadEntity))
