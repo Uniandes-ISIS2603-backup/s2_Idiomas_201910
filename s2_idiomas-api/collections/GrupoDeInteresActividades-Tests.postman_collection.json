@@ -1,0 +1,727 @@
+{
+	"info": {
+		"_postman_id": "b4dd1c8a-e4b7-4d0a-b4cc-9fc3379df1f5",
+		"name": "GrupoDeInteresActividades Tests",
+		"description": "Colección de pruebas sobre el recurso GrupoDeInteresActividades",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un grupoDeInteres Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"idioma\": \"Aleman\",\n        \"nombre\": \"Aleman2\",\n        \"descripcion\": \"Descripcion\"\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo grupoDeInteres. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un grupoDeInteres 2 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "edca8864-fbb2-420c-a95d-fe433ad517cc",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"idioma\": \"Aleman\",\n        \"nombre\": \"Aleman1\",\n        \"descripcion\": \"Descripcion\"\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo grupoDeInteres. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una actividad Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"El nombre\",\n\t\"fecha\": \"2019-03-20T05:00:00Z[UTC]\",\n    \"descripcion\": \"La descripcion\",\n    \"motivacion\": \"La motivacion\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"actividades"
+					]
+				},
+				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una actividad 2 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"El nombre2\",\n\t\"fecha\": \"2019-03-20T05:00:00Z[UTC]\",\n    \"descripcion\": \"La descripcion2\",\n    \"motivacion\": \"La motivacion\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"actividades"
+					]
+				},
+				"description": "Crea un nuevo actividad. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un actividad a una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "928d4fa6-7fc0-4443-a233-d9e9bee4761e",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nAsocia un actividad a una grupoDeInteres en la aplicación. \r\n\r\nSe envía el Id de la grupoDeInteres y el del actividad a asociar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar un actividad que no existe a una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c96675bf-923e-486c-809c-00b21626a440",
+						"exec": [
+							"tests[\"No agrega un actividad con un id de un author que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /actividades/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nAsocia un actividad que no existe a una grupoDeInteres en la aplicación. \r\n\r\nSe envía el Id de la grupoDeInteres y el del actividad a asociar en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /actividades/0 no existe.\".\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener los actividades de una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f40c17f-d786-4cc7-a506-809d7089c41e",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"GrupoDeInteres count with actividades\"] = data.length >= 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta los actividades de una grupoDeInteres en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id de la grupoDeInteres y el del actividad a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un actividad de una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb5201f8-e084-4a67-a336-861c386fef34",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un actividad de una grupoDeInteres en la aplicación. \r\nLa petición no tiene cuerpo.\r\n\r\nSe envía el Id de la grupoDeInteres y del actividad a consultar en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un actividad no asociado de una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a76e08fa-81d0-4f09-b339-fe3859c0337f",
+						"exec": [
+							"tests[\"No se puede obtener un actividad que no esta asociado\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El actividad no está asociado a la grupoDeInteres\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e}}/actividades/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e}}",
+						"actividades",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un actividad que no esta asociado a una grupoDeInteres en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El actividad no está asociado a la grupoDeInteres\".\r\n\r\n**Código http esperado: 412**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un actividad que no existe de una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4fe6019-e9ca-41f3-b2e5-bd3244f6cce9",
+						"exec": [
+							"tests[\"No se puede obtener un actividad que no existe\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e}}/actividades/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e}}",
+						"actividades",
+						"0"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un actividad que no existe de una grupoDeInteres en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error.\r\n\r\n**Código http esperado: 404**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar actividades a una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a7f75e8e-b8e0-4156-8d66-16942aaade2c",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"description\": \"Jorge Fondebrider traza un mundo fantastico con mapas de la geografia real y de sus mitologias, observando a los hombres lobo que han vivido en la imaginacion de Europa y America.\",\n        \"grupoDeInteres\": {\n            \"id\": {{new_id_e2}},\n            \"name\": \"Planet\"\n        },\n        \"id\": {{new_id_b}},\n        \"image\": \"https://static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n        \"isbn\": \"930330149-8\",\n        \"name\": \"Historia de los hombres lobo 2\",\n        \"publishingdate\": \"2000-08-20T00:00:00-05:00\"\n    },\n    {\n        \"description\": \"Jorge Fondebrider traza un mundo fantastico con mapas de la geografia real y de sus mitologias, observando a los hombres lobo que han vivido en la imaginacion de Europa y America.\",\n        \"grupoDeInteres\": {\n            \"id\": {{new_id_e2}},\n            \"name\": \"Planet\"\n        },\n        \"id\": {{new_id_b2}},\n        \"image\": \"https//static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n        \"isbn\": \"930330149-81\",\n        \"name\": \"Historia de los hombres lobo 3\",\n        \"publishingdate\": \"2000-08-20T00:00:00-05:00\"\n    }\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de actividades una grupoDeInteres existente.\r\n\r\nSe envía el Id ne la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar actividades que no existen a una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f16c4b46-7d21-4856-be43-d169cd91bf8f",
+						"exec": [
+							"tests[\"No se pueden asociar los actividades ya que estos no existen\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /actividades/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"description\": \"Jorge Fondebrider traza un mundo fantastico con mapas de la geografia real y de sus mitologias, observando a los hombres lobo que han vivido en la imaginacion de Europa y America.\",\n    \"id\": 0,\n    \"image\": \"https://static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n    \"isbn\": \"930330149-8\",\n    \"name\": \"Historia de los hombres lobo 2\",\n    \"publishingdate\": \"2000-08-20T00:00:00-05:00\"\n}\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}/actividades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}",
+						"actividades"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nActualiza la lista de una grupoDeInteres existente con actividades que no existen. \r\n\r\nSe envía el Id en la URL de la petición.\r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /actividades/0 no existe.\".\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un actividad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ec74fba-bc15-4973-99bd-0c1a86a28a2e",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"actividades",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un actividad. Se envía el id del actividad creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un actividad 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ec74fba-bc15-4973-99bd-0c1a86a28a2e",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/actividades/{{new_id_b2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"actividades",
+						"{{new_id_b2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un actividad. Se envía el id del actividad creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una grupoDeInteres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b7ebd7e0-caad-4990-b235-1fca6781258d",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra una grupoDeInteres. Se envía el id de la grupoDeInteres creada en la primera petición.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una grupoDeInteres 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c6cd048-672b-4b5a-b683-fa8f4f9606bf",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_e2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"grupoDeInteres",
+						"{{new_id_e2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra la grupoDeInteres 2.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6d42efd8-dffe-448d-9d05-23d87320be0e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a70d8e8b-94c2-49c2-b372-e7a40f8cc251",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
