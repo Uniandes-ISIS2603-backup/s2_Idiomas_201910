@@ -5,9 +5,8 @@
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
-import co.edu.uniandes.csw.idiomas.podam.DateStrategy;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,16 +14,10 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
-import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -58,100 +51,73 @@ public class PersonaEntity extends BaseEntity  implements Serializable
     private String contrasenia;
     
     /**
-     * Atributo que representa la fecha de la actividad.
+     * Atributo que representa los comentarios de la persona.
      */
-    @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
-    private Date fecha;
-
-    /**
-     * Atributo que modela la descripción de la actividad.
-     */
-    private String descripcion;
-
-    private Long contrasenia;
-    private String nombre;
     @PodamExclude
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
-    private List<ComentarioEntity> comentarioEntitys;
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
     
-    
-
-    
-    /**
-     * Connstructor vacio de un Entity
-     */
-    public PersonaEntity()
-    {
-        //contructor vacio
-
-    }
-    
-    /**
-     * Retorna la contrasenia de un Entity
-     * @return contrasenia la contrseña
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Asigna una contrasenia a un Entity
-     * @param contrasenia 
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
 
     /**
-     * Retorna el nombre del Entity
-     * @return nombre -el nombre
+     * @return the nombre
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * Asigna un nombre al Entity
-     * @param nombre 
+     * @param nombre the nombre to set
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * @return the comentarioEntitys
+     * @return the subTypeId
      */
-    public List<ComentarioEntity> getComentarioEntitys() {
-        return comentarioEntitys;
+    public char getSubTypeId() {
+        return subTypeId;
     }
 
     /**
-     * @param comentarioEntitys the comentarioEntitys to set
+     * @param subTypeId the subTypeId to set
      */
-    public void setComentarioEntitys(List<ComentarioEntity> comentarioEntitys) {
-        this.comentarioEntitys = comentarioEntitys;
-    }
-      @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
+    public void setSubTypeId(char subTypeId) {
+        this.subTypeId = subTypeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * @return the contrasenia
+     */
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    
+    /**
+     * @param contrasenia the contrasenia to set
+     */
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
 
-    @Override
-    public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
-        }
-        return super.hashCode();
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
     }
     
 }
