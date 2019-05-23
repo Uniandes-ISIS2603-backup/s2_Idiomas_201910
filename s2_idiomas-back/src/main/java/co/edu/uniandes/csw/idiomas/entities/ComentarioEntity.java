@@ -31,7 +31,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToOne
-    private PersonaEntity autor;
+    private PersonaEntity persona;
 
     
     @PodamExclude
@@ -81,20 +81,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the autor
-     */
-    public PersonaEntity getAutor() {
-        return autor;
-    }
-
-    /**
-     * @param autor the autor to set
-     */
-    public void setAutor(PersonaEntity autor) {
-        this.autor = autor;
-    }
-
-    /**
      * @return the titulo
      */
     public String getTitulo() {
@@ -135,19 +121,18 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
         this.grupoDeInteres = grupoDeInteres;
     }
-    
-    
 
     /**
-     * @return the comments
+     * @return the persona
      */
-    //public List<ComentarioEntity> getComments() {
-    //    return comments;
-    //}
+    public PersonaEntity getPersona() {
+        return persona;
+    }
+
     /**
-     * @param comments the comments to set
+     * @param persona the persona to set
      */
-    //public void setComments(List<ComentarioEntity> comments) {
-    //     this.comments = comments;
-    // }
+    public void setPersona(PersonaEntity persona) {
+        this.persona = persona;
+    }
 }

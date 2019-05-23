@@ -51,12 +51,6 @@ public class GrupoDeInteresLogicTest {
     private GrupoDeInteresLogic grupoDeInteresLogic;
     
     /**
-     * Inyección de dependencias con CoordinadorLogic
-     */
-    @Inject
-    private CoordinadorLogic corLogic;
-    
-    /**
      * Contexto de persistencia que se va a utilizar para acceder a la base 
      * de datos.
      */
@@ -71,8 +65,6 @@ public class GrupoDeInteresLogicTest {
     private UserTransaction utx;
 
     private List<GrupoDeInteresEntity> data = new ArrayList<>();
-    
-    private List<CoordinadorEntity> coordinadorData = new ArrayList<>();
 
 
     /**
