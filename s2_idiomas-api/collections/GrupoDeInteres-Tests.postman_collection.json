@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "1162ff9e-0f75-48c2-9bb3-e947f8c775ac",
-		"name": "Administrador Tests",
-		"description": "Colección de pruebas sobre el recurso Administrador",
+		"_postman_id": "38338b90-bc63-4369-9dd1-65ff62f9213a",
+		"name": "GrupoDeInteres Tests",
+		"description": "Colección de pruebas sobre el recurso GrupoDeInteres",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crear un administrador",
+			"name": "Crear un grupoDeInteres",
 			"event": [
 				{
 					"listen": "test",
@@ -33,10 +33,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"El nombre\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
+					"raw": "    {\n        \"idioma\": \"Aleman\",\n        \"nombre\": \"Aleman2\",\n        \"descripcion\": \"Descripcion\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -45,15 +45,15 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores"
+						"grupoDeInteres"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo administrador. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo grupoDeInteres. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Crear un administrador 2",
+			"name": "Crear un grupoDeInteres 2",
 			"event": [
 				{
 					"listen": "test",
@@ -79,10 +79,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"El nombrea\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
+					"raw": "    {\n        \"idioma\": \"Aleman\",\n        \"nombre\": \"Aleman1\",\n        \"descripcion\": \"Descripcion\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -91,15 +91,15 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores"
+						"grupoDeInteres"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo administrador. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo grupoDeInteres. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos los administradores",
+			"name": "Obtener todos los grupoDeInteres",
 			"event": [
 				{
 					"listen": "test",
@@ -109,7 +109,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"administradores count\"] = data.length >= 1;"
+							"tests[\"grupoDeInteres count\"] = data.length >= 1;"
 						]
 					}
 				}
@@ -122,7 +122,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -131,15 +131,15 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores"
+						"grupoDeInteres"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los administradores de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de administradores en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los grupoDeInteres de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de grupoDeInteres en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un administrador",
+			"name": "Obtener un grupoDeInteres",
 			"event": [
 				{
 					"listen": "test",
@@ -162,7 +162,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -171,26 +171,26 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un administrador de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del administrador deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un grupoDeInteres de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del grupoDeInteres deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un administrador que no existe",
+			"name": "Obtener un grupoDeInteres que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
-						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia obtener un administrador con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /administradores/0 no existe.\");"
-						]
+							"tests[\"No se deberia obtener un grupoDeInteres con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /gruposDeInteres/0 no existe.\");"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -202,7 +202,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -211,16 +211,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un administrador que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /administradores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un grupoDeInteres que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /grupoDeInteres/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un administrador",
+			"name": "Editar un grupoDeInteres",
 			"event": [
 				{
 					"listen": "test",
@@ -245,10 +245,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\n        \"nombre\": \"El nombrea\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
+					"raw": "    {\n        \"idioma\": \"Aleman\",\n        \"nombre\": \"Aleman3\",\n        \"descripcion\": \"Descripcion\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -257,26 +257,26 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza un administrador existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nActualiza un grupoDeInteres existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un administrador que no existe",
+			"name": "Editar un grupoDeInteres que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
-						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia actualizar un administrador con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /administradores/0 no existe.\");"
-						]
+							"tests[\"No se deberia actualizar un grupoDeInteres con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /gruposDeInteres/0 no existe.\");"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -293,7 +293,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -302,16 +302,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\nActualiza un administrador que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /administradores/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
+				"description": "**Release: Paso-5**\r\nActualiza un grupoDeInteres que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /grupoDeInteres/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un administrador",
+			"name": "Borrar un grupoDeInteres",
 			"event": [
 				{
 					"listen": "test",
@@ -332,7 +332,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -341,16 +341,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un administrador. Se envía el id del administrador creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un grupoDeInteres. Se envía el id del grupoDeInteres creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar el administrador 2",
+			"name": "Borrar el grupoDeInteres 2",
 			"event": [
 				{
 					"listen": "test",
@@ -371,7 +371,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/{{new_id_a2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -380,26 +380,26 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"{{new_id_a2}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un administrador. Se envía el id del administrador creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un grupoDeInteres. Se envía el id del grupoDeInteres creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un administrador que no existe",
+			"name": "Borrar un grupoDeInteres que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
-						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia borrar un administrador con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /administradores/0 no existe.\");"
-						]
+							"tests[\"No se deberia borrar un grupoDeInteres con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /gruposDeInteres/0 no existe.\");"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -411,7 +411,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/administradores/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/grupoDeInteres/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -420,11 +420,11 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"administradores",
+						"grupoDeInteres",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nBorra un administrador que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /administradores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nBorra un grupoDeInteres que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /grupoDeInteres/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}
