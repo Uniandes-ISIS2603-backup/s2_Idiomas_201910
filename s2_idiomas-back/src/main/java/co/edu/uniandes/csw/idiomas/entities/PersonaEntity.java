@@ -5,23 +5,69 @@
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
+import co.edu.uniandes.csw.idiomas.podam.DateStrategy;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
  * @author j.barbosaj
  */
 @Entity
-public class PersonaEntity  implements Serializable
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "typeUser", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("P")
+public class PersonaEntity extends BaseEntity  implements Serializable
 {
+    
+    // -------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------
+    
+    /**
+     * Atributo que representa el nombre de la actividad.
+     */
+    private String nombre;
+
+    /**
+     * Atributo que representa el tipo de la persona
+     */
+    @Column(name = "typeUser", insertable = false, updatable = false)
+    private char subTypeId;
+    
+    /**
+     * Atributo que representa la contrasenia de la persona
+     */
+    private String contrasenia;
+    
+    /**
+     * Atributo que representa la fecha de la actividad.
+     */
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
+    private Date fecha;
+
+    /**
+     * Atributo que modela la descripción de la actividad.
+     */
+    private String descripcion;
 
     private Long contrasenia;
     private String nombre;

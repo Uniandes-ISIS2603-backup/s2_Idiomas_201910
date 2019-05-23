@@ -31,9 +31,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author j.barbosa
  */
-public class UsuarioDTO implements Serializable{
-    Long id;
-    String nombre;
+public class UsuarioDTO extends PersonaDTO implements Serializable
+{
+    //
+    private Long id;
+    private String nombre;
     Long contrasenia;
 
 
