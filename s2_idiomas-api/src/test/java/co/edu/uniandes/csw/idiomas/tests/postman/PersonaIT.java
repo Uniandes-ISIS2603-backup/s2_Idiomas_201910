@@ -40,7 +40,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *  Pruebas de integracion de actividad.
+ *  Pruebas de integracion de persona.
  * @author g.cubillosb
  */
 @RunWith(Arquillian.class)

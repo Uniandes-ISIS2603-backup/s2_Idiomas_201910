@@ -10,9 +10,9 @@ import co.edu.uniandes.csw.idiomas.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.idiomas.ejb.ComentarioLogic;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
-import java.text.DateFormat;
+import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
+import co.edu.uniandes.csw.idiomas.mappers.WebApplicationExceptionMapper;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -84,7 +84,7 @@ public class ComentarioResource {
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
         System.out.println(Comentario.getAutor());
         ComentarioEntity ComentarioEntity = Comentario.toEntity();
-        System.out.println(ComentarioEntity.getAutor());
+        System.out.println(ComentarioEntity.getPersona());
         ComentarioEntity.setFecha(now.getTime());
         // Invoca la lógica para crear la Comentario nueva
         ComentarioEntity nuevoComentarioEntity = ComentarioLogic.createComment(ComentarioEntity);

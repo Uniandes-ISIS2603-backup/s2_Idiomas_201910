@@ -6,13 +6,8 @@
 package co.edu.uniandes.csw.idiomas.test.logic;
 
 import co.edu.uniandes.csw.idiomas.ejb.PersonaLogic;
-import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
-import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
-import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.PersonaEntity;
-import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
-import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.PersonaPersistence;
 import java.util.ArrayList;

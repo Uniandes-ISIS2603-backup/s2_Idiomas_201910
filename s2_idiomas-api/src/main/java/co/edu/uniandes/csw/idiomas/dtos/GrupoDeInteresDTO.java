@@ -84,7 +84,8 @@ public class GrupoDeInteresDTO implements Serializable {
      *
      */
     public GrupoDeInteresDTO(GrupoDeInteresEntity grupoDeInteresEntity) {
-        if (grupoDeInteresEntity != null) {
+        if (grupoDeInteresEntity != null) 
+        {
             this.id = grupoDeInteresEntity.getId();
             this.idioma = grupoDeInteresEntity.getIdioma();
             if (grupoDeInteresEntity.getAdministrador() != null) {

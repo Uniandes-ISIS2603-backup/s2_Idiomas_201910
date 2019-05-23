@@ -14,8 +14,8 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
 
     public ComentarioDetailDTO(ComentarioEntity entity) {
         super(entity);
-        if (entity.getAutor() != null) {
-            this.autor = new PersonaDTO(entity.getAutor());
+        if (entity.getPersona()!= null) {
+            this.autor = new PersonaDTO(entity.getPersona());
         } else {
             this.autor = null;
         }
@@ -35,7 +35,7 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
     public ComentarioEntity toEntity() {
         ComentarioEntity entity = super.toEntity();
         if (getAutor() != null) {
-            entity.setAutor(this.getAutor().toEntity());
+            entity.setPersona(this.getAutor().toEntity());
         }
         if (getActividad() != null) {
             entity.setActividad(this.getActividad().toEntity());

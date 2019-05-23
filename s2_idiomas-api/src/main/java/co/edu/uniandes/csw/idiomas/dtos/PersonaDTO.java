@@ -39,17 +39,17 @@ public class PersonaDTO implements Serializable
     /**
      * Atributo que representa el Id de la persona
      */
-    private Long id;
+    protected Long id;
     
     /**
      * Atributo que representa el nombre de la persona.
      */
-    private String nombre;
+    protected String nombre;
     
     /**
      * Atributo que representa la contrasenia de la persona.
      */
-    private String contrasenia;
+    protected String contrasenia;
     
     
     // -----------------------------------------------------------------------

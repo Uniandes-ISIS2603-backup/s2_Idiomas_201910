@@ -6,129 +6,60 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
- * @author j.barbosaj
+ * Clase que representa un Usuario en la persistencia y permite su
+ * serialización.
+ * @author g.cubillosb
  */
 @Entity
-public class UsuarioEntity extends BaseEntity implements Serializable{
+@DiscriminatorValue("U")
+public class UsuarioEntity extends PersonaEntity implements Serializable{
     
-
+    // -------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------
     
-    private String contrasenia;
-    
-    
-    private String nombre;
-    
+    /**
+     * Atributo que representa los actividades asociados con el usuario.
+     */
     @PodamExclude
-    @ManyToMany(mappedBy = "usuarios")
-    private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
+    @ManyToMany(mappedBy = "usuarios", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<ActividadEntity> actividades;
+    
+    /**
+     * Atributo que representa los grupos de interés asociados con el usuario.
+     */
+    @PodamExclude
+    @ManyToMany(mappedBy = "usuarios", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<GrupoDeInteresEntity> gruposDeInteres;
+    
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
 
+    /**
+     * @return the actividades
+     */
     public List<ActividadEntity> getActividades() {
         return actividades;
     }
 
+    /**
+     * @param actividades the actividades to set
+     */
     public void setActividades(List<ActividadEntity> actividades) {
         this.actividades = actividades;
-    }
-    
-       
-    @PodamExclude
-    @ManyToMany
-    private List<ActividadEntity> actividades = new ArrayList<>();
- 
-    
-    @PodamExclude
-    @ManyToMany
-    private List<EstadiaEntity> estadias = new ArrayList<>();    
-    
-    /**
-     * Connstructor vacio de un Entity
-     */
-    public UsuarioEntity()
-    {
-        //contructor vacio
-    }
-    
-    
-
-    /**
-     * Retorna el nombre del Entity
-     * @return nombre -el nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Asigna un nombre al Entity
-     * @param nombre 
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the estadias
-     */
-    public List<EstadiaEntity> getEstadias() {
-        return estadias;
-    }
-
-    /**
-     * @param estadias the estadias to set
-     */
-    public void setEstadias(List<EstadiaEntity> estadias) {
-        this.estadias = estadias;
-    }
-
-    
-    
-   
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    
-
-    @Override
-    public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
-        }
-        return super.hashCode();
-    }
-
-    /**
-     * @return the contrasenia
-     */
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    /**
-     * @param contrasenia the contrasenia to set
-     */
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
     }
 
     /**
@@ -143,5 +74,18 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
      */
     public void setGruposDeInteres(List<GrupoDeInteresEntity> gruposDeInteres) {
         this.gruposDeInteres = gruposDeInteres;
+    }
+    
+    /**
+     * Equals de la clase
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        PersonaEntity fobj = (PersonaEntity) obj;
+        return this.getNombre().equals(fobj.getNombre())
+                && this.getContrasenia().equals(fobj.getContrasenia());
     }
 }

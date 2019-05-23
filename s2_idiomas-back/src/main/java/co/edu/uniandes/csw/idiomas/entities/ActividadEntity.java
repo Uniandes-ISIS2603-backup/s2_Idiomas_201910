@@ -79,7 +79,7 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      */
     @PodamExclude
     @ManyToMany(mappedBy = "actividades", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<UsuarioEntity> asistentes = new ArrayList<>();
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 
     /**
      * Atributo que representa los coordinadores de una actividad.
@@ -156,20 +156,7 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    /**
-     * @return the asistentes
-     */
-    public List<UsuarioEntity> getAsistentes() {
-        return asistentes;
-    }
-
-    /**
-     * @param asistentes the asistentes to set
-     */
-    public void setAsistentes(List<UsuarioEntity> asistentes) {
-        this.asistentes = asistentes;
-    }
+    
 
     /**
      * @return the coordinadores
@@ -200,30 +187,6 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * Equals de la clase
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (!super.equals(obj)) {
-            return false;
-        }
-        ActividadEntity fobj = (ActividadEntity) obj;
-        return this.getDescripcion().equals(fobj.getDescripcion()) && this.getFecha().equals(fobj.getFecha())
-                && this.getMotivacion().equals(fobj.getMotivacion())
-                && this.getNombre().equals(fobj.getNombre());
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.getNombre());
-        hash = 97 * hash + Objects.hashCode(this.getFecha());
-        hash = 97 * hash + Objects.hashCode(this.getDescripcion());
-        hash = 97 * hash + Objects.hashCode(this.getMotivacion());
-        return hash;
-    }
-
-    /**
      * @return the subTypeId
      */
     public Character getSubTypeId() {
@@ -249,6 +212,44 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      */
     public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
         this.grupoDeInteres = grupoDeInteres;
+    }
+    
+    /**
+     * Equals de la clase
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        ActividadEntity fobj = (ActividadEntity) obj;
+        return this.getDescripcion().equals(fobj.getDescripcion()) && this.getFecha().equals(fobj.getFecha())
+                && this.getMotivacion().equals(fobj.getMotivacion())
+                && this.getNombre().equals(fobj.getNombre());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.getNombre());
+        hash = 97 * hash + Objects.hashCode(this.getFecha());
+        hash = 97 * hash + Objects.hashCode(this.getDescripcion());
+        hash = 97 * hash + Objects.hashCode(this.getMotivacion());
+        return hash;
+    }
+
+    /**
+     * @return the usuarios
+     */
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }
