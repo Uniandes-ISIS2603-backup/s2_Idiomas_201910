@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.idiomas.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,11 +20,11 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author j.barbosaj
  */
 @Entity
-public class UsuarioEntity  implements Serializable{
+public class UsuarioEntity extends BaseEntity implements Serializable{
     
 
     
-    private Long contrasenia;
+    private String contrasenia;
     private String nombre;
     
     @PodamExclude
@@ -58,21 +57,7 @@ public class UsuarioEntity  implements Serializable{
         //contructor vacio
     }
     
-    /**
-     * Retorna la contrasenia de un Entity
-     * @return contrasenia la contrseña
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
     
-    /**
-     * Asigna una contrasenia a un Entity
-     * @param contrasenia 
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
 
     /**
      * Retorna el nombre del Entity
@@ -128,5 +113,33 @@ public class UsuarioEntity  implements Serializable{
             return this.getId().hashCode();
         }
         return super.hashCode();
+    }
+
+    /**
+     * @return the contrasenia
+     */
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    /**
+     * @param contrasenia the contrasenia to set
+     */
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    /**
+     * @return the gruposDeInteres
+     */
+    public List<GrupoDeInteresEntity> getGruposDeInteres() {
+        return gruposDeInteres;
+    }
+
+    /**
+     * @param gruposDeInteres the gruposDeInteres to set
+     */
+    public void setGruposDeInteres(List<GrupoDeInteresEntity> gruposDeInteres) {
+        this.gruposDeInteres = gruposDeInteres;
     }
 }

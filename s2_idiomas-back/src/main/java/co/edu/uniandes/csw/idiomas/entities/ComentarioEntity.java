@@ -39,6 +39,13 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     private ActividadEntity actividad;
     
     /**
+     * Atributo que representa los comentarios de la actividad.
+     */
+    @PodamExclude
+    @ManyToOne
+    private GrupoDeInteresEntity grupoDeInteres;
+    
+    /**
      * Constructor vacío de ComentarioEntity.
      */
     public ComentarioEntity() {
@@ -113,6 +120,20 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
      */
     public void setActividad(ActividadEntity actividad) {
         this.actividad = actividad;
+    }
+
+    /**
+     * @return the grupoDeInteres
+     */
+    public GrupoDeInteresEntity getGrupoDeInteres() {
+        return grupoDeInteres;
+    }
+
+    /**
+     * @param grupoDeInteres the grupoDeInteres to set
+     */
+    public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
+        this.grupoDeInteres = grupoDeInteres;
     }
     
     

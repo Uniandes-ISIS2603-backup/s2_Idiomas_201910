@@ -8,8 +8,10 @@ package co.edu.uniandes.csw.idiomas.test.logic;
 import co.edu.uniandes.csw.idiomas.ejb.GrupoDeInteresLogic;
 import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
 import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
+import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
+import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.GrupoDeInteresPersistence;
 import java.util.ArrayList;
@@ -122,22 +124,27 @@ public class GrupoDeInteresLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             GrupoDeInteresEntity entity = factory.manufacturePojo(GrupoDeInteresEntity.class);
             em.persist(entity);
             entity.setUsuarios(new ArrayList<>());
             data.add(entity);
         }
-        GrupoDeInteresEntity grupoDeInteres = data.get(2);
-        ActividadEntity entity = factory.manufacturePojo(ActividadEntity.class);
-        entity.ge().add(grupoDeInteres);
-        em.persist(entity);
-        grupoDeInteres.getBooks().add(entity);
+        ActividadEntity actividad = factory.manufacturePojo(ActividadEntity.class);
+        actividad.setGrupoDeInteres(data.get(1));
+        em.persist(actividad);
+        data.get(1).getActividades().add(actividad);
 
-        PrizeEntity prize = factory.manufacturePojo(PrizeEntity.class);
-        prize.setGrupoDeInteres(data.get(1));
-        em.persist(prize);
-        data.get(1).getPrizes().add(prize);
+        ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
+        comentario.setGrupoDeInteres(data.get(2));
+        em.persist(comentario);
+        data.get(2).getComentarios().add(comentario);
+        
+        GrupoDeInteresEntity grupoDeInteres = data.get(2);
+        UsuarioEntity usuarios = factory.manufacturePojo(UsuarioEntity.class);
+        usuarios.ge().add(grupoDeInteres);
+        em.persist(usuarios);
+        grupoDeInteres.getBooks().add(usuarios);
     }
 
     /**
