@@ -43,7 +43,7 @@ public class PersonaEntity extends BaseEntity  implements Serializable
      * Atributo que representa el tipo de la persona
      */
     @Column(name = "typeUser", insertable = false, updatable = false)
-    private char subTypeId;
+    private Character subTypeId;
     
     /**
      * Atributo que representa la contrasenia de la persona
@@ -81,14 +81,14 @@ public class PersonaEntity extends BaseEntity  implements Serializable
     /**
      * @return the subTypeId
      */
-    public char getSubTypeId() {
+    public Character getSubTypeId() {
         return subTypeId;
     }
 
     /**
      * @param subTypeId the subTypeId to set
      */
-    public void setSubTypeId(char subTypeId) {
+    public void setSubTypeId(Character subTypeId) {
         this.subTypeId = subTypeId;
     }
 
@@ -118,6 +118,19 @@ public class PersonaEntity extends BaseEntity  implements Serializable
      */
     public void setComentarios(List<ComentarioEntity> comentarios) {
         this.comentarios = comentarios;
+    }
+    
+    /**
+     * Equals de la clase
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        PersonaEntity fobj = (PersonaEntity) obj;
+        return this.getNombre().equals(fobj.getNombre())
+                && this.getContrasenia().equals(fobj.getContrasenia());
     }
     
 }

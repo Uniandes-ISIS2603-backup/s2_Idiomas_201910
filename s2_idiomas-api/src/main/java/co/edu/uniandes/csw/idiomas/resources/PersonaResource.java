@@ -5,161 +5,206 @@
  */
 package co.edu.uniandes.csw.idiomas.resources;
 
-import co.edu.uniandes.csw.idiomas.dtos.AdministradorDTO;
-import co.edu.uniandes.csw.idiomas.dtos.AdministradorDetailDTO;
-import co.edu.uniandes.csw.idiomas.ejb.AdministradorLogic;
-import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
+import co.edu.uniandes.csw.idiomas.dtos.PersonaDTO;
+import co.edu.uniandes.csw.idiomas.dtos.PersonaDetailDTO;
+import co.edu.uniandes.csw.idiomas.ejb.PersonaLogic;
+import co.edu.uniandes.csw.idiomas.entities.PersonaEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.idiomas.mappers.WebApplicationExceptionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
- * Clase que implementa el recurso "personas".
- *
- * @author ISIS2603
- * @version 1.0
+ * Clase que define los servicios de la clase persona
+ * @author g.cubillosb
  */
 @Path("personas")
-@Produces("application/json")
-@Consumes("application/json")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class PersonaResource {
-
-    private static final Logger LOGGER = Logger.getLogger(AdministradorResource.class.getName());
-     private static final String NO_EXISTE =" no existe." ;
-    @Inject
-    AdministradorLogic administradorLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-
+    
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+    
     /**
-     * Crea una nueva administrador con la informacion que se recibe en el cuerpo de
+     * Atributo que representa el logger correspondiente de la clase. Para poder
+     * enviar mensajes.
+     */
+    private static final Logger LOGGER = Logger.getLogger(PersonaResource.class.getName());
+    
+    /**
+     * Permite acceder a la lógica de la aplicación. Es una inyección de dependencias.
+     */
+    @Inject
+    private PersonaLogic personaLogic; 
+    
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Crea una nueva persona con la informacion que se recibe en el cuerpo de
      * la petición y se regresa un objeto identico con un id auto-generado por
      * la base de datos.
      *
-     * @param administrador {@link AdministradorDTO} - La administrador que se desea
+     * @param persona {@link PersonaDTO} - La persona que se desea
      * guardar.
-     * @return JSON {@link AdministradorDTO} - La administrador guardada con el atributo
+     * @return JSON {@link PersonaDTO} - La persona guardada con el atributo
      * id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando ya existe la administrador.
+     * Error de lógica que se genera cuando ya existe la persona.
      */
     @POST
-    public AdministradorDTO createAdministrador(AdministradorDTO administrador) throws BusinessLogicException {
-       LOGGER.log(Level.INFO, "AdministradorResource createAdministrador: input: {0}", administrador);
+    public PersonaDTO createPersona(PersonaDTO persona) throws BusinessLogicException 
+    {
+        LOGGER.log(Level.INFO, "PersonaResource createPersona: input: {0}", persona);
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
-        AdministradorEntity administradorEntity = administrador.toEntity();
-        // Invoca la lógica para crear la administrador nueva
-        AdministradorEntity nuevoAdministradorEntity = administradorLogic.createAdministrador(administradorEntity);
+        PersonaEntity personaEntity = persona.toEntity();
+        // Invoca la lógica para crear la persona nueva
+        PersonaEntity nuevoPersonaEntity = personaLogic.createPersona(personaEntity);
         // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
-        AdministradorDTO nuevoAdministradorDTO = new AdministradorDTO(nuevoAdministradorEntity);
-        LOGGER.log(Level.INFO, "AdministradorResource createAdministrador: output: {0}", nuevoAdministradorDTO);
-        return nuevoAdministradorDTO;
+        PersonaDTO nuevoPersonaDTO = new PersonaDTO(nuevoPersonaEntity);
+        LOGGER.log(Level.INFO, "PersonaResource createPersona: output: {0}", nuevoPersonaDTO);
+        return nuevoPersonaDTO;
     }
 
     /**
-     * Borra la administrador con el id asociado recibido en la URL.
+     * Busca y devuelve todas las personas que existen en la aplicacion.
      *
-     * @param administradoresId Identificador de la administrador que se desea borrar.
-     * Este debe ser una cadena de dígitos.
-     * @return 
+     * @return JSONArray {@link PersonaDetailDTO} - Las personas
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
-    @DELETE
-    @Path("{administradoresId: \\d+}")
-    public void deleteAdministrador(@PathParam("administradoresId") Long administradoresId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "AdministradorResource deleteAdministrador: input: {0}", administradoresId);
-        if (administradorLogic.getAdministrador(administradoresId) == null) {
-            throw new WebApplicationException("El recurso /administradores/" + administradoresId +NO_EXISTE, 404);
-        }
-        administradorLogic.deleteAdministrador(administradoresId);
-        LOGGER.info("AdministradorResource deleteAdministrador: output: void");
+    @GET
+    public List<PersonaDetailDTO> getPersonas() {
+        LOGGER.info("PersonaResource getPersonas: input: void");
+        List<PersonaDetailDTO> listaPersonas = listEntity2DetailDTO(personaLogic.getPersonas());
+        LOGGER.log(Level.INFO, "PersonaResource getPersonas: output: {0}", listaPersonas);
+        return listaPersonas;
     }
-    
-   /**
-     * Actualiza el autor con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+
+    /**
+     * Busca la persona con el id asociado recibido en la URL y la devuelve.
      *
-     * @param AdministradorId Identificador del autor que se desea actualizar. Este
-     * debe ser una cadena de dígitos.
-     * @param Administrador {@link AdministradorDetailDTO} El autor que se desea guardar.
-     * @return JSON {@link AdministradorDetailDTO} - El autor guardado.
+     * @param personasId Identificador de la persona que se esta buscando.
+     * Este debe ser una cadena de dígitos.
+     * @return JSON {@link PersonaDetailDTO} - La persona buscada
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el autor a
+     * Error de lógica que se genera cuando no se encuentra la persona.
+     */
+    @GET
+    @Path("{personasId: \\d+}")
+    public PersonaDetailDTO getPersona(@PathParam("personasId") Long personasId) 
+    {
+        LOGGER.log(Level.INFO, "PersonaResource getPersona: input: {0}", personasId);
+        PersonaEntity personaEntity = personaLogic.getPersona(personasId);
+        if (personaEntity == null) {
+            throw new WebApplicationException("El recurso /personas/" + personasId + " no existe.", 404);
+        }
+        PersonaDetailDTO detailDTO = new PersonaDetailDTO(personaEntity);
+        LOGGER.log(Level.INFO, "PersonaResource getPersona: output: {0}", detailDTO);
+        return detailDTO;
+    }
+
+    /**
+     * Actualiza la persona con el id recibido en la URL con la informacion
+     * que se recibe en el cuerpo de la petición.
+     *
+     * @param personasId Identificador de la persona que se desea
+     * actualizar. Este debe ser una cadena de dígitos.
+     * @param persona {@link PersonaDetailDTO} La persona que se desea
+     * guardar.
+     * @return JSON {@link PersonaDetailDTO} - La persona guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la persona a
      * actualizar.
      */
     @PUT
-    @Path("{AdministradorId: \\d+}")
-    public AdministradorDetailDTO updateAdministrador(@PathParam("AdministradorId") Long administradorId, AdministradorDetailDTO administrador) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "AdministradorResource updateAdministrador: input: AdministradorId: {0} , Administrador: {1}", new Object[]{administradorId, administrador});
-        administrador.setId(administradorId);
-        if (administradorLogic.getAdministrador(administradorId) == null)
-        {
-            throw new WebApplicationException("El recurso /Administradores/" + administradorId +NO_EXISTE, 404);
+    @Path("{personasId: \\d+}")
+    public PersonaDetailDTO updatePersona(@PathParam("personasId") Long personasId, PersonaDetailDTO persona) throws BusinessLogicException
+    {
+        LOGGER.log(Level.INFO, "PersonaResource updatePersona: input: id:{0} , persona: {1}", new Object[]{personasId, persona});
+        persona.setId(personasId);
+        if (personaLogic.getPersona(personasId) == null) {
+            throw new WebApplicationException("El recurso /personas/" + personasId + " no existe.", 404);
         }
-        AdministradorDetailDTO detailDTO = new AdministradorDetailDTO(administradorLogic.updateAdministrador(administradorId, administrador.toEntity()));
-        LOGGER.log(Level.INFO, "AdministradorResource updateAdministrador: output: {0}", detailDTO);
+        PersonaDetailDTO detailDTO = new PersonaDetailDTO(personaLogic.updatePersona(personasId, persona.toEntity()));
+        LOGGER.log(Level.INFO, "PersonaResource updatePersona: output: {0}", detailDTO);
         return detailDTO;
+
     }
-    
-     /**
-     * Actualiza la administrador con el id asociado recibido en la URL.
+
+    /**
+     * Borra la persona con el id asociado recibido en la URL.
      *
-     * @param administradoresId Identificador de la administrador que se desea actualizar.
+     * @param personasId Identificador de la persona que se desea borrar.
      * Este debe ser una cadena de dígitos.
-     * @return 
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede eliminar la persona.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la persona.
      */
-    @GET
-    @Path("{administradoresId: \\d+}")
-    public AdministradorDetailDTO retornarAdministrador(@PathParam("administradoresId") Long administradoresId) {
-        LOGGER.log(Level.INFO, "AdministradorResource getAdministrador: input: {0}", administradoresId);
-        AdministradorEntity administradorEntity = administradorLogic.getAdministrador(administradoresId);
-        if (administradorEntity == null) {
-            throw new WebApplicationException("El recurso /administradores/" + administradoresId +NO_EXISTE, 404);
+    @DELETE
+    @Path("{personasId: \\d+}")
+    public void deletePersona(@PathParam("personasId") Long personasId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "PersonaResource deletePersona: input: {0}", personasId);
+        if (personaLogic.getPersona(personasId) == null) {
+            throw new WebApplicationException("El recurso /personas/" + personasId + " no existe.", 404);
         }
-        AdministradorDetailDTO detailDTO = new AdministradorDetailDTO(administradorEntity);
-        LOGGER.log(Level.INFO, "AdministradorResource getAdministrador: output: {0}", detailDTO);
-        return detailDTO;
+        personaLogic.deletePersona(personasId);
+        LOGGER.info("PersonaResource deletePersona: output: void");
     }
-    
-      /**
-     * Actualiza la administrador con el id asociado recibido en la URL.
+
+    /**
+     * Conexión con el servicio de comentarios para una persona.
+     * {@link PersonaComentarioResourceResource}
      *
-     * @param administradoresId Identificador de la administrador que se desea actualizar.
-     * Este debe ser una cadena de dígitos.
-     * @return 
-     */
-    @GET    
-    public List<AdministradorDetailDTO> retornarAdministrador() {
-        LOGGER.info("AdministradorResource getAdministradors: input: void");
-        List<AdministradorDetailDTO> listaAdministradors = listEntity2DTO(administradorLogic.getAdministradors());
-        LOGGER.log(Level.INFO, "AdministradorResource getAdministradors: output: {0}", listaAdministradors);
-        return listaAdministradors;
-               
-    }   
-      /**
-     * Convierte una lista de AdministradorEntity a una lista de AdministradorDetailDTO.
+     * Este método conecta la ruta de /personas con las rutas de /comentarios que
+     * dependen de la persona, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de los comentarios de una persona.
      *
-     * @param entityList Lista de AdministradorEntity a convertir.
-     * @return Lista de AdministradorDetailDTO convertida.
+     * @param personasId El ID de la persona con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de comentarios para esta persona en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la persona.
      */
-    private List<AdministradorDetailDTO> listEntity2DTO(List<AdministradorEntity> entityList) {
-        List<AdministradorDetailDTO> list = new ArrayList<>();
-        for (AdministradorEntity entity : entityList) {
-            list.add(new AdministradorDetailDTO(entity));
+    @Path("{personasId: \\d+}/comentarios")
+    public Class<ComentarioResource> getPersonaComentarioResource(@PathParam("personasId") Long personasId) {
+        if (personaLogic.getPersona(personasId) == null) {
+            throw new WebApplicationException("El recurso /personas/" + personasId + " no existe.", 404);
+        }
+        return ComentarioResource.class;
+    }
+
+    /**
+     * Convierte una lista de entidades a DTO.
+     *
+     * Este método convierte una lista de objetos PersonaEntity a una lista de
+     * objetos PersonaDetailDTO (json)
+     *
+     * @param entityList corresponde a la lista de personas de tipo Entity
+     * que vamos a convertir a DTO.
+     * @return la lista de personas en forma DTO (json)
+     */
+    private List<PersonaDetailDTO> listEntity2DetailDTO(List<PersonaEntity> entityList) {
+        List<PersonaDetailDTO> list = new ArrayList<>();
+        for (PersonaEntity entity : entityList) {
+            list.add(new PersonaDetailDTO(entity));
         }
         return list;
     }
+    
+    
+    
 }

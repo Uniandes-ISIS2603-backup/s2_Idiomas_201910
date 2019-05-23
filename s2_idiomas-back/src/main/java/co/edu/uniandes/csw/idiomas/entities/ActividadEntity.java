@@ -48,7 +48,7 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     private String nombre;
 
     @Column(name = "typeActivity", insertable = false, updatable = false)
-    private char subTypeId;
+    private Character subTypeId;
     
     /**
      * Atributo que representa la fecha de la actividad.
@@ -226,14 +226,14 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     /**
      * @return the subTypeId
      */
-    public char getSubTypeId() {
+    public Character getSubTypeId() {
         return subTypeId;
     }
 
     /**
      * @param subTypeId the subTypeId to set
      */
-    public void setSubTypeId(char subTypeId) {
+    public void setSubTypeId(Character subTypeId) {
         this.subTypeId = subTypeId;
     }
 

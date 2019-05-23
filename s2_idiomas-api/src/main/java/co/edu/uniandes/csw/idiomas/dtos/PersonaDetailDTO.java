@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.PersonaEntity;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
-import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
