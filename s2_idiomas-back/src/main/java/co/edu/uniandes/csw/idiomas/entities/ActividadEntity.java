@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -84,8 +85,15 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      * Atributo que representa los coordinadores de una actividad.
      */
     @PodamExclude
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "actividades", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CoordinadorEntity> coordinadores = new ArrayList<>();
+    
+    /**
+     * Atributo que representa los comentarios de la actividad.
+     */
+    @PodamExclude
+    @ManyToOne
+    private GrupoDeInteresEntity grupoDeInteres;
 
     // ------------------------------------------------------------------
     // Constructor
@@ -227,6 +235,20 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      */
     public void setSubTypeId(char subTypeId) {
         this.subTypeId = subTypeId;
+    }
+
+    /**
+     * @return the grupoDeInteres
+     */
+    public GrupoDeInteresEntity getGrupoDeInteres() {
+        return grupoDeInteres;
+    }
+
+    /**
+     * @param grupoDeInteres the grupoDeInteres to set
+     */
+    public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
+        this.grupoDeInteres = grupoDeInteres;
     }
 
 }

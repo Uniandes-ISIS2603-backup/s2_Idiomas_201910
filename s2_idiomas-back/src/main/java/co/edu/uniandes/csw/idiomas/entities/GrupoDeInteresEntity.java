@@ -78,14 +78,14 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
      * Atributo que representa las actividades asociados con el grupo de interés.
      */
     @PodamExclude
-    @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
     private List<ActividadEntity> actividades;
     
     /**
      * Atributo que representa los comentarios asociados con el grupo de interés.
      */
     @PodamExclude
-    @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
     private List<ComentarioEntity> comentarios;
     
     // ------------------------------------------------------------------
