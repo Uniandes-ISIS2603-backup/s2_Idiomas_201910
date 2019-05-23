@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.idiomas.ejb;
 
 import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
-import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
+import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.AdministradorPersistence;
 import java.util.List;
@@ -158,9 +158,9 @@ public class AdministradorLogic {
     public void deleteAdministrador(Long pAdministradoresId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la administrador con id = {0}", pAdministradoresId);
         // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
-        List<ComentarioEntity> comentarios = getAdministrador(pAdministradoresId).getComentarios();
-        if (comentarios != null && !comentarios.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar la administrador con id = " + pAdministradoresId + " porque tiene comentarios asociados");
+        List<GrupoDeInteresEntity> gruposDeInteres = getAdministrador(pAdministradoresId).getGruposDeInteres();
+        if (gruposDeInteres != null && !gruposDeInteres.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar la administrador con id = " + pAdministradoresId + " porque tiene gruposDeInteres asociados");
         }
         
         persistence.delete(pAdministradoresId);

@@ -119,11 +119,11 @@ public class CoordinadorLogicTest {
             data.add(entity);
         }
 
-        CoordinadorEntity coordinador = data.get(2);
-        ActividadEntity entity = factory.manufacturePojo(ActividadEntity.class);
-        entity.getCoordinadores().add(coordinador);
-        em.persist(entity);
-        coordinador.getActividades().add(entity);
+//        CoordinadorEntity coordinador = data.get(2);
+//        ActividadEntity entity = factory.manufacturePojo(ActividadEntity.class);
+//        entity.getCoordinadores().add(coordinador);
+//        em.persist(entity);
+//        coordinador.getActividades().add(entity);
     }
 
     /**
@@ -273,9 +273,9 @@ public class CoordinadorLogicTest {
 
         CoordinadorEntity newEntity = em.find(CoordinadorEntity.class, entity.getId());
 
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
+        Assert.assertEquals(pojoEntity.getId(), newEntity.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(pojoEntity.getContrasenia(), newEntity.getContrasenia());
     }
     
     /**
@@ -383,16 +383,16 @@ public class CoordinadorLogicTest {
         Assert.assertNull(deleted);
     }
 
-    /**
-     * Prueba para eliminar un Coordinador asociado a un comentario
-     *
-     * 
-     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void deleteCoordinadorConGrupoDeInteresTest() throws BusinessLogicException 
-    {
-        coordinadorLogic.deleteCoordinador(data.get(2).getId());
-    }
+//    /**
+//     * Prueba para eliminar un Coordinador asociado a un comentario
+//     *
+//     * 
+//     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+//     */
+//    @Test(expected = BusinessLogicException.class)
+//    public void deleteCoordinadorConGrupoDeInteresTest() throws BusinessLogicException 
+//    {
+//        coordinadorLogic.deleteCoordinador(data.get(2).getId());
+//    }
     
 }

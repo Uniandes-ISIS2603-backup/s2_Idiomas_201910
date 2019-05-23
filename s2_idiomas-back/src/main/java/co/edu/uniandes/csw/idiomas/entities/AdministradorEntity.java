@@ -11,7 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -32,7 +32,7 @@ public class AdministradorEntity extends PersonaEntity implements Serializable{
      * Atributo que representa los comentarios de la actividad.
      */
     @PodamExclude
-    @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
     
     // ------------------------------------------------------------------

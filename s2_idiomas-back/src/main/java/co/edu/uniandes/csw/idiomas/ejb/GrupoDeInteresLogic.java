@@ -66,11 +66,6 @@ public class GrupoDeInteresLogic {
         if (!validateName(grupoDeInteresEntity.getDescripcion())) {
             throw new BusinessLogicException("La descripción es inválida.");
         }
-        // Verifica la regla de negocio que dice que un grupoDeInteres debe tener un administrador.
-        if (grupoDeInteresEntity.getAdministrador() == null)
-        {
-            throw new BusinessLogicException("El grupo debe tener un administrador.");
-        }
         // Verifica la regla de negocio que dice que un grupoDeInteres no puede ser idéntico a otro grupoDeInteres.
         if (persistence.findByName(grupoDeInteresEntity.getNombre()) != null
                 &&persistence.findByName(grupoDeInteresEntity.getNombre()).equals(grupoDeInteresEntity))

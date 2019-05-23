@@ -6,8 +6,8 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -30,15 +30,15 @@ public class UsuarioEntity extends PersonaEntity implements Serializable{
      * Atributo que representa los actividades asociados con el usuario.
      */
     @PodamExclude
-    @ManyToMany(mappedBy = "usuarios", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<ActividadEntity> actividades;
+    @ManyToMany
+    private List<ActividadEntity> actividades = new ArrayList<>();
     
     /**
      * Atributo que representa los grupos de interés asociados con el usuario.
      */
     @PodamExclude
-    @ManyToMany(mappedBy = "usuarios", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<GrupoDeInteresEntity> gruposDeInteres;
+    @ManyToMany
+    private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
     
     // ------------------------------------------------------------------
     // Constructor

@@ -21,7 +21,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author g.cubillosb
  */
 @Entity
-@DiscriminatorValue("A")
+@DiscriminatorValue("C")
 public class CoordinadorEntity extends PersonaEntity implements Serializable{
     
     // -------------------------------------------------------------------
@@ -32,7 +32,7 @@ public class CoordinadorEntity extends PersonaEntity implements Serializable{
      * Atributo que representa las actividades de un coordinador.
      */
     @PodamExclude
-    @ManyToMany(mappedBy = "coordinadores", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     private List<ActividadEntity> actividades = new ArrayList<>();
     
     // ------------------------------------------------------------------

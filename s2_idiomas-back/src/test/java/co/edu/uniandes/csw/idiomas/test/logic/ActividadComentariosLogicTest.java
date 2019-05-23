@@ -154,7 +154,7 @@ public class ActividadComentariosLogicTest
 
         Assert.assertEquals(comentarioEntity.getId(), response.getId());
         Assert.assertEquals(comentarioEntity.getActividad(), response.getActividad());
-        Assert.assertEquals(comentarioEntity.getAutor(), response.getAutor());
+        Assert.assertEquals(comentarioEntity.getPersona(), response.getPersona());
         Assert.assertEquals(comentarioEntity.getFecha(), response.getFecha());
     }
 

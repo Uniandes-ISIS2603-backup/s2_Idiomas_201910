@@ -132,7 +132,7 @@ public class OtroLogicTest {
         {
             OtroEntity entity = factory.manufacturePojo(OtroEntity.class);
             em.persist(entity);
-            entity.setAsistentes(new ArrayList<>());
+            entity.setUsuarios(new ArrayList<>());
             entity.setComentarios(new ArrayList<>());
             entity.setCoordinadores(new ArrayList<>());
             entity.getCoordinadores().add(coordinadorData.get(0));

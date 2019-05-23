@@ -271,9 +271,9 @@ public class PersonaLogicTest {
 
         PersonaEntity newEntity = em.find(PersonaEntity.class, entity.getId());
 
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
+        Assert.assertEquals(pojoEntity.getId(), newEntity.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(pojoEntity.getContrasenia(), newEntity.getContrasenia());
     }
     
     /**

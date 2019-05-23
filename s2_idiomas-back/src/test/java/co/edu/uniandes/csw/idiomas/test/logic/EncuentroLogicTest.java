@@ -8,9 +8,7 @@ package co.edu.uniandes.csw.idiomas.test.logic;
 import co.edu.uniandes.csw.idiomas.ejb.EncuentroLogic;
 import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
 import co.edu.uniandes.csw.idiomas.entities.EncuentroEntity;
-import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
-import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.EncuentroPersistence;
 import java.util.ArrayList;
@@ -132,7 +130,7 @@ public class EncuentroLogicTest {
         {
             EncuentroEntity entity = factory.manufacturePojo(EncuentroEntity.class);
             em.persist(entity);
-            entity.setAsistentes(new ArrayList<>());
+            entity.setUsuarios(new ArrayList<>());
             entity.setComentarios(new ArrayList<>());
             entity.setCoordinadores(new ArrayList<>());
             entity.getCoordinadores().add(coordinadorData.get(0));

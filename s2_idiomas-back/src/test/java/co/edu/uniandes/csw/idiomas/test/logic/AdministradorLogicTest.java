@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.idiomas.test.logic;
 
 import co.edu.uniandes.csw.idiomas.ejb.AdministradorLogic;
-import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
@@ -103,9 +102,7 @@ public class AdministradorLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from AdministradorEntity").executeUpdate();
-        em.createQuery("delete from ComentarioEntity").executeUpdate();
-        em.createQuery("delete from AdministradorEntity").executeUpdate();
-        em.createQuery("delete from AdministradorEntity").executeUpdate();
+        em.createQuery("delete from GrupoDeInteresEntity").executeUpdate();
     }
 
     /**
@@ -113,16 +110,16 @@ public class AdministradorLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             AdministradorEntity entity = factory.manufacturePojo(AdministradorEntity.class);
             em.persist(entity);
             data.add(entity);
         }
-
-        GrupoDeInteresEntity grupoDeInteres = factory.manufacturePojo(GrupoDeInteresEntity.class);
-        grupoDeInteres.setAdministrador(data.get(2));
-        em.persist(grupoDeInteres);
-        data.get(2).getGruposDeInteres().add(grupoDeInteres);
+        
+//        GrupoDeInteresEntity entity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+//        entity.setAdministrador(data.get(1));
+//        em.persist(entity);
+//        data.get(1).getGruposDeInteres().add(entity);
     }
 
     /**
@@ -272,9 +269,9 @@ public class AdministradorLogicTest {
 
         AdministradorEntity newEntity = em.find(AdministradorEntity.class, entity.getId());
 
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
+        Assert.assertEquals(pojoEntity.getId(), newEntity.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(pojoEntity.getContrasenia(), newEntity.getContrasenia());
     }
     
     /**
@@ -382,16 +379,16 @@ public class AdministradorLogicTest {
         Assert.assertNull(deleted);
     }
 
-    /**
-     * Prueba para eliminar un Administrador asociado a un comentario
-     *
-     * 
-     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void deleteAdministradorConGrupoDeInteresTest() throws BusinessLogicException 
-    {
-        administradorLogic.deleteAdministrador(data.get(2).getId());
-    }
+//    /**
+//     * Prueba para eliminar un Administrador asociado a un comentario
+//     *
+//     * 
+//     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+//     */
+//    @Test(expected = BusinessLogicException.class)
+//    public void deleteAdministradorConGrupoDeInteresTest() throws BusinessLogicException 
+//    {
+//        administradorLogic.deleteAdministrador(data.get(1).getId());
+//    }
     
 }

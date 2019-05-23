@@ -183,9 +183,9 @@ public class GrupoDeInteresPersistenceTest {
 
         GrupoDeInteresEntity resp = em.find(GrupoDeInteresEntity.class, entity.getId());
         
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
-        Assert.assertEquals(entity.getIdioma(), newEntity.getIdioma());
+        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(resp.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(resp.getIdioma(), newEntity.getIdioma());
     }
 
     /**

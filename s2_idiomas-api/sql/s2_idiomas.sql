@@ -11,7 +11,7 @@ delete from ActividadEntity;
 
 Select * from ActividadEntity;
 Select * from ComentarioEntity;
-Select * from UsuarioEntity;
+Select * from AdministradorEntity;
 
 
 delete from UsuarioEntity;

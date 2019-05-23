@@ -68,8 +68,6 @@ public class ActividadLogicTest {
     private UserTransaction utx;
 
     private List<ActividadEntity> data = new ArrayList<>();
-    
-    private List<CoordinadorEntity> coordinadorData = new ArrayList<>();
 
 
     /**
@@ -122,18 +120,10 @@ public class ActividadLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++)
-        {
-            CoordinadorEntity coordinador = factory.manufacturePojo(CoordinadorEntity.class);
-            em.persist(coordinador);
-            coordinadorData.add(coordinador);
-        }
         for (int i = 0; i < 3; i++) 
         {
             ActividadEntity entity = factory.manufacturePojo(ActividadEntity.class);
             em.persist(entity);
-            entity.getCoordinadores().add(coordinadorData.get(0));
-            // TODO : GC Poner calificación
             data.add(entity);
         }
         ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
@@ -249,10 +239,10 @@ public class ActividadLogicTest {
 
         ActividadEntity resp = em.find(ActividadEntity.class, entity.getId());
 
-        Assert.assertEquals(resp.getId(), entity.getId());
-        Assert.assertEquals(resp.getNombre(), entity.getNombre());
-        Assert.assertEquals(resp.getDescripcion(), entity.getDescripcion());
-        Assert.assertEquals(resp.getFecha(), entity.getFecha());
+        Assert.assertEquals(resp.getId(), pojoEntity.getId());
+        Assert.assertEquals(resp.getNombre(), pojoEntity.getNombre());
+        Assert.assertEquals(resp.getDescripcion(), pojoEntity.getDescripcion());
+        Assert.assertEquals(resp.getFecha(), pojoEntity.getFecha());
     }
     
     /**

@@ -159,9 +159,9 @@ public class UsuarioLogic {
     public void deleteUsuario(Long pUsuariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la usuario con id = {0}", pUsuariosId);
         // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
-        List<ComentarioEntity> comentarios = getUsuario(pUsuariosId).getComentarios();
-        if (comentarios != null && !comentarios.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar la usuario con id = " + pUsuariosId + " porque tiene comentarios asociados");
+        List<ActividadEntity> actividades = getUsuario(pUsuariosId).getActividades();
+        if (actividades != null && !actividades.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar la usuario con id = " + pUsuariosId + " porque tiene actividades asociados");
         }
         
         persistence.delete(pUsuariosId);

@@ -73,7 +73,7 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
      */
     @PodamExclude
     @ManyToMany(mappedBy = "gruposDeInteres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<UsuarioEntity> usuarios;
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
     
     /**
      * Atributo que representa las actividades asociados con el grupo de interés.
@@ -87,7 +87,7 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
      */
     @PodamExclude
     @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
-    private List<ComentarioEntity> comentarios;
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
     
     // ------------------------------------------------------------------
     // Constructor
