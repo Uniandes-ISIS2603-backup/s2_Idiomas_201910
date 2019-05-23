@@ -82,7 +82,7 @@ public class ComentarioResource {
     public ComentarioDetailDTO createComentario(ComentarioDetailDTO Comentario) throws BusinessLogicException, ParseException {
         LOGGER.log(Level.INFO, "ComentarioResource createComentario: input: {0}", Comentario);
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
-        System.out.println(Comentario.getAutor());
+        System.out.println(Comentario.getPersona());
         ComentarioEntity ComentarioEntity = Comentario.toEntity();
         System.out.println(ComentarioEntity.getPersona());
         ComentarioEntity.setFecha(now.getTime());
