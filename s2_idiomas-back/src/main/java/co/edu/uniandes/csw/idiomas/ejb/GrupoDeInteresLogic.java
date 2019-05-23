@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.idiomas.ejb;
 
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
@@ -169,6 +170,11 @@ public class GrupoDeInteresLogic {
         if (comentarios != null && !comentarios.isEmpty()) {
             throw new BusinessLogicException("No se puede borrar la grupoDeInteres con id = " + pGruposDeInteresId + " porque tiene comentarios asociados");
         }
+        List<ActividadEntity> actividades = getGrupoDeInteres(pGruposDeInteresId).getActividades();
+        if (actividades != null && !actividades.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar la grupoDeInteres con id = " + pGruposDeInteresId + " porque tiene actividades asociados");
+        }
+        
         persistence.delete(pGruposDeInteresId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar la grupoDeInteres con id = {0}", pGruposDeInteresId);
     }

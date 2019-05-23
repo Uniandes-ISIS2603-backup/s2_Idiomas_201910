@@ -25,6 +25,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
 
     
     private String contrasenia;
+    
+    
     private String nombre;
     
     @PodamExclude

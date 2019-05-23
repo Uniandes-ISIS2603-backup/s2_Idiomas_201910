@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.idiomas.test.logic;
 import co.edu.uniandes.csw.idiomas.ejb.GrupoDeInteresLogic;
 import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
 import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
+import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
 import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
@@ -140,11 +141,11 @@ public class GrupoDeInteresLogicTest {
         em.persist(comentario);
         data.get(2).getComentarios().add(comentario);
         
-        GrupoDeInteresEntity grupoDeInteres = data.get(2);
+        GrupoDeInteresEntity grupoDeInteres = data.get(3);
         UsuarioEntity usuarios = factory.manufacturePojo(UsuarioEntity.class);
-        usuarios.ge().add(grupoDeInteres);
+        usuarios.getGruposDeInteres().add(grupoDeInteres);
         em.persist(usuarios);
-        grupoDeInteres.getBooks().add(usuarios);
+        grupoDeInteres.getUsuarios().add(usuarios);
     }
 
     /**
@@ -154,23 +155,25 @@ public class GrupoDeInteresLogicTest {
     @Test
     public void createGrupoDeInteresTest() throws BusinessLogicException {
         GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-        CoordinadorEntity newCorEntity = factory.manufacturePojo(CoordinadorEntity.class);
-        
-        // TODO: GC Conectar con coordinador Logic
-//        newCorEntity = corLogic.createCoordinador(newCorEntity);
-//        newEntity.getCoordinadores().add(newCorEntity);
+        // Asignar el administrador
+        AdministradorEntity administrador = factory.manufacturePojo(AdministradorEntity.class);
+        newEntity.setAdministrador(administrador);
         GrupoDeInteresEntity result = grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+        
         Assert.assertNotNull(result);
         GrupoDeInteresEntity entity = em.find(GrupoDeInteresEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(entity.getIdioma(), newEntity.getIdioma());
+        
         
     }
     
     /**
      * Prueba para crear un GrupoDeInteres con nombre inválido
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void createGrupoDeInteresTestConNombreInvalido1() throws BusinessLogicException {
@@ -182,7 +185,7 @@ public class GrupoDeInteresLogicTest {
     /**
      * Prueba para crear un GrupoDeInteres con nombre inválido
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void createGrupoDeInteresTestConNombreInvalido2() throws BusinessLogicException {
@@ -192,28 +195,93 @@ public class GrupoDeInteresLogicTest {
     }
     
     /**
-     * Prueba para crear un GrupoDeInteres sin un coordinador
+     * Prueba para crear un GrupoDeInteres con idioma inválido
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    // TODO: GC Conectar con coordinador
-//    @Test(expected = BusinessLogicException.class)
-//    public void createGrupoDeInteresTestSinCoordinador() throws BusinessLogicException {
-//        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-//        newEntity.setCoordinadores(null);
-//        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
-//    }
+    @Test(expected = BusinessLogicException.class)
+    public void createGrupoDeInteresTestConIdiomaInvalido1() throws BusinessLogicException {
+        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+        newEntity.setIdioma("");
+        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
+
+    /**
+     * Prueba para crear un GrupoDeInteres con idioma inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createGrupoDeInteresTestConIdiomaInvalido2() throws BusinessLogicException {
+        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+        newEntity.setIdioma(null);
+        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un GrupoDeInteres con descripcion inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createGrupoDeInteresTestConDescripcionInvalido1() throws BusinessLogicException {
+        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+        newEntity.setDescripcion("");
+        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
+
+    /**
+     * Prueba para crear un GrupoDeInteres con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createGrupoDeInteresTestConDescripcionInvalido2() throws BusinessLogicException {
+        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+        newEntity.setDescripcion(null);
+        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un GrupoDeInteres sin un administrador
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createGrupoDeInteresTestSinAdministrador() throws BusinessLogicException {
+        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+        newEntity.setAdministrador(null);
+        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
     
     /**
      * Prueba para crear un GrupoDeInteres ya existente.
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void createGrupoDeInteresTestYaExistente() throws BusinessLogicException {
         List<GrupoDeInteresEntity> gruposDeInteres = grupoDeInteresLogic.getGruposDeInteres();
         GrupoDeInteresEntity newEntity = gruposDeInteres.get(0);
         grupoDeInteresLogic.createGrupoDeInteres(newEntity);
+    }
+    
+    /**
+     * Prueba para consultar la lista de GruposDeInteres.
+     */
+    @Test
+    public void getGruposDeInteresTest() {
+        List<GrupoDeInteresEntity> list = grupoDeInteresLogic.getGruposDeInteres();
+        Assert.assertEquals(data.size(), list.size());
+        for (GrupoDeInteresEntity entity : list) {
+            boolean found = false;
+            for (GrupoDeInteresEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
 
     /**
@@ -222,12 +290,12 @@ public class GrupoDeInteresLogicTest {
     @Test
     public void getGrupoDeInteresTest() {
         GrupoDeInteresEntity entity = data.get(0);
-        GrupoDeInteresEntity resultEntity = grupoDeInteresLogic.getGrupoDeInteres(entity.getId());
-        Assert.assertNotNull(resultEntity);
-        Assert.assertEquals(resultEntity.getId(), entity.getId());
-        Assert.assertEquals(resultEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(resultEntity.getDescripcion(), entity.getDescripcion());
-        Assert.assertEquals(resultEntity.getFecha(), entity.getFecha());
+        GrupoDeInteresEntity newEntity = grupoDeInteresLogic.getGrupoDeInteres(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(entity.getIdioma(), newEntity.getIdioma());
     }
     
     /**
@@ -252,12 +320,12 @@ public class GrupoDeInteresLogicTest {
 
         grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
 
-        GrupoDeInteresEntity resp = em.find(GrupoDeInteresEntity.class, entity.getId());
+        GrupoDeInteresEntity newEntity = em.find(GrupoDeInteresEntity.class, entity.getId());
 
-        Assert.assertEquals(resp.getId(), entity.getId());
-        Assert.assertEquals(resp.getNombre(), entity.getNombre());
-        Assert.assertEquals(resp.getDescripcion(), entity.getDescripcion());
-        Assert.assertEquals(resp.getFecha(), entity.getFecha());
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(entity.getIdioma(), newEntity.getIdioma());
     }
     
     /**
@@ -267,9 +335,13 @@ public class GrupoDeInteresLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void updateGrupoDeInteresTestConNombreInvalido1() throws BusinessLogicException {
-        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-        newEntity.setNombre("");
-        grupoDeInteresLogic.updateGrupoDeInteres(newEntity.getId(), newEntity);
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre("");
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
     }
 
     /**
@@ -279,23 +351,94 @@ public class GrupoDeInteresLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void updateGrupoDeInteresTestConNombreInvalido2() throws BusinessLogicException {
-        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-        newEntity.setNombre(null);
-        grupoDeInteresLogic.updateGrupoDeInteres(newEntity.getId(), newEntity);
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre(null);
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
     }
     
     /**
-     * Prueba para crear un GrupoDeInteres sin un coordinador
+     * Prueba para crear un GrupoDeInteres con idioma inválido
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    // TODO: GC Conectar con coordinador
-//    @Test(expected = BusinessLogicException.class)
-//    public void createGrupoDeInteresTestSinCoordinador() throws BusinessLogicException {
-//        GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-//        newEntity.setCoordinadores(null);
-//        grupoDeInteresLogic.createGrupoDeInteres(newEntity);
-//    }
+    @Test(expected = BusinessLogicException.class)
+    public void updateGrupoDeInteresTestConIdiomaInvalido1() throws BusinessLogicException {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setIdioma("");
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
+    }
+
+    /**
+     * Prueba para crear un GrupoDeInteres con idioma inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateGrupoDeInteresTestConIdiomaInvalido2() throws BusinessLogicException {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setIdioma(null);
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un GrupoDeInteres con descripcion inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateGrupoDeInteresTestConDescripcionInvalido1() throws BusinessLogicException {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setDescripcion("");
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
+    }
+
+    /**
+     * Prueba para crear un GrupoDeInteres con descripcion inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateGrupoDeInteresTestConDescripcionInvalido2() throws BusinessLogicException {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setDescripcion(null);
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un GrupoDeInteres sin Administrador
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateGrupoDeInteresTestSinAdministrador() throws BusinessLogicException {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity pojoEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setAdministrador(null);
+
+        grupoDeInteresLogic.updateGrupoDeInteres(pojoEntity.getId(), pojoEntity);
+    }
     
     /**
      * Prueba para crear un GrupoDeInteres ya existente.
@@ -322,17 +465,18 @@ public class GrupoDeInteresLogicTest {
         Assert.assertNull(deleted);
     }
 
-//    /**
-//     * Prueba para eliminar un GrupoDeInteres asociado a un usuario
-//     *
-//     * 
-//     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
-//     */
-//    @Test(expected = BusinessLogicException.class)
-//    public void deleteGrupoDeInteresConUsuarioTest() throws BusinessLogicException {
-//        grupoDeInteresLogic.deleteGrupoDeInteres(data.get(2).getId());
-//    }
-
+    /**
+     * Prueba para eliminar un GrupoDeInteres asociado a un comentario
+     *
+     * 
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteGrupoDeInteresConActividadTest() throws BusinessLogicException 
+    {
+        grupoDeInteresLogic.deleteGrupoDeInteres(data.get(1).getId());
+    }
+    
     /**
      * Prueba para eliminar un GrupoDeInteres asociado a un comentario
      *
@@ -342,7 +486,7 @@ public class GrupoDeInteresLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void deleteGrupoDeInteresConComentarioTest() throws BusinessLogicException 
     {
-        grupoDeInteresLogic.deleteGrupoDeInteres(data.get(1).getId());
+        grupoDeInteresLogic.deleteGrupoDeInteres(data.get(2).getId());
     }
     
 }
