@@ -68,8 +68,6 @@ public class ChatLogicTest {
     private UserTransaction utx;
 
     private List<ChatEntity> data = new ArrayList<>();
-    
-    private List<CoordinadorEntity> coordinadorData = new ArrayList<>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -121,17 +119,10 @@ public class ChatLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++)
-        {
-            CoordinadorEntity coordinador = factory.manufacturePojo(CoordinadorEntity.class);
-            em.persist(coordinador);
-            coordinadorData.add(coordinador);
-        }
         for (int i = 0; i < 3; i++) 
         {
             ChatEntity entity = factory.manufacturePojo(ChatEntity.class);
             em.persist(entity);
-            entity.getCoordinadores().add(coordinadorData.get(0));
             data.add(entity);
         }
         ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
@@ -277,7 +268,7 @@ public class ChatLogicTest {
     /**
      * Prueba para crear un Chat con nombre inválido
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void updateChatTestConNombreInvalido1() throws BusinessLogicException {

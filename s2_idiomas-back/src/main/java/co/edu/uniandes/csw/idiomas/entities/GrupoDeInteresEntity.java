@@ -1,100 +1,211 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
+ * Clase que representa un grupoDeInteres en la persistencia y permite su serialización
  *
- * @author estudiante
+ * @author g.cubillosb
  */
 @Entity
-public class GrupoDeInteresEntity extends BaseEntity implements Serializable{
-    /**
-     * idioma del grupo
-     */
-    String idioma;
-    /**
-     * administrador del grupo
-     */
-    String administrador;
-    /**
-     * calificacion del grupo
-     */
-    Long calificacion;
-    /**
-     * blog del grupo
-     */
-    Long blog;
+public class GrupoDeInteresEntity extends BaseEntity implements Serializable 
+{
+    
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
     
     /**
-     * Connstructor vacio de un Entity
+     * Atributo que representa el idioma del grupo.
      */
-    public GrupoDeInteresEntity()
-    {
-        
-    }
+    private String idioma;
+
     /**
-     * 
-     * @return idioma
+     * Atributo que representa el nombre del grupo.
+     */
+    private String nombre;
+    
+    /**
+     * Atributo que representa la descripción del grupo.
+     */
+    private String descripcion;
+
+    /**
+     * Atributo que representa el administrador del grupo.
+     */
+    @PodamExclude
+    @ManyToOne
+    private AdministradorEntity administrador;
+
+    /**
+     * Atributo que representa los usuarios asociados con el grupo de interés.
+     */
+    @PodamExclude
+    @ManyToMany(mappedBy = "gruposDeInteres", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
+    
+    /**
+     * Atributo que representa las actividades asociados con el grupo de interés.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
+    private List<ActividadEntity> actividades = new ArrayList<ActividadEntity>();
+    
+    /**
+     * Atributo que representa los comentarios asociados con el grupo de interés.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
+    
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
+
+    /**
+     * @return the idioma
      */
     public String getIdioma() {
         return idioma;
     }
+
     /**
-     * 
-     * @param idioma 
+     * @param idioma the idioma to set
      */
     public void setIdioma(String idioma) {
         this.idioma = idioma;
     }
-   /**
-     * 
-     * @return administrador
+
+    /**
+     * @return the nombre
      */
-    public String getAdministrador() {
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the administrador
+     */
+    public AdministradorEntity getAdministrador() {
         return administrador;
     }
+
     /**
-     * 
-     * @param administrador 
+     * @param administrador the administrador to set
      */
-    public void setAdministrador(String administrador) {
+    public void setAdministrador(AdministradorEntity administrador) {
         this.administrador = administrador;
     }
-   /**
-     * 
-     * @return calificacion
-     */
-    public Long getCalificacion() {
-        return calificacion;
-    }
-    /**
-     * 
-     * @param calificacion 
-     */
-    public void setCalificacion(Long calificacion) {
-        this.calificacion = calificacion;
-    }
-   /**
-     * 
-     * @return blog
-     */
-    public Long getBlog() {
-        return blog;
-    }
-    /**
-     * 
-     * @param blog 
-     */
-    public void setBlog(Long blog) {
-        this.blog = blog;
-    }
-    
-    
 
+    /**
+     * @return the usuarios
+     */
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    /**
+     * @return the actividades
+     */
+    public List<ActividadEntity> getActividades() {
+        return actividades;
+    }
+
+    /**
+     * @param actividades the actividades to set
+     */
+    public void setActividades(List<ActividadEntity> actividades) {
+        this.actividades = actividades;
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
+    }
+    
+    /**
+     * Equals de la clase
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        GrupoDeInteresEntity fobj = (GrupoDeInteresEntity) obj;
+        return this.getDescripcion().equals(fobj.getDescripcion())
+                && this.getNombre().equals(fobj.getNombre())
+                && this.getIdioma().equals(fobj.getIdioma());
+    }
+    
 }

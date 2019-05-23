@@ -9,15 +9,16 @@ import java.io.Serializable;
  */
 public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
 
-    private PersonaDTO autor;
+    private PersonaDTO persona;
+    
     private ActividadDTO actividad;
 
     public ComentarioDetailDTO(ComentarioEntity entity) {
         super(entity);
-        if (entity.getAutor() != null) {
-            this.autor = new PersonaDTO(entity.getAutor());
+        if (entity.getPersona()!= null) {
+            this.persona = new PersonaDTO(entity.getPersona());
         } else {
-            this.autor = null;
+            this.persona = null;
         }
         if (entity.getActividad() != null) {
             this.actividad = new ActividadDTO(entity.getActividad());
@@ -34,8 +35,8 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
     @Override
     public ComentarioEntity toEntity() {
         ComentarioEntity entity = super.toEntity();
-        if (getAutor() != null) {
-            entity.setAutor(this.getAutor().toEntity());
+        if (getPersona()!= null) {
+            entity.setPersona(this.getPersona().toEntity());
         }
         if (getActividad() != null) {
             entity.setActividad(this.getActividad().toEntity());
@@ -43,19 +44,7 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
         return entity;
     }
 
-    /**
-     * @return the autor
-     */
-    public PersonaDTO getAutor() {
-        return autor;
-    }
-
-    /**
-     * @param autor the autor to set
-     */
-    public void setAutor(PersonaDTO autor) {
-        this.autor = autor;
-    }
+    
 
     /**
      * @return the actividad
@@ -69,6 +58,20 @@ public class ComentarioDetailDTO extends ComentarioDTO implements Serializable {
      */
     public void setActividad(ActividadDTO actividad) {
         this.actividad = actividad;
+    }
+
+    /**
+     * @return the persona
+     */
+    public PersonaDTO getPersona() {
+        return persona;
+    }
+
+    /**
+     * @param persona the persona to set
+     */
+    public void setPersona(PersonaDTO persona) {
+        this.persona = persona;
     }
 
 }

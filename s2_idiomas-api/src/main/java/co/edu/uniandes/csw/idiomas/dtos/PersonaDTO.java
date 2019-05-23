@@ -32,32 +32,70 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author j.barbosa
  */
 public class PersonaDTO implements Serializable 
-{ Long id;
-    String nombre;
-    Long contrasenia;
-
-
-    
+{ // -----------------------------------------------------------------------
+    // Atributos
+    // -----------------------------------------------------------------------
     
     /**
-     * Constructor por defecto
+     * Atributo que representa el Id de la persona
      */
-    public PersonaDTO()
-    {
-    }
-
+    protected Long id;
+    
     /**
-     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * Atributo que representa el nombre de la persona.
+     */
+    protected String nombre;
+    
+    /**
+     * Atributo que representa la contrasenia de la persona.
+     */
+    protected String contrasenia;
+    
+    
+    // -----------------------------------------------------------------------
+    // Constructor
+    // -----------------------------------------------------------------------
+    
+    /**
+     * Constructor vacio de una persona
+     */
+    public PersonaDTO ()
+    {
+        
+    }
+    
+    /**
+     * Convertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
      * la entidad que viene de argumento.
      *
-     * @param personaEntity: Es la entidad que se va a convertir a DTO
+     * @param pPersonaEntity: Es la entidad que se va a convertir a DTO
      */
-    public PersonaDTO(PersonaEntity personaEntity) {
-        if (personaEntity != null) {
-            this.id = personaEntity.getId();
-            this.nombre = personaEntity.getNombre();
-            this.contrasenia = personaEntity.getContrasenia();
+    public PersonaDTO(PersonaEntity pPersonaEntity) 
+    {
+        if (pPersonaEntity != null) 
+        {
+            this.id = pPersonaEntity.getId();
+            this.nombre = pPersonaEntity.getNombre();
+            this.contrasenia = pPersonaEntity.getContrasenia();
         }
+    }
+    
+    // ----------------------------------------------------------------------
+    // Metodos
+    // ----------------------------------------------------------------------
+
+    /**
+     * Convierte un objeto PersonaDTO a PersonaEntity.
+     *
+     * @return Nueva objeto PersonaEntity.
+     *
+     */
+    public PersonaEntity toEntity() {
+        PersonaEntity personaEntity = new PersonaEntity();
+        personaEntity.setId(this.getId());
+        personaEntity.setNombre(this.getNombre());
+        personaEntity.setContrasenia(this.getContrasenia());
+        return personaEntity;
     }
 
     /**
@@ -95,40 +133,23 @@ public class PersonaDTO implements Serializable
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-     /**
-     * Devuelve el contrasenia de la persona.
-     *
-     * @return the contrasenia
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Modifica la conrasenia del persona.
-     *
-     * @param contrasenia 
-     */
-       public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    /**
-     * Convertir DTO a Entity
-     *
-     * @return Un Entity con los valores del DTO
-     */
-    public PersonaEntity toEntity() {
-        PersonaEntity personaEntity = new PersonaEntity();
-        personaEntity.setId(this.id);
-        personaEntity.setNombre(this.nombre);
-        personaEntity.setContrasenia(this.contrasenia);
-        return personaEntity;
-    }
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @param contrasenia the contrasenia to set
+     */
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    /**
+     * @return the contrasenia
+     */
+    public String getContrasenia() {
+        return contrasenia;
     }
 }

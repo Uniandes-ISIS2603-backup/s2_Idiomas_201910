@@ -6,8 +6,6 @@
 package co.edu.uniandes.csw.idiomas.test.persistence;
 
 import co.edu.uniandes.csw.idiomas.entities.PersonaEntity;
-import co.edu.uniandes.csw.idiomas.entities.PersonaEntity;
-import co.edu.uniandes.csw.idiomas.persistence.PersonaPersistence;
 import co.edu.uniandes.csw.idiomas.persistence.PersonaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +13,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,47 +25,50 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
+ * Pruebas de persistencia de Persona
  *
- * @author j.barbosaj
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
-public class PersonaPersistenceTest 
-{
-     
-     /**
-     * Inyección de la dependencia a la clase PersonaPersistence cuyos métodos
-     * se van a probar.
+public class PersonaPersistenceTest {
+    
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+
+    /**
+     * Inyecta la dependencia de PersonaPersistence.
      */
     @Inject
     private PersonaPersistence personaPersistence;
-    
-     /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
+
+    /**
+     * Contexto de persistencia que se va a utilizar para acceder a la base
+     * de datos.
      */
-    @PersistenceContext 
+    @PersistenceContext
     private EntityManager em;
-    
-     /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
+
+    /**
+     * Variable para marcar las transacciones del "em" (Entity Manager) cuando
+     * se crean/borran datos.
      */
     @Inject
     UserTransaction utx;
-    
-     /**
-     * Lista que tiene los datos de prueba.
+
+    /**
+     * Lista de los datos de prueba.
      */
-    private List<PersonaEntity> data = new ArrayList<PersonaEntity>();
+    private List<PersonaEntity> data = new ArrayList<>();
     
-    
-    
-     /**
-     *
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Persona, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -77,8 +78,7 @@ public class PersonaPersistenceTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -99,7 +99,7 @@ public class PersonaPersistenceTest
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
@@ -120,29 +120,28 @@ public class PersonaPersistenceTest
             data.add(entity);
         }
     }
-    
+
     /**
-     * Prueva el crear
+     * Prueba para crear un Persona.
      */
     @Test
-    public void createPersonaTest()
-    {
+    public void createPersonaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         PersonaEntity newEntity = factory.manufacturePojo(PersonaEntity.class);
         PersonaEntity result = personaPersistence.create(newEntity);
-        
-         Assert.assertNotNull(result);
-         
-         PersonaEntity entity = em.find(PersonaEntity.class, result.getId());
+
+        Assert.assertNotNull(result);
+
+        PersonaEntity entity = em.find(PersonaEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
-    
+
     /**
-     * Prueba para consultar la lista de Personaes.
+     * Prueba para consultar la lista de Personas.
      */
     @Test
-    public void getPersonaesTest() {
+    public void getPersonasTest() {
         List<PersonaEntity> list = personaPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
         for (PersonaEntity ent : list) {
@@ -166,7 +165,7 @@ public class PersonaPersistenceTest
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
         Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
-       }
+    }
 
     /**
      * Prueba para actualizar un Persona.
@@ -183,8 +182,6 @@ public class PersonaPersistenceTest
 
         PersonaEntity resp = em.find(PersonaEntity.class, entity.getId());
         
-        Assert.assertEquals(resp.getId(), newEntity.getId());
-        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
         Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
         Assert.assertEquals(resp.getContrasenia(), newEntity.getContrasenia());
     }
@@ -201,7 +198,7 @@ public class PersonaPersistenceTest
     }
     
     /**
-     * Prueba para consultasr un Persona por nombre.
+     * Prueba para consultar un Persona por nombre.
      */
     @Test
     public void findPersonaByNameTest() {
@@ -216,3 +213,4 @@ public class PersonaPersistenceTest
         Assert.assertNull(newEntity);
     }
 }
+

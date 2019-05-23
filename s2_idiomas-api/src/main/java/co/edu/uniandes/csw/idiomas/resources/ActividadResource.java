@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  * Clase que define los servicios de la clase actividad
  * @author g.cubillosb
  */
-@Path("actividad")
+@Path("actividades")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped

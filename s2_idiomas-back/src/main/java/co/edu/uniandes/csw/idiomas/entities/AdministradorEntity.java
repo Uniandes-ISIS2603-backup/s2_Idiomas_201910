@@ -6,85 +6,67 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
- * @author j.barbosaj
+ * Clase que representa un Administrador en la persistencia y permite su
+ * serialización.
+ * @author g.cubillosb
  */
 @Entity
-public class AdministradorEntity implements Serializable {
+@DiscriminatorValue("A")
+public class AdministradorEntity extends PersonaEntity implements Serializable{
     
-    Long contrasenia;
-    String nombre;
-    
-    /**
-     * Atributo que representa los grupos administradps.
-     */
-//    @PodamExclude
-//    @OneToMany(mappedBy = "administrador")
-//    private List<AdministradorGrupoEntity> comentarios = new ArrayList<AdministradorGrupoEntity>();
+    // -------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------
     
     /**
-     * Connstructor vacio de un Entity
+     * Atributo que representa los comentarios de la actividad.
      */
-    public AdministradorEntity()
-    {
-        //contructor vacio
-    }
+    @PodamExclude
+    @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
     
-    /**
-     * Retorna la contrasenia de un Entity
-     * @return contrasenia la contrseña
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
     
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
+
     /**
-     * Asigna una contrasenia a un Entity
-     * @param contrasenia 
+     * @return the gruposDeInteres
      */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
+    public List<GrupoDeInteresEntity> getGruposDeInteres() {
+        return gruposDeInteres;
     }
 
     /**
-     * Retorna el nombre del Entity
-     * @return nombre -el nombre
+     * @param gruposDeInteres the gruposDeInteres to set
      */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Asigna un nombre al Entity
-     * @param nombre 
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setGruposDeInteres(List<GrupoDeInteresEntity> gruposDeInteres) {
+        this.gruposDeInteres = gruposDeInteres;
     }
     
-      @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    /**
+     * Equals de la clase
+     */
     @Override
-    public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
         }
-        return super.hashCode();
+        PersonaEntity fobj = (PersonaEntity) obj;
+        return this.getNombre().equals(fobj.getNombre())
+                && this.getContrasenia().equals(fobj.getContrasenia());
     }
 }

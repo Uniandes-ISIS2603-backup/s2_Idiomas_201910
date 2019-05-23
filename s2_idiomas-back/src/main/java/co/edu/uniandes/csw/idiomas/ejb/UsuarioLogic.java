@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.idiomas.ejb;
 
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
+import co.edu.uniandes.csw.idiomas.entities.ComentarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.UsuarioPersistence;
 import java.util.List;
@@ -15,40 +17,61 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Usuario.
  *
- * @author j.barbosaj 201717575
+ * @author g.cubillosb
  */
 @Stateless
-public class UsuarioLogic 
-{
-     private static final Logger LOGGER = Logger.getLogger(UsuarioLogic.class.getName());
+public class UsuarioLogic {
 
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
+    /**
+     * Logger para las acciones de la clase.
+     */
+    private static final Logger LOGGER = Logger.getLogger(UsuarioLogic.class.getName());
+
+    /**
+     * Variable para acceder a la persistencia de la aplicación. Es una
+     * inyección de dependencias.
+     */
     @Inject
-    private UsuarioPersistence persistence; // Variable para acceder a la persistencia de la aplicación. Es una inyección de dependencias.
+    private UsuarioPersistence persistence;
 
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
     /**
      * Crea una usuario en la persistencia.
      *
      * @param usuarioEntity La entidad que representa la usuario a
      * persistir.
-     * @return La entiddad de la usuario luego de persistirla.
+     * @return La entidad de la usuario luego de persistirla.
      * @throws BusinessLogicException Si la usuario a persistir ya existe.
      */
     public UsuarioEntity createUsuario(UsuarioEntity usuarioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la usuario");
-       // Verifica la regla de negocio que dice que no puede haber un usuario con el nombre vacio
-        if(usuarioEntity.getNombre().compareTo("")==0)
-        {
-            throw new BusinessLogicException("El Usuario no tiene nombre");
+
+        // Verifica la regla de negocio que dice que el nombre de la usuario no puede ser vacío.
+        if (!validateName(usuarioEntity.getNombre())) {
+            throw new BusinessLogicException("El nombre es inválido.");
         }
-        // Verifica la regla de negocio que dice que no puede haber un usuario con contraseña vacio
-        else if(usuarioEntity.getContrasenia()==null)
-        {
-            throw new BusinessLogicException("El Usuario no tiene contraseña");
+        // Verifica la regla de negocio que dice que la contrasenia de la usuario no puede ser vacío.
+        if (!validateName(usuarioEntity.getContrasenia())) {
+            throw new BusinessLogicException("La contrasenia es inválido.");
         }
-        // Verifica la regla de negocio que dice que no puede haber dos usuario con el mismo nombre
-        else if (persistence.findByName(usuarioEntity.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe una Usuario con el nombre \"" + usuarioEntity.getNombre() + "\"");
+        // Verifica la regla de negocio que dice que la contrasenia de la usuario no puede ser menor a
+        //ocho caracteres.
+        if (usuarioEntity.getContrasenia().length() < 8 ) {
+            throw new BusinessLogicException("La longitud no es válida.");
+        }
+        // Verifica la regla de negocio que dice que un usuario no puede ser idéntico a otro usuario.
+        if (persistence.findByName(usuarioEntity.getNombre()) != null
+                &&persistence.findByName(usuarioEntity.getNombre()).equals(usuarioEntity))
+        {
+            throw new BusinessLogicException("El usuario ya existe.");         
         }
         // Invoca la persistencia para crear la usuario
         persistence.create(usuarioEntity);
@@ -58,34 +81,33 @@ public class UsuarioLogic
 
     /**
      *
-     * Obtener todas las usuario existentes en la base de datos.
+     * Obtener todas las usuarios existentes en la base de datos.
      *
-     * @return una lista de usuario.
+     * @return una lista de usuarios.
      */
     public List<UsuarioEntity> getUsuarios() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las usuario");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las usuarios");
         // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
-        List<UsuarioEntity> usuario = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las usuario");
-        return usuario;
+        List<UsuarioEntity> usuarios = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las usuarios");
+        return usuarios;
     }
 
     /**
      *
      * Obtener una usuario por medio de su id.
      *
-     * @param usuarioId: id de la usuario para ser buscada.
+     * @param usuariosId: id de la usuario para ser buscada.
      * @return la usuario solicitada por medio de su id.
      */
-    public UsuarioEntity getUsuario(Long usuarioId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la usuario con id = {0}", usuarioId);
-        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.        
-        UsuarioEntity usuarioEntity = persistence.find(usuarioId);
+    public UsuarioEntity getUsuario(Long usuariosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la usuario con id = {0}", usuariosId);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        UsuarioEntity usuarioEntity = persistence.find(usuariosId);
         if (usuarioEntity == null) {
-            LOGGER.log(Level.SEVERE, "La usuario con el id = {0} no existe", usuarioId);
+            LOGGER.log(Level.SEVERE, "La usuario con el id = {0} no existe", usuariosId);
         }
-        
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la usuario con id = {0}", usuarioId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la usuario con id = {0}", usuariosId);
         return usuarioEntity;
     }
 
@@ -93,33 +115,35 @@ public class UsuarioLogic
      *
      * Actualizar una usuario.
      *
-     * @param usuarioId: id de la usuario para buscarla en la base de
+     * @param pUsuariosId: id de la usuario para buscarla en la base de
      * datos.
      * @param usuarioEntity: usuario con los cambios para ser actualizada,
      * por ejemplo el nombre.
      * @return la usuario con los cambios actualizados en la base de datos.
      */
-    public UsuarioEntity updateUsuario(Long usuarioId, UsuarioEntity usuarioEntity) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la usuario con id = {0}", usuarioId);
-        //verifica que el Usuario que se va a actualizar existe
-        UsuarioEntity eusuarioEntity = persistence.find(usuarioId);
-        if (eusuarioEntity == null) {
-            throw new BusinessLogicException( "La usuario con el id = {0} no existe" + usuarioId);
+    public UsuarioEntity updateUsuario(Long pUsuariosId, UsuarioEntity usuarioEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la usuario con id = {0}", pUsuariosId);
+        
+        // Verifica la regla de negocio que dice que el nombre de la usuario no puede ser vacío.
+        if (!validateName(usuarioEntity.getNombre())) {
+            throw new BusinessLogicException("El nombre es inválido.");
         }
-         // Verifica la regla de negocio que dice que no puede haber un usuario con el nombre vacio
-        else if(usuarioEntity.getNombre().compareTo("")==0)
+        // Verifica la regla de negocio que dice que la contrasenia de la usuario no puede ser vacío.
+        if (!validateName(usuarioEntity.getContrasenia())) {
+            throw new BusinessLogicException("La contrasenia es inválido.");
+        }
+        // Verifica la regla de negocio que dice que la contrasenia de la usuario no puede ser menor a
+        //ocho caracteres.
+        if (usuarioEntity.getContrasenia().length() < 8 ) {
+            throw new BusinessLogicException("La longitud no es válida.");
+        }
+        // Verifica la regla de negocio que dice que un usuario no puede ser idéntico a otro usuario.
+        if (persistence.findByName(usuarioEntity.getNombre()) != null
+                &&persistence.findByName(usuarioEntity.getNombre()).equals(usuarioEntity))
         {
-            throw new BusinessLogicException("El Usuario no tiene nombre");
+            throw new BusinessLogicException("El usuario ya existe.");         
         }
-        // Verifica la regla de negocio que dice que no puede haber un usuario con contraseña vacio
-        else if(usuarioEntity.getContrasenia()==null)
-        {
-            throw new BusinessLogicException("El Usuario no tiene contraseña");
-        }
-        // Verifica la regla de negocio que dice que no puede haber dos usuario con el mismo nombre
-        else if (persistence.findByName(usuarioEntity.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe una Usuario con el nombre \"" + usuarioEntity.getNombre() + "\"");
-        }
+        
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
         UsuarioEntity newEntity = persistence.update(usuarioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la usuario con id = {0}", usuarioEntity.getId());
@@ -129,16 +153,29 @@ public class UsuarioLogic
     /**
      * Borrar un usuario
      *
-     * @param usuarioId: id de la usuario a borrar
+     * @param pUsuariosId: id de la usuario a borrar
      * @throws BusinessLogicException Si la usuario a eliminar tiene libros.
      */
-    public void deleteUsuario(Long usuarioId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la usuario con id = {0}", usuarioId);  
-        if(persistence.find(usuarioId)== null)
-        {
-            throw new BusinessLogicException("el usuario no existe");
+    public void deleteUsuario(Long pUsuariosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la usuario con id = {0}", pUsuariosId);
+        // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
+        List<ActividadEntity> actividades = getUsuario(pUsuariosId).getActividades();
+        if (actividades != null && !actividades.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar la usuario con id = " + pUsuariosId + " porque tiene actividades asociados");
         }
-        persistence.delete(usuarioId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la usuario con id = {0}", usuarioId);
+        
+        persistence.delete(pUsuariosId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la usuario con id = {0}", pUsuariosId);
     }
+
+    /**
+     * Verifica que el nombre no sea invalido.
+     *
+     * @param pNombre a verificar
+     * @return true si el nombre es valido.
+     */
+    private boolean validateName(String pNombre) {
+        return !(pNombre == null || pNombre.isEmpty());
+    }
+
 }

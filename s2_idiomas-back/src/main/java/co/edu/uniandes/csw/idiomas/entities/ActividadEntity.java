@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,7 +48,8 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     private String nombre;
 
     @Column(name = "typeActivity", insertable = false, updatable = false)
-    private char subTypeId;
+    private Character subTypeId;
+    
     /**
      * Atributo que representa la fecha de la actividad.
      */
@@ -77,14 +79,21 @@ public class ActividadEntity extends BaseEntity implements Serializable {
      */
     @PodamExclude
     @ManyToMany(mappedBy = "actividades", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<UsuarioEntity> asistentes = new ArrayList<>();
+    private List<UsuarioEntity> usuarios = new ArrayList<>();
 
     /**
      * Atributo que representa los coordinadores de una actividad.
      */
     @PodamExclude
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "actividades", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CoordinadorEntity> coordinadores = new ArrayList<>();
+    
+    /**
+     * Atributo que representa los comentarios de la actividad.
+     */
+    @PodamExclude
+    @ManyToOne
+    private GrupoDeInteresEntity grupoDeInteres;
 
     // ------------------------------------------------------------------
     // Constructor
@@ -147,20 +156,7 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    /**
-     * @return the asistentes
-     */
-    public List<UsuarioEntity> getAsistentes() {
-        return asistentes;
-    }
-
-    /**
-     * @param asistentes the asistentes to set
-     */
-    public void setAsistentes(List<UsuarioEntity> asistentes) {
-        this.asistentes = asistentes;
-    }
+    
 
     /**
      * @return the coordinadores
@@ -191,6 +187,34 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the subTypeId
+     */
+    public Character getSubTypeId() {
+        return subTypeId;
+    }
+
+    /**
+     * @param subTypeId the subTypeId to set
+     */
+    public void setSubTypeId(Character subTypeId) {
+        this.subTypeId = subTypeId;
+    }
+
+    /**
+     * @return the grupoDeInteres
+     */
+    public GrupoDeInteresEntity getGrupoDeInteres() {
+        return grupoDeInteres;
+    }
+
+    /**
+     * @param grupoDeInteres the grupoDeInteres to set
+     */
+    public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
+        this.grupoDeInteres = grupoDeInteres;
+    }
+    
+    /**
      * Equals de la clase
      */
     @Override
@@ -215,17 +239,17 @@ public class ActividadEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the subTypeId
+     * @return the usuarios
      */
-    public char getSubTypeId() {
-        return subTypeId;
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
     }
 
     /**
-     * @param subTypeId the subTypeId to set
+     * @param usuarios the usuarios to set
      */
-    public void setSubTypeId(char subTypeId) {
-        this.subTypeId = subTypeId;
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }

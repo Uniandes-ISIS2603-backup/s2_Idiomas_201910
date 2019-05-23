@@ -16,9 +16,10 @@ import java.util.List;
  * Clase que extiende de {@link ActividadDTO} para manejar las relaciones entre
  * ActividadDTO y otros DTOs. Para el contenido de una actividad ir a la
  * documentación de {@link ActividadDTO}
- * @actividad g.cubillosb
+ * @author g.cubillosb
  */
-public class ActividadDetailDTO extends ActividadDTO implements Serializable {
+public class ActividadDetailDTO extends ActividadDTO implements Serializable 
+{
     
     // ------------------------------------------------------------------------
     // Atributos
@@ -28,13 +29,13 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
      * Lista de tipo UsuarioDTO contiene los usuarios que están asociados con
      * esta actividad.
      */
-    private List<UsuarioDTO> asistentes;
+    private List<UsuarioDTO> usuarios;
     
     /**
      * Lista de tipo ComentarioDTO contiene los comentarios que están
      * asociados con esta actividad.
      */
-    private List<ComentarioDTO> comentarioA;
+    private List<ComentarioDTO> comentarios;
     
     // ------------------------------------------------------------------------
     // Constructor
@@ -58,19 +59,19 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
      */
     public ActividadDetailDTO(ActividadEntity actividadEntity) {
         super(actividadEntity);
-        if (actividadEntity.getAsistentes() != null) {
-            asistentes = new ArrayList<>();
-            for (UsuarioEntity entityAsistentes : actividadEntity.getAsistentes())
+        if (actividadEntity.getUsuarios()!= null) {
+            usuarios = new ArrayList<>();
+            for (UsuarioEntity dtoUsuarios : actividadEntity.getUsuarios())
             {
-                asistentes.add(new UsuarioDTO(entityAsistentes));
+                usuarios.add(new UsuarioDTO(dtoUsuarios));
             }
         }
         if (actividadEntity.getComentarios() != null)
         {
-            comentarioA = new ArrayList();
+            comentarios = new ArrayList();
             for (ComentarioEntity entityComentarios : actividadEntity.getComentarios())
             {
-                comentarioA.add(new ComentarioDTO(entityComentarios));
+                comentarios.add(new ComentarioDTO(entityComentarios));
             }
         }
     }
@@ -89,48 +90,50 @@ public class ActividadDetailDTO extends ActividadDTO implements Serializable {
     @Override
     public ActividadEntity toEntity() {
         ActividadEntity actividadEntity = super.toEntity();
-        if (asistentes != null) {
+        if (getUsuarios() != null) {
             List<UsuarioEntity> usuarioEntity = new ArrayList<>();
-            for (UsuarioDTO dtoUsuario : asistentes) {
+            for (UsuarioDTO dtoUsuario : getUsuarios()) {
                 usuarioEntity.add(dtoUsuario.toEntity());
             }
-            actividadEntity.setAsistentes(usuarioEntity);
+            actividadEntity.setUsuarios(usuarioEntity);
         }
-        if (comentarioA != null) {
+        if (getComentarios() != null) {
             List<ComentarioEntity> comentariosEntity = new ArrayList<>();
-            for (ComentarioDTO dtoComentario : comentarioA) {
+            for (ComentarioDTO dtoComentario : getComentarios()) {
                 comentariosEntity.add(dtoComentario.toEntity());
             }
             actividadEntity.setComentarios(comentariosEntity);
         }
         return actividadEntity;
     }
+
+    /**
+     * @return the usuarios
+     */
+    public List<UsuarioDTO> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<UsuarioDTO> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioDTO> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
+    }
     
-    /**
-     * @return the asistentes
-     */
-    public List<UsuarioDTO> getAsistentes() {
-        return asistentes;
-    }
-
-    /**
-     * @param asistentes the asistentes to set
-     */
-    public void setAsistentes(List<UsuarioDTO> asistentes) {
-        this.asistentes = asistentes;
-    }
-
-    /**
-     * @return the comentarioA
-     */
-    public List<ComentarioDTO> getComentarioA() {
-        return comentarioA;
-    }
-
-    /**
-     * @param comentarioA the comentarioA to set
-     */
-    public void setComentarioA(List<ComentarioDTO> comentarioA) {
-        this.comentarioA = comentarioA;
-    }
+    
 }

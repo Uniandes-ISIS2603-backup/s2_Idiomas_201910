@@ -1,3 +1,26 @@
+/*
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
@@ -6,123 +29,59 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * UsuarioDTO Objeto de transferencia de datos de Usuarios. Los DTO
- * contienen las representaciones de los JSON que se transfieren entre el
+ * UsuarioDTO Objeto de transferencia de datos de Usuarios. Los
+ * DTO contienen las representaciones de los JSON que se transfieren entre el
  * cliente y el servidor.
  *
- * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
- *      "id": number,
- *      "nombre": string
- *      "contraseña" : string
- *   }
- * </pre> Por ejemplo una usuario se representa asi:<br>
- *
- * <pre>
- *
- *   {
- *      "id": 1,
- *      "nombre": juan
- *      "contraseña" : 1234
- *   }
- *
- * </pre>
- *
- * @author j.barbosa
+ * @author g.cubillosb
  */
-public class UsuarioDTO implements Serializable{
-    Long id;
-    String nombre;
-    Long contrasenia;
-
-
+public class UsuarioDTO extends PersonaDTO implements Serializable {
     
-    
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
     /**
-     * Constructor por defecto
+     * Constructor vacio
      */
     public UsuarioDTO() {
+        super();
     }
 
     /**
-     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
-     * la entidad que viene de argumento.
+     * Crea un objeto UsuarioDTO a partir de un objeto
+     * UsuarioEntity.
      *
-     * @param usuarioEntity: Es la entidad que se va a convertir a DTO
+     * @param usuarioEntity Entidad UsuarioEntity desde la cual se
+     * va a crear el nuevo objeto.
+     *
      */
     public UsuarioDTO(UsuarioEntity usuarioEntity) {
-        if (usuarioEntity != null) {
+        if (usuarioEntity != null) 
+        {
             this.id = usuarioEntity.getId();
-            this.nombre = usuarioEntity.getNombre();
             this.contrasenia = usuarioEntity.getContrasenia();
+            this.nombre = usuarioEntity.getNombre();
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
     /**
-     * Devuelve el ID de la usuario.
+     * Convierte un objeto UsuarioDTO a UsuarioEntity.
      *
-     * @return the id
+     * @return Nueva objeto UsuarioEntity.
      */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Modifica el ID de la usuario.
-     *
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * Devuelve el nombre de la usuario.
-     *
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Modifica el nombre de la usuario.
-     *
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
-     /**
-     * Devuelve el contrasenia de la usuario.
-     *
-     * @return the contrasenia
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Modifica la conrasenia del usuario.
-     *
-     * @param contraseina the nombre to set
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    /**
-     * Convertir DTO a Entity
-     *
-     * @return Un Entity con los valores del DTO
-     */
-    public UsuarioEntity toEntity() {
+    @Override
+    public UsuarioEntity toEntity() 
+    {
         UsuarioEntity usuarioEntity = new UsuarioEntity();
-        usuarioEntity.setId(this.id);
-        usuarioEntity.setNombre(this.nombre);
-        usuarioEntity.setContrasenia(this.contrasenia);
+        usuarioEntity.setId(this.getId());
+        usuarioEntity.setContrasenia(this.getContrasenia());
+        usuarioEntity.setNombre(this.getNombre());
         return usuarioEntity;
     }
 

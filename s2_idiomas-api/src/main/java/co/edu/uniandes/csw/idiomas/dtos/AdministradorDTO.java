@@ -1,146 +1,93 @@
+/*
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * AdministradorDTO Objeto de transferencia de datos de Administradores. Los DTO
- * contienen las representaciones de los JSON que se transfieren entre el
+ * AdministradorDTO Objeto de transferencia de datos de Administradores. Los
+ * DTO contienen las representaciones de los JSON que se transfieren entre el
  * cliente y el servidor.
  *
- * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
- *      "id": number,
- *      "nombre": string
- *      "contrasenia" : string
- *   }
- * </pre> Por ejemplo una administrador se representa asi:<br>
- *
- * <pre>
- *
- *   {
- *      "id": 1,
- *      "nombre": juan
- *      "contrasenia" : 1234
- *   }
- *
- * </pre>
- *
- * @author j.barbosa
+ * @author g.cubillosb
  */
-public class AdministradorDTO implements Serializable
-{
-    /**
-     * el id del administrador
-     */
-    Long id;
-    /**
-     * el nombre del administrador
-     */
-    String nombre;
-    /**
-     * contraseña del administrador
-     */
-    Long contrasenia;
-
-
+public class AdministradorDTO extends PersonaDTO implements Serializable {
     
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
     
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
     /**
-     * Constructor por defecto
+     * Constructor vacio
      */
-    public AdministradorDTO() 
-    {
-        //constructor por defecto
+    public AdministradorDTO() {
+        super();
     }
 
     /**
-     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
-     * la entidad que viene de argumento.
+     * Crea un objeto AdministradorDTO a partir de un objeto
+     * AdministradorEntity.
      *
-     * @param administradorEntity: Es la entidad que se va a convertir a DTO
+     * @param administradorEntity Entidad AdministradorEntity desde la cual se
+     * va a crear el nuevo objeto.
+     *
      */
     public AdministradorDTO(AdministradorEntity administradorEntity) {
-        if (administradorEntity != null) {
+        if (administradorEntity != null) 
+        {
             this.id = administradorEntity.getId();
-            this.nombre = administradorEntity.getNombre();
             this.contrasenia = administradorEntity.getContrasenia();
+            this.nombre = administradorEntity.getNombre();
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
     /**
-     * Devuelve el ID de la administrador.
+     * Convierte un objeto AdministradorDTO a AdministradorEntity.
      *
-     * @return the id
+     * @return Nueva objeto AdministradorEntity.
      */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Modifica el ID de la administrador.
-     *
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * Devuelve el nombre de la administrador.
-     *
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Modifica el nombre de la administrador.
-     *
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
-     /**
-     * Devuelve el contrasenia de la administrador.
-     *
-     * @return the contrasenia
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * 
-     * Modifica la conrasenia del administrador.
-     *
-     *   
-     * @param contrasenia 
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    /**
-     * Convertir DTO a Entity
-     *
-     * @return Un Entity con los valores del DTO
-     */
-    public AdministradorEntity toEntity() {
+    @Override
+    public AdministradorEntity toEntity() 
+    {
         AdministradorEntity administradorEntity = new AdministradorEntity();
-        administradorEntity.setId(this.id);
-        administradorEntity.setNombre(this.nombre);
-        administradorEntity.setContrasenia(this.contrasenia);
+        administradorEntity.setId(this.getId());
+        administradorEntity.setContrasenia(this.getContrasenia());
+        administradorEntity.setNombre(this.getNombre());
         return administradorEntity;
     }
 
     @Override
-    public String toString()
-    {
-        return "{id:"+id.toString()+","+"nombre:"+nombre+","+"contrasenia"+contrasenia.toString()+"}";
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

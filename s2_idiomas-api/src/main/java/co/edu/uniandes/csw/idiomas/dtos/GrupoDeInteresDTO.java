@@ -1,7 +1,25 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package co.edu.uniandes.csw.idiomas.dtos;
 
@@ -10,137 +28,175 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
 /**
- * AdministradorDTO Objeto de transferencia de datos de Administradores. Los DTO
- * contienen las representaciones de los JSON que se transfieren entre el
+ * GrupoDeInteresDTO Objeto de transferencia de datos de GruposDeInteres. Los
+ * DTO contienen las representaciones de los JSON que se transfieren entre el
  * cliente y el servidor.
  *
- * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
- *      "idioma": String,
- *      "administrador": string
- *      "calificacion" : number
- *      "blog":number
- *      
- *   }
- * </pre> Por ejemplo un GrupoDeInteres se representa asi:<br>
- *
- * <pre>
- *
- *   {
- *      "idioma": Ingles,
- *      "administrador": "XYZ",
- *      "calificacion": 5,
- *      "blog":1,
-
- *   }
- *
- * </pre>
- *
- *
- * @author le.perezl
+ * @author g.cubillosb
  */
-public class GrupoDeInteresDTO implements Serializable{
+public class GrupoDeInteresDTO implements Serializable {
+    
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
+
+    /**
+     * Atributo que representa el id del grupo.
+     */
     private Long id;
+
     /**
-     * idioma del grupo
+     * Atributo que representa el idioma del grupo.
      */
-    String idioma;
+    private String idioma;
+
     /**
-     * administrador del grupo
+     * Atributo que representa el nombre del grupo.
      */
-    String administrador;
-    /**
-     * calificacion del grupo
-     */
-    Long calificacion;
-    /**
-     * blog del grupo
-     */
-    Long blog;
+    private String nombre;
     
-    public GrupoDeInteresDTO(){
-        
-    }
-    
-    public GrupoDeInteresDTO(GrupoDeInteresEntity grupo){
-        
-    }
-    public GrupoDeInteresEntity toEntity(){
-        //crear variable del tipo
-        //hacer traspaso de los datos
-        return null;
-        
-    }
-        /**
-     * Devuelve el Idioma del grupo.
-     *
-     * @return the id
+    /**
+     * Atributo que representa la descripción del grupo.
      */
-    public String getIdioma() {
-        return idioma;
-    }
-        
-       /**
-     * Devuelve el Idioma del grupo.
-     *
-     * @return the id
+    private String descripcion;
+
+    /**
+     * Atributo que representa el administrador del grupo.
      */
-    public Long getBlog() {
-        return blog;
+    private AdministradorDTO administrador;
+
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    /**
+     * Constructor vacio
+     */
+    public GrupoDeInteresDTO() {
     }
 
     /**
-     * Modifica el Admin dl grupo.
+     * Crea un objeto GrupoDeInteresDTO a partir de un objeto
+     * GrupoDeInteresEntity.
      *
-     * @param admin the admin to set
+     * @param grupoDeInteresEntity Entidad GrupoDeInteresEntity desde la cual se
+     * va a crear el nuevo objeto.
+     *
      */
-    public void setAdministrador (String pAdmin) {
-        this.administrador = pAdmin;
+    public GrupoDeInteresDTO(GrupoDeInteresEntity grupoDeInteresEntity) {
+        if (grupoDeInteresEntity != null) 
+        {
+            this.id = grupoDeInteresEntity.getId();
+            this.idioma = grupoDeInteresEntity.getIdioma();
+            if (grupoDeInteresEntity.getAdministrador() != null) {
+                this.administrador = new AdministradorDTO(grupoDeInteresEntity.getAdministrador());
+            } else {
+                this.administrador = null;
+            }
+            this.descripcion = grupoDeInteresEntity.getDescripcion();
+            this.nombre = grupoDeInteresEntity.getIdioma();
+        }
     }
- 
-    public String getAdministrador() {
-        return administrador;
+
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
+    /**
+     * Convierte un objeto GrupoDeInteresDTO a GrupoDeInteresEntity.
+     *
+     * @return Nueva objeto GrupoDeInteresEntity.
+     */
+    public GrupoDeInteresEntity toEntity() {
+        GrupoDeInteresEntity grupoDeInteresEntity = new GrupoDeInteresEntity();
+        if (this.getAdministrador() != null)
+        {
+            grupoDeInteresEntity.setAdministrador(this.getAdministrador().toEntity());
+        }
+        grupoDeInteresEntity.setDescripcion(this.getDescripcion());
+        grupoDeInteresEntity.setId(this.getId());
+        grupoDeInteresEntity.setIdioma(this.getIdioma());
+        grupoDeInteresEntity.setNombre(this.getNombre());
+        return grupoDeInteresEntity;
     }
 
     /**
-     * Modifica la califiacion del grupo.
+     * Obtiene el atributo id.
      *
-     * @param calificacion the calificacion to set
-     */
-    public void setCalificacion(Long pCalificacion) {
-        this.calificacion = pCalificacion;
-    }
-    
-      /**
-     * retorna la califiacion del grupo.
+     * @return atributo id.
      *
-     */
-    public Long getCalificacion() {
-       return calificacion;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-}
-
-    /**
-     * @return the id
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * @param id the id to set
+     * Establece el valor del atributo id.
+     *
+     * @param id nuevo valor del atributo
+     *
      */
     public void setId(Long id) {
         this.id = id;
     }
-   
+
+    /**
+     * @return the idioma
+     */
+    public String getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * @param idioma the idioma to set
+     */
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the administrador
+     */
+    public AdministradorDTO getAdministrador() {
+        return administrador;
+    }
+
+    /**
+     * @param administrador the administrador to set
+     */
+    public void setAdministrador(AdministradorDTO administrador) {
+        this.administrador = administrador;
+    }
+    
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 }

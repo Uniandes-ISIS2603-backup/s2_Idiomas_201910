@@ -1,14 +1,14 @@
 {
 	"info": {
 		"_postman_id": "d8882bfb-cc54-415a-9254-7160db93afad",
-		"name": "Usuario Tests",
-		"description": "Colección de pruebas sobre el recurso Usuario",
+		"name": "Persona Tests",
+		"description": "Colección de pruebas sobre el recurso Persona",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"_postman_id": "774892f1-09c9-43e6-8992-f1954f4381b8",
-			"name": "Crear un usuario",
+			"name": "Crear un persona",
 			"event": [
 				{
 					"listen": "test",
@@ -37,7 +37,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura.\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -46,16 +46,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios"
+						"personas"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo usuario. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo persona. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "31b010f1-63e7-46d8-9d40-f60e3eef35c9",
-			"name": "Crear un usuario 2",
+			"name": "Crear un persona 2",
 			"event": [
 				{
 					"listen": "test",
@@ -84,7 +84,7 @@
 					"raw": "    {\n        \"birthDate\": \"1966-07-22T00:00:00-05:00\",\n        \"description\": \"fue un escritor, guionista, editor y periodista colombiano..\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Descargakoj.jpg\",\n        \"name\": \"Gustavo Bolivar Moreno\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -93,16 +93,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios"
+						"personas"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo usuario. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo persona. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "33bd34dd-477f-4cb1-9016-2cbedfffff27",
-			"name": "Obtener todos los usuarios",
+			"name": "Obtener todos los personas",
 			"event": [
 				{
 					"listen": "test",
@@ -112,7 +112,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"usuarios count\"] = data.length >= 1;"
+							"tests[\"personas count\"] = data.length >= 1;"
 						]
 					}
 				}
@@ -125,7 +125,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -134,16 +134,16 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios"
+						"personas"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los usuarios de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de usuarios en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los personas de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de personas en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "a8235b30-6097-4e20-8b50-8e7f705956ca",
-			"name": "Obtener un usuario",
+			"name": "Obtener un persona",
 			"event": [
 				{
 					"listen": "test",
@@ -166,7 +166,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -175,17 +175,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un usuario de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del usuario deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un persona de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del persona deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "c82b020e-a8a0-4dc9-b376-290238400f3a",
-			"name": "Obtener un usuario que no existe",
+			"name": "Obtener un persona que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -193,8 +193,8 @@
 						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia obtener un usuario con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+							"tests[\"No se deberia obtener un persona con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /personas/0 no existe.\");"
 						]
 					}
 				}
@@ -207,7 +207,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -216,17 +216,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nConsulta un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un persona que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /personas/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "ef51b944-fe31-4bb5-b80a-dc97c216f72c",
-			"name": "Editar un usuario",
+			"name": "Editar un persona",
 			"event": [
 				{
 					"listen": "test",
@@ -254,7 +254,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -263,17 +263,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nActualiza un usuario existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+				"description": "**Release: Paso-5**\r\n\r\nActualiza un persona existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "c740e7de-ba3e-41df-b3d0-8444dc2c0e7c",
-			"name": "Editar un usuario que no existe",
+			"name": "Editar un persona que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -281,8 +281,8 @@
 						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia actualizar un usuario con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+							"tests[\"No se deberia actualizar un persona con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /personas/0 no existe.\");"
 						]
 					}
 				}
@@ -300,7 +300,7 @@
 					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -309,17 +309,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\nActualiza un usuario que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
+				"description": "**Release: Paso-5**\r\nActualiza un persona que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /personas/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "7079500c-58c5-4311-917c-972a992481c9",
-			"name": "Borrar un usuario",
+			"name": "Borrar un persona",
 			"event": [
 				{
 					"listen": "test",
@@ -340,7 +340,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -349,17 +349,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"{{new_id_a}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un usuario. Se envía el id del usuario creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un persona. Se envía el id del persona creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "fd6bb264-66c1-4591-92fc-6d805b4b3bcd",
-			"name": "Borrar el usuario 2",
+			"name": "Borrar el persona 2",
 			"event": [
 				{
 					"listen": "test",
@@ -380,7 +380,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/{{new_id_a2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/{{new_id_a2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -389,17 +389,17 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"{{new_id_a2}}"
 					]
 				},
-				"description": "**Release: Paso-5**\n\nBorra un usuario. Se envía el id del usuario creado anteriormente.\n\n**Código HTTP esperado: 204**"
+				"description": "**Release: Paso-5**\n\nBorra un persona. Se envía el id del persona creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
 		{
 			"_postman_id": "8545415f-ecab-4f03-93af-9934fe3eba52",
-			"name": "Borrar un usuario que no existe",
+			"name": "Borrar un persona que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -407,8 +407,8 @@
 						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"No se deberia borrar un usuario con un id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /usuarios/0 no existe.\");"
+							"tests[\"No se deberia borrar un persona con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /personas/0 no existe.\");"
 						]
 					}
 				}
@@ -421,7 +421,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/usuarios/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/personas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -430,11 +430,11 @@
 					"path": [
 						"s2_idiomas-api",
 						"api",
-						"usuarios",
+						"personas",
 						"0"
 					]
 				},
-				"description": "**Release: Paso-5**\r\n\r\nBorra un usuario que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /usuarios/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
+				"description": "**Release: Paso-5**\r\n\r\nBorra un persona que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /personas/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		}

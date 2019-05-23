@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.idiomas.test.logic;
 
 import co.edu.uniandes.csw.idiomas.ejb.CoordinadorLogic;
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.CoordinadorPersistence;
@@ -27,13 +28,13 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *
- * @author j.barbosaj 201717575
+ * Pruebas de lógica de Coordinador
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
-public class CoordinadorLogicTest 
-{
-     /**
+public class CoordinadorLogicTest {
+
+    /**
      * Atributo que representa los datos aleatorios a ser creados.
      */
     private PodamFactory factory = new PodamFactoryImpl();
@@ -42,8 +43,7 @@ public class CoordinadorLogicTest
      * Inyección de dependencias con CoordinadorLogic.
      */
     @Inject
-    private CoordinadorLogic coordinadorLogic;    
-   
+    private CoordinadorLogic coordinadorLogic;
     
     /**
      * Contexto de persistencia que se va a utilizar para acceder a la base 
@@ -60,8 +60,8 @@ public class CoordinadorLogicTest
     private UserTransaction utx;
 
     private List<CoordinadorEntity> data = new ArrayList<>();
-    
-  
+
+
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -101,7 +101,10 @@ public class CoordinadorLogicTest
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from CoordinadorEntity").executeUpdate();     
+        em.createQuery("delete from CoordinadorEntity").executeUpdate();
+        em.createQuery("delete from ComentarioEntity").executeUpdate();
+        em.createQuery("delete from CoordinadorEntity").executeUpdate();
+        em.createQuery("delete from CoordinadorEntity").executeUpdate();
     }
 
     /**
@@ -109,154 +112,287 @@ public class CoordinadorLogicTest
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++)
-        {
-            CoordinadorEntity coordinador = factory.manufacturePojo(CoordinadorEntity.class);
-            em.persist(coordinador);          
-            data.add(coordinador);
-        }       
+        for (int i = 0; i < 4; i++) {
+            CoordinadorEntity entity = factory.manufacturePojo(CoordinadorEntity.class);
+            em.persist(entity);
+            entity.setActividades(new ArrayList<>());
+            data.add(entity);
+        }
+
+//        CoordinadorEntity coordinador = data.get(2);
+//        ActividadEntity entity = factory.manufacturePojo(ActividadEntity.class);
+//        entity.getCoordinadores().add(coordinador);
+//        em.persist(entity);
+//        coordinador.getActividades().add(entity);
     }
-    
-     /**
+
+    /**
      * Prueba para crear un Coordinador.
      * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test
     public void createCoordinadorTest() throws BusinessLogicException {
-         CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        CoordinadorEntity result = coordinadorLogic.createCoordinador(newEntity);
         
-         //crear un admin sin problemas de logica
-         CoordinadorEntity result = coordinadorLogic.createCoordinador(newEntity);
-         Assert.assertEquals(newEntity, result);
-         Assert.assertEquals(newEntity.getId(), result.getId());
-         
-         
-         //crear un admin con problemas de logica en el nombre
-        CoordinadorEntity newEntity1 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity1.setNombre("");
-        try{
-        coordinadorLogic.createCoordinador(newEntity1);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Coordinador no tiene nombre");
-        }
+        Assert.assertNotNull(result);
+        CoordinadorEntity entity = em.find(CoordinadorEntity.class, result.getId());
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
         
-         //crear un admin con problemas de logica en la contraseña
-        CoordinadorEntity newEntity2 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity2.setContrasenia(null);
-        try{
-        coordinadorLogic.createCoordinador(newEntity2);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Coordinador no tiene contraseña");
-        }
         
-         //crear un admin con problemas de logica de nombre repetido
-        CoordinadorEntity newEntity3 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity3.setNombre("miNombre");
-        try{
-        coordinadorLogic.createCoordinador(newEntity3);
-        coordinadorLogic.createCoordinador(newEntity3);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"Ya existe una Coordinador con el nombre \"miNombre\"");
-        }
-         
-         
     }
     
     /**
-     * Prueva obtener la lista de coordinadores
+     * Prueba para crear un Coordinador con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    @Test
-    public void getCoordinadorsTest()
-    {
-        List<CoordinadorEntity> lista = coordinadorLogic.getCoordinadors();
-        Assert.assertNotNull( lista );
-        Assert.assertEquals(lista.size(), data.size());  
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestConNombreInvalido1() throws BusinessLogicException {
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        newEntity.setNombre("");
+        coordinadorLogic.createCoordinador(newEntity);
+    }
+
+    /**
+     * Prueba para crear un Coordinador con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestConNombreInvalido2() throws BusinessLogicException {
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        newEntity.setNombre(null);
+        coordinadorLogic.createCoordinador(newEntity);
     }
     
     /**
-     * Prueva obtener un coordinador
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    @Test
-    public void getCoordinadorTest()
-    {
-        Long elIdDeAlguien = data.get(0).getId();
-        Assert.assertNotNull(coordinadorLogic.getCoordinador(elIdDeAlguien));
-        
-        Assert.assertNull(coordinadorLogic.getCoordinador(new Long(1000)));
-       
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestConContraseniaInvalido1() throws BusinessLogicException {
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        newEntity.setContrasenia("");
+        coordinadorLogic.createCoordinador(newEntity);
+    }
+
+    /**
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestConContraseniaInvalido2() throws BusinessLogicException {
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        newEntity.setContrasenia(null);
+        coordinadorLogic.createCoordinador(newEntity);
     }
     
-     /**
+    /**
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestConContraseniaInvalido3() throws BusinessLogicException {
+        CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
+        newEntity.setContrasenia("a");
+        coordinadorLogic.createCoordinador(newEntity);
+    }
+    
+    
+    
+    /**
+     * Prueba para crear un Coordinador ya existente.
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCoordinadorTestYaExistente() throws BusinessLogicException {
+        List<CoordinadorEntity> coordinadores = coordinadorLogic.getCoordinadores();
+        CoordinadorEntity newEntity = coordinadores.get(0);
+        coordinadorLogic.createCoordinador(newEntity);
+    }
+    
+    /**
+     * Prueba para consultar la lista de Coordinadores.
+     */
+    @Test
+    public void getCoordinadoresTest() {
+        List<CoordinadorEntity> list = coordinadorLogic.getCoordinadores();
+        Assert.assertEquals(data.size(), list.size());
+        for (CoordinadorEntity entity : list) {
+            boolean found = false;
+            for (CoordinadorEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+
+    /**
+     * Prueba para consultar un Coordinador.
+     */
+    @Test
+    public void getCoordinadorTest() {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity newEntity = coordinadorLogic.getCoordinador(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
+    }
+    
+    /**
+     * Prueba para consultar un Coordinador.
+     */
+    @Test
+    public void getCoordinadorNoExistenteTest() {
+        CoordinadorEntity resultEntity = coordinadorLogic.getCoordinador(-1L);
+        Assert.assertNull(resultEntity);
+    }
+
+    /**
      * Prueba para actualizar un Coordinador.
      * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test
     public void updateCoordinadorTest() throws BusinessLogicException {
-         CoordinadorEntity newEntity = factory.manufacturePojo(CoordinadorEntity.class);
-         Long elIdDeAlguien = data.get(0).getId();
-         newEntity.setId(elIdDeAlguien);
-        CoordinadorEntity antes = coordinadorLogic.getCoordinador(elIdDeAlguien);
-         //update un admin sin problemas de logica
-         CoordinadorEntity result = coordinadorLogic.updateCoordinador(elIdDeAlguien, newEntity);
-         Assert.assertNotEquals(antes.getNombre(), result.getNombre());
-         Assert.assertEquals(antes.getId(), result.getId());
-         
-         //update un admin con problema en el nombre
-        CoordinadorEntity newEntity1 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity1.setNombre("");
-        try{
-        coordinadorLogic.updateCoordinador(elIdDeAlguien, newEntity1);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Coordinador no tiene nombre");
-        }
-        
-         //crear un admin con problemas de logica en la contraseña
-        CoordinadorEntity newEntity2 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity2.setContrasenia(null);
-        try{
-          coordinadorLogic.updateCoordinador(elIdDeAlguien, newEntity2);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Coordinador no tiene contraseña");
-        }
-        
-         //crear un admin con problemas de logica de nombre repetido
-        CoordinadorEntity newEntity3 =  factory.manufacturePojo(CoordinadorEntity.class);
-        newEntity3.setNombre("miNombre");
-        try{
-        coordinadorLogic.updateCoordinador(elIdDeAlguien, newEntity3);;
-        coordinadorLogic.updateCoordinador(elIdDeAlguien, newEntity3);;
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"Ya existe una Coordinador con el nombre \"miNombre\"");
-        }     
-         
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
+
+        CoordinadorEntity newEntity = em.find(CoordinadorEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), newEntity.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(pojoEntity.getContrasenia(), newEntity.getContrasenia());
     }
     
-    @Test
-    public void deleteCoordinadorTest() throws BusinessLogicException 
-    {
-         Long elIdDeAlguien = data.get(0).getId();
-         coordinadorLogic.deleteCoordinador(elIdDeAlguien);
-         Assert.assertNull(coordinadorLogic.getCoordinador(elIdDeAlguien));
-         Assert.assertNotEquals(data.size(), coordinadorLogic.getCoordinadors().size());
-         
-         try{
-             coordinadorLogic.deleteCoordinador(new Long(1000));
-         }
-         catch (BusinessLogicException e)
-         {
-             Assert.assertEquals(e.getMessage(), "el coordinador no existe");
-         }
+    /**
+     * Prueba para crear un Coordinador con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestConNombreInvalido1() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre("");
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
     }
+
+    /**
+     * Prueba para crear un Coordinador con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestConNombreInvalido2() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre(null);
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestConContraseniaInvalido1() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia("");
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
+    }
+
+    /**
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestConContraseniaInvalido2() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia(null);
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Coordinador con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestConContraseniaInvalido3() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        CoordinadorEntity pojoEntity = factory.manufacturePojo(CoordinadorEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia("a");
+
+        coordinadorLogic.updateCoordinador(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Coordinador ya existente.
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCoordinadorTestYaExistente() throws BusinessLogicException {
+        List<CoordinadorEntity> coordinadores = coordinadorLogic.getCoordinadores();
+        CoordinadorEntity newEntity = coordinadores.get(0);
+        coordinadorLogic.updateCoordinador(newEntity.getId(), newEntity);
+    }
+
+    /**
+     * Prueba para eliminar un Coordinador
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteCoordinadorTest() throws BusinessLogicException {
+        CoordinadorEntity entity = data.get(0);
+        coordinadorLogic.deleteCoordinador(entity.getId());
+        CoordinadorEntity deleted = em.find(CoordinadorEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+
+//    /**
+//     * Prueba para eliminar un Coordinador asociado a un comentario
+//     *
+//     * 
+//     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+//     */
+//    @Test(expected = BusinessLogicException.class)
+//    public void deleteCoordinadorConGrupoDeInteresTest() throws BusinessLogicException 
+//    {
+//        coordinadorLogic.deleteCoordinador(data.get(2).getId());
+//    }
+    
 }

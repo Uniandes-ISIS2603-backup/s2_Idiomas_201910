@@ -6,12 +6,16 @@
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -20,92 +24,113 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author j.barbosaj
  */
 @Entity
-public class PersonaEntity  implements Serializable
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "typeUser", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("P")
+public class PersonaEntity extends BaseEntity  implements Serializable
 {
-
-    private Long contrasenia;
+    
+    // -------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------
+    
+    /**
+     * Atributo que representa el nombre de la actividad.
+     */
     private String nombre;
+
+    /**
+     * Atributo que representa el tipo de la persona
+     */
+    @Column(name = "typeUser", insertable = false, updatable = false)
+    private Character subTypeId;
+    
+    /**
+     * Atributo que representa la contrasenia de la persona
+     */
+    private String contrasenia;
+    
+    /**
+     * Atributo que representa los comentarios de la persona.
+     */
     @PodamExclude
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
-    private List<ComentarioEntity> comentarioEntitys;
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
     
-    
-
-    
-    /**
-     * Connstructor vacio de un Entity
-     */
-    public PersonaEntity()
-    {
-        //contructor vacio
-
-    }
-    
-    /**
-     * Retorna la contrasenia de un Entity
-     * @return contrasenia la contrseña
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Asigna una contrasenia a un Entity
-     * @param contrasenia 
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
 
     /**
-     * Retorna el nombre del Entity
-     * @return nombre -el nombre
+     * @return the nombre
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * Asigna un nombre al Entity
-     * @param nombre 
+     * @param nombre the nombre to set
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * @return the comentarioEntitys
+     * @return the subTypeId
      */
-    public List<ComentarioEntity> getComentarioEntitys() {
-        return comentarioEntitys;
+    public Character getSubTypeId() {
+        return subTypeId;
     }
 
     /**
-     * @param comentarioEntitys the comentarioEntitys to set
+     * @param subTypeId the subTypeId to set
      */
-    public void setComentarioEntitys(List<ComentarioEntity> comentarioEntitys) {
-        this.comentarioEntitys = comentarioEntitys;
-    }
-      @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
+    public void setSubTypeId(Character subTypeId) {
+        this.subTypeId = subTypeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * @return the contrasenia
+     */
+    public String getContrasenia() {
+        return contrasenia;
     }
 
+    /**
+     * @param contrasenia the contrasenia to set
+     */
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
+    }
     
-
+    /**
+     * Equals de la clase
+     */
     @Override
-    public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
         }
-        return super.hashCode();
+        PersonaEntity fobj = (PersonaEntity) obj;
+        return this.getNombre().equals(fobj.getNombre())
+                && this.getContrasenia().equals(fobj.getContrasenia());
     }
     
 }

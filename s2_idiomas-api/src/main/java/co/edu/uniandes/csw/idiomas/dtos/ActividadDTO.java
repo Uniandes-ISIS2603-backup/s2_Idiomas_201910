@@ -176,7 +176,7 @@ public class ActividadDTO implements Serializable{
     /**
      * @return the pTipo
      */
-    public char getpTipo() {
+    public Character getpTipo() {
         return pTipo;
     }
 

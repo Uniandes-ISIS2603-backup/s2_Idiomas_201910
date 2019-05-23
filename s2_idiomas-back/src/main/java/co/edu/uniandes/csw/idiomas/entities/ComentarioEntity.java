@@ -31,12 +31,19 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToOne
-    private PersonaEntity autor;
+    private PersonaEntity persona;
 
     
     @PodamExclude
     @ManyToOne
     private ActividadEntity actividad;
+    
+    /**
+     * Atributo que representa los comentarios de la actividad.
+     */
+    @PodamExclude
+    @ManyToOne
+    private GrupoDeInteresEntity grupoDeInteres;
     
     /**
      * Constructor vacío de ComentarioEntity.
@@ -74,20 +81,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the autor
-     */
-    public PersonaEntity getAutor() {
-        return autor;
-    }
-
-    /**
-     * @param autor the autor to set
-     */
-    public void setAutor(PersonaEntity autor) {
-        this.autor = autor;
-    }
-
-    /**
      * @return the titulo
      */
     public String getTitulo() {
@@ -114,19 +107,32 @@ public class ComentarioEntity extends BaseEntity implements Serializable {
     public void setActividad(ActividadEntity actividad) {
         this.actividad = actividad;
     }
-    
-    
 
     /**
-     * @return the comments
+     * @return the grupoDeInteres
      */
-    //public List<ComentarioEntity> getComments() {
-    //    return comments;
-    //}
+    public GrupoDeInteresEntity getGrupoDeInteres() {
+        return grupoDeInteres;
+    }
+
     /**
-     * @param comments the comments to set
+     * @param grupoDeInteres the grupoDeInteres to set
      */
-    //public void setComments(List<ComentarioEntity> comments) {
-    //     this.comments = comments;
-    // }
+    public void setGrupoDeInteres(GrupoDeInteresEntity grupoDeInteres) {
+        this.grupoDeInteres = grupoDeInteres;
+    }
+
+    /**
+     * @return the persona
+     */
+    public PersonaEntity getPersona() {
+        return persona;
+    }
+
+    /**
+     * @param persona the persona to set
+     */
+    public void setPersona(PersonaEntity persona) {
+        this.persona = persona;
+    }
 }

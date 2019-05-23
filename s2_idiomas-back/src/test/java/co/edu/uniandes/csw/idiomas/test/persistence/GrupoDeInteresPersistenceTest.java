@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.idiomas.test.persistence;
 
-
 import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import co.edu.uniandes.csw.idiomas.persistence.GrupoDeInteresPersistence;
 import java.util.ArrayList;
@@ -25,18 +24,23 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
+ * Pruebas de persistencia de GrupoDeInteres
  *
- * @author le.perezl
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
 public class GrupoDeInteresPersistenceTest {
-        /**
+    
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+
+    /**
      * Inyecta la dependencia de GrupoDeInteresPersistence.
      */
     @Inject
-    private GrupoDeInteresPersistence grupoPersistence;
+    private GrupoDeInteresPersistence grupoDeInteresPersistence;
 
     /**
      * Contexto de persistencia que se va a utilizar para acceder a la base
@@ -56,6 +60,10 @@ public class GrupoDeInteresPersistenceTest {
      * Lista de los datos de prueba.
      */
     private List<GrupoDeInteresEntity> data = new ArrayList<>();
+    
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -106,10 +114,10 @@ public class GrupoDeInteresPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            GrupoDeInteresEntity grupo = factory.manufacturePojo(GrupoDeInteresEntity.class);
+            GrupoDeInteresEntity entity = factory.manufacturePojo(GrupoDeInteresEntity.class);
 
-            em.persist(grupo);
-            data.add(grupo);
+            em.persist(entity);
+            data.add(entity);
         }
     }
 
@@ -120,21 +128,21 @@ public class GrupoDeInteresPersistenceTest {
     public void createGrupoDeInteresTest() {
         PodamFactory factory = new PodamFactoryImpl();
         GrupoDeInteresEntity newEntity = factory.manufacturePojo(GrupoDeInteresEntity.class);
-        GrupoDeInteresEntity result = grupoPersistence.create(newEntity);
+        GrupoDeInteresEntity result = grupoDeInteresPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
         GrupoDeInteresEntity entity = em.find(GrupoDeInteresEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
 
     /**
-     * Prueba para consultar la lista de GrupoDeInteress.
+     * Prueba para consultar la lista de GruposDeInteres.
      */
     @Test
-    public void getGrupoDeInteresLTest() {
-        List<GrupoDeInteresEntity> list = grupoPersistence.findAll();
+    public void getGruposDeInteresTest() {
+        List<GrupoDeInteresEntity> list = grupoDeInteresPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
         for (GrupoDeInteresEntity ent : list) {
             boolean found = false;
@@ -153,9 +161,10 @@ public class GrupoDeInteresPersistenceTest {
     @Test
     public void getGrupoDeInteresTest() {
         GrupoDeInteresEntity entity = data.get(0);
-        GrupoDeInteresEntity newEntity = grupoPersistence.find(entity.getId());
+        GrupoDeInteresEntity newEntity = grupoDeInteresPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
         Assert.assertEquals(entity.getIdioma(), newEntity.getIdioma());
     }
 
@@ -170,11 +179,13 @@ public class GrupoDeInteresPersistenceTest {
 
         newEntity.setId(entity.getId());
 
-        grupoPersistence.update(newEntity);
+        grupoDeInteresPersistence.update(newEntity);
 
         GrupoDeInteresEntity resp = em.find(GrupoDeInteresEntity.class, entity.getId());
-
-        Assert.assertEquals(newEntity.getId(), resp.getId());
+        
+        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(resp.getDescripcion(), newEntity.getDescripcion());
+        Assert.assertEquals(resp.getIdioma(), newEntity.getIdioma());
     }
 
     /**
@@ -183,8 +194,25 @@ public class GrupoDeInteresPersistenceTest {
     @Test
     public void deleteGrupoDeInteresTest() {
         GrupoDeInteresEntity entity = data.get(0);
-        grupoPersistence.delete(entity.getId());
+        grupoDeInteresPersistence.delete(entity.getId());
         GrupoDeInteresEntity deleted = em.find(GrupoDeInteresEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+    
+    /**
+     * Prueba para consultar un GrupoDeInteres por nombre.
+     */
+    @Test
+    public void findGrupoDeInteresByNameTest() {
+        GrupoDeInteresEntity entity = data.get(0);
+        GrupoDeInteresEntity newEntity = grupoDeInteresPersistence.findByName(entity.getNombre());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+
+        newEntity = grupoDeInteresPersistence.findByName(null);
+        Assert.assertNull(newEntity);
+        newEntity = grupoDeInteresPersistence.findByName("");
+        Assert.assertNull(newEntity);
+    }
 }
+

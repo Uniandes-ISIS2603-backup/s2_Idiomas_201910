@@ -8,125 +8,84 @@ package co.edu.uniandes.csw.idiomas.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
- * @author j.barbosaj
+ * Clase que representa un Usuario en la persistencia y permite su
+ * serialización.
+ * @author g.cubillosb
  */
 @Entity
-public class UsuarioEntity  implements Serializable{
+@DiscriminatorValue("U")
+public class UsuarioEntity extends PersonaEntity implements Serializable{
     
+    // -------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------
+    
+    /**
+     * Atributo que representa los actividades asociados con el usuario.
+     */
+    @PodamExclude
+    @ManyToMany
+    private List<ActividadEntity> actividades = new ArrayList<>();
+    
+    /**
+     * Atributo que representa los grupos de interés asociados con el usuario.
+     */
+    @PodamExclude
+    @ManyToMany
+    private List<GrupoDeInteresEntity> gruposDeInteres = new ArrayList<>();
+    
+    // ------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------
 
-    
-    private Long contrasenia;
-    private String nombre;
-    
-//    @PodamExclude
-//    @ManyToMany(mappedBy = "usuarios")
-//    private List<gruposDeintereEntity> grupos = new ArrayList<>();
-
+    /**
+     * @return the actividades
+     */
     public List<ActividadEntity> getActividades() {
         return actividades;
     }
 
+    /**
+     * @param actividades the actividades to set
+     */
     public void setActividades(List<ActividadEntity> actividades) {
         this.actividades = actividades;
     }
-    
-       
-    @PodamExclude
-    @ManyToMany
-    private List<ActividadEntity> actividades = new ArrayList<>();
- 
-    
-    @PodamExclude
-    @ManyToMany
-    private List<EstadiaEntity> estadias = new ArrayList<>();    
-    
+
     /**
-     * Connstructor vacio de un Entity
+     * @return the gruposDeInteres
      */
-    public UsuarioEntity()
-    {
-        //contructor vacio
-    }
-    
-    /**
-     * Retorna la contrasenia de un Entity
-     * @return contrasenia la contrseña
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Asigna una contrasenia a un Entity
-     * @param contrasenia 
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
+    public List<GrupoDeInteresEntity> getGruposDeInteres() {
+        return gruposDeInteres;
     }
 
     /**
-     * Retorna el nombre del Entity
-     * @return nombre -el nombre
+     * @param gruposDeInteres the gruposDeInteres to set
      */
-    public String getNombre() {
-        return nombre;
+    public void setGruposDeInteres(List<GrupoDeInteresEntity> gruposDeInteres) {
+        this.gruposDeInteres = gruposDeInteres;
     }
-
+    
     /**
-     * Asigna un nombre al Entity
-     * @param nombre 
+     * Equals de la clase
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the estadias
-     */
-    public List<EstadiaEntity> getEstadias() {
-        return estadias;
-    }
-
-    /**
-     * @param estadias the estadias to set
-     */
-    public void setEstadias(List<EstadiaEntity> estadias) {
-        this.estadias = estadias;
-    }
-
-    
-    
-   
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    
-
     @Override
-    public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
         }
-        return super.hashCode();
+        PersonaEntity fobj = (PersonaEntity) obj;
+        return this.getNombre().equals(fobj.getNombre())
+                && this.getContrasenia().equals(fobj.getContrasenia());
     }
 }

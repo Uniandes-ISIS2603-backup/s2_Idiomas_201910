@@ -1,3 +1,26 @@
+/*
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 package co.edu.uniandes.csw.idiomas.dtos;
 
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
@@ -6,123 +29,60 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * CoordinadorDTO Objeto de transferencia de datos de Coordinadores. Los DTO
- * contienen las representaciones de los JSON que se transfieren entre el
+ * CoordinadorDTO Objeto de transferencia de datos de Coordinadores. Los
+ * DTO contienen las representaciones de los JSON que se transfieren entre el
  * cliente y el servidor.
  *
- * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
- *      "id": number,
- *      "nombre": string
- *      "contraseña" : string
- *   }
- * </pre> Por ejemplo una coordinador se representa asi:<br>
- *
- * <pre>
- *
- *   {
- *      "id": 1,
- *      "nombre": juan
- *      "contraseña" : 1234
- *   }
- *
- * </pre>
- *
- * @author j.barbosa
+ * @author g.cubillosb
  */
-public class CoordinadorDTO implements Serializable {
-    Long id;
-    String nombre;
-    Long contrasenia;
-
-
+public class CoordinadorDTO extends PersonaDTO implements Serializable {
     
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
     
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
     /**
-     * Constructor por defecto
+     * Constructor vacio
      */
     public CoordinadorDTO() {
+        super();
     }
 
     /**
-     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
-     * la entidad que viene de argumento.
+     * Crea un objeto CoordinadorDTO a partir de un objeto
+     * CoordinadorEntity.
      *
-     * @param coordinadorEntity: Es la entidad que se va a convertir a DTO
+     * @param coordinadorEntity Entidad CoordinadorEntity desde la cual se
+     * va a crear el nuevo objeto.
+     *
      */
     public CoordinadorDTO(CoordinadorEntity coordinadorEntity) {
-        if (coordinadorEntity != null) {
+        if (coordinadorEntity != null) 
+        {
             this.id = coordinadorEntity.getId();
-            this.nombre = coordinadorEntity.getNombre();
             this.contrasenia = coordinadorEntity.getContrasenia();
+            this.nombre = coordinadorEntity.getNombre();
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
     /**
-     * Devuelve el ID de la coordinador.
+     * Convierte un objeto CoordinadorDTO a CoordinadorEntity.
      *
-     * @return the id
+     * @return Nueva objeto CoordinadorEntity.
      */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Modifica el ID de la coordinador.
-     *
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * Devuelve el nombre de la coordinador.
-     *
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * Modifica el nombre de la coordinador.
-     *
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
-     /**
-     * Devuelve el contrasenia de la coordinador.
-     *
-     * @return the contrasenia
-     */
-    public Long getContrasenia() {
-        return contrasenia;
-    }
-    
-    /**
-     * Modifica la conrasenia del coordinador.
-     *
-     * @param contraseina the nombre to set
-     */
-    public void setContrasenia(Long contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    /**
-     * Convertir DTO a Entity
-     *
-     * @return Un Entity con los valores del DTO
-     */
-    public CoordinadorEntity toEntity() {
+    @Override
+    public CoordinadorEntity toEntity() 
+    {
         CoordinadorEntity coordinadorEntity = new CoordinadorEntity();
-        coordinadorEntity.setId(this.id);
-        coordinadorEntity.setNombre(this.nombre);
-        coordinadorEntity.setContrasenia(this.contrasenia);
+        coordinadorEntity.setId(this.getId());
+        coordinadorEntity.setContrasenia(this.getContrasenia());
+        coordinadorEntity.setNombre(this.getNombre());
         return coordinadorEntity;
     }
 
@@ -131,4 +91,3 @@ public class CoordinadorDTO implements Serializable {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
-

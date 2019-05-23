@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.idiomas.test.logic;
 
 import co.edu.uniandes.csw.idiomas.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.UsuarioPersistence;
@@ -27,12 +28,13 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *
- * @author j.barbosaj 201717575
+ * Pruebas de lógica de Usuario
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
 public class UsuarioLogicTest {
-     /**
+
+    /**
      * Atributo que representa los datos aleatorios a ser creados.
      */
     private PodamFactory factory = new PodamFactoryImpl();
@@ -41,8 +43,7 @@ public class UsuarioLogicTest {
      * Inyección de dependencias con UsuarioLogic.
      */
     @Inject
-    private UsuarioLogic usuarioLogic;    
-   
+    private UsuarioLogic usuarioLogic;
     
     /**
      * Contexto de persistencia que se va a utilizar para acceder a la base 
@@ -59,8 +60,8 @@ public class UsuarioLogicTest {
     private UserTransaction utx;
 
     private List<UsuarioEntity> data = new ArrayList<>();
-    
-  
+
+
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -100,7 +101,10 @@ public class UsuarioLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from UsuarioEntity").executeUpdate();     
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from ComentarioEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        em.createQuery("delete from AdministradorEntity").executeUpdate();
     }
 
     /**
@@ -108,154 +112,289 @@ public class UsuarioLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++)
-        {
-            UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-            em.persist(usuario);          
-            data.add(usuario);
-        }       
+        for (int i = 0; i < 4; i++) {
+            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            em.persist(entity);
+            entity.setActividades(new ArrayList<>());
+            entity.setGruposDeInteres(new ArrayList<>());
+            data.add(entity);
+        }
+        
+//        UsuarioEntity usuario = data.get(2);
+//        ActividadEntity actividad = factory.manufacturePojo(ActividadEntity.class);
+//        actividad.getUsuarios().add(usuario);
+//        em.persist(actividad);
+//        usuario.getActividades().add(actividad);
+        
     }
-    
-     /**
+
+    /**
      * Prueba para crear un Usuario.
      * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test
     public void createUsuarioTest() throws BusinessLogicException {
-         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
         
-         //crear un admin sin problemas de logica
-         UsuarioEntity result = usuarioLogic.createUsuario(newEntity);
-         Assert.assertEquals(newEntity, result);
-         Assert.assertEquals(newEntity.getId(), result.getId());
-         
-         
-         //crear un admin con problemas de logica en el nombre
-        UsuarioEntity newEntity1 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity1.setNombre("");
-        try{
-        usuarioLogic.createUsuario(newEntity1);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Usuario no tiene nombre");
-        }
+        Assert.assertNotNull(result);
+        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
         
-         //crear un admin con problemas de logica en la contraseña
-        UsuarioEntity newEntity2 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity2.setContrasenia(null);
-        try{
-        usuarioLogic.createUsuario(newEntity2);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Usuario no tiene contraseña");
-        }
         
-         //crear un admin con problemas de logica de nombre repetido
-        UsuarioEntity newEntity3 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity3.setNombre("miNombre");
-        try{
-        usuarioLogic.createUsuario(newEntity3);
-        usuarioLogic.createUsuario(newEntity3);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"Ya existe una Usuario con el nombre \"miNombre\"");
-        }
-         
-         
     }
     
     /**
-     * Prueva obtener la lista de usuarioes
+     * Prueba para crear un Usuario con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    @Test
-    public void getUsuariosTest()
-    {
-        List<UsuarioEntity> lista = usuarioLogic.getUsuarios();
-        Assert.assertNotNull( lista );
-        Assert.assertEquals(lista.size(), data.size());  
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConNombreInvalido1() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setNombre("");
+        usuarioLogic.createUsuario(newEntity);
+    }
+
+    /**
+     * Prueba para crear un Usuario con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConNombreInvalido2() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setNombre(null);
+        usuarioLogic.createUsuario(newEntity);
     }
     
     /**
-     * Prueva obtener un usuario
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
-    @Test
-    public void getUsuarioTest()
-    {
-        Long elIdDeAlguien = data.get(0).getId();
-        Assert.assertNotNull(usuarioLogic.getUsuario(elIdDeAlguien));
-        
-        Assert.assertNull(usuarioLogic.getUsuario(new Long(1000)));
-       
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConContraseniaInvalido1() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setContrasenia("");
+        usuarioLogic.createUsuario(newEntity);
+    }
+
+    /**
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConContraseniaInvalido2() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setContrasenia(null);
+        usuarioLogic.createUsuario(newEntity);
     }
     
-     /**
+    /**
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConContraseniaInvalido3() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setContrasenia("a");
+        usuarioLogic.createUsuario(newEntity);
+    }
+    
+    
+    
+    /**
+     * Prueba para crear un Usuario ya existente.
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestYaExistente() throws BusinessLogicException {
+        List<UsuarioEntity> usuarios = usuarioLogic.getUsuarios();
+        UsuarioEntity newEntity = usuarios.get(0);
+        usuarioLogic.createUsuario(newEntity);
+    }
+    
+    /**
+     * Prueba para consultar la lista de Usuarios.
+     */
+    @Test
+    public void getUsuariosTest() {
+        List<UsuarioEntity> list = usuarioLogic.getUsuarios();
+        Assert.assertEquals(data.size(), list.size());
+        for (UsuarioEntity entity : list) {
+            boolean found = false;
+            for (UsuarioEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+
+    /**
+     * Prueba para consultar un Usuario.
+     */
+    @Test
+    public void getUsuarioTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity newEntity = usuarioLogic.getUsuario(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
+    }
+    
+    /**
+     * Prueba para consultar un Usuario.
+     */
+    @Test
+    public void getUsuarioNoExistenteTest() {
+        UsuarioEntity resultEntity = usuarioLogic.getUsuario(-1L);
+        Assert.assertNull(resultEntity);
+    }
+
+    /**
      * Prueba para actualizar un Usuario.
      * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
      */
     @Test
     public void updateUsuarioTest() throws BusinessLogicException {
-         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-         Long elIdDeAlguien = data.get(0).getId();
-         newEntity.setId(elIdDeAlguien);
-        UsuarioEntity antes = usuarioLogic.getUsuario(elIdDeAlguien);
-         //update un admin sin problemas de logica
-         UsuarioEntity result = usuarioLogic.updateUsuario(elIdDeAlguien, newEntity);
-         Assert.assertNotEquals(antes.getNombre(), result.getNombre());
-         Assert.assertEquals(antes.getId(), result.getId());
-         
-         //update un admin con problema en el nombre
-        UsuarioEntity newEntity1 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity1.setNombre("");
-        try{
-        usuarioLogic.updateUsuario(elIdDeAlguien, newEntity1);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Usuario no tiene nombre");
-        }
-        
-         //crear un admin con problemas de logica en la contraseña
-        UsuarioEntity newEntity2 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity2.setContrasenia(null);
-        try{
-          usuarioLogic.updateUsuario(elIdDeAlguien, newEntity2);
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"El Usuario no tiene contraseña");
-        }
-        
-         //crear un admin con problemas de logica de nombre repetido
-        UsuarioEntity newEntity3 =  factory.manufacturePojo(UsuarioEntity.class);
-        newEntity3.setNombre("miNombre");
-        try{
-        usuarioLogic.updateUsuario(elIdDeAlguien, newEntity3);;
-        usuarioLogic.updateUsuario(elIdDeAlguien, newEntity3);;
-        }
-        catch(BusinessLogicException e)
-        {
-            Assert.assertEquals(e.getMessage(),"Ya existe una Usuario con el nombre \"miNombre\"");
-        }     
-         
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
+
+        UsuarioEntity newEntity = em.find(UsuarioEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), newEntity.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(pojoEntity.getContrasenia(), newEntity.getContrasenia());
     }
     
-    @Test
-    public void deleteUsuarioTest() throws BusinessLogicException 
-    {
-         Long elIdDeAlguien = data.get(0).getId();
-         usuarioLogic.deleteUsuario(elIdDeAlguien);
-         Assert.assertNull(usuarioLogic.getUsuario(elIdDeAlguien));
-         Assert.assertNotEquals(data.size(), usuarioLogic.getUsuarios().size());
-         
-         try{
-             usuarioLogic.deleteUsuario(new Long(1000));
-         }
-         catch (BusinessLogicException e)
-         {
-             Assert.assertEquals(e.getMessage(), "el usuario no existe");
-         }
+    /**
+     * Prueba para crear un Usuario con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestConNombreInvalido1() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre("");
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
     }
+
+    /**
+     * Prueba para crear un Usuario con nombre inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestConNombreInvalido2() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setNombre(null);
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestConContraseniaInvalido1() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia("");
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
+    }
+
+    /**
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestConContraseniaInvalido2() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia(null);
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con contrasenia inválido
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestConContraseniaInvalido3() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setContrasenia("a");
+
+        usuarioLogic.updateUsuario(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario ya existente.
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateUsuarioTestYaExistente() throws BusinessLogicException {
+        List<UsuarioEntity> usuarios = usuarioLogic.getUsuarios();
+        UsuarioEntity newEntity = usuarios.get(0);
+        usuarioLogic.updateUsuario(newEntity.getId(), newEntity);
+    }
+
+    /**
+     * Prueba para eliminar un Usuario
+     *
+     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteUsuarioTest() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        usuarioLogic.deleteUsuario(entity.getId());
+        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+
+//    /**
+//     * Prueba para eliminar un Usuario asociado a un comentario
+//     *
+//     * 
+//     * @throws co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException
+//     */
+//    @Test(expected = BusinessLogicException.class)
+//    public void deleteUsuarioConActividadTest() throws BusinessLogicException 
+//    {
+//        usuarioLogic.deleteUsuario(data.get(2).getId());
+//    }
+//    
 }

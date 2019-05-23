@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.idiomas.test.persistence;
 
-
 import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
 import co.edu.uniandes.csw.idiomas.persistence.AdministradorPersistence;
 import java.util.ArrayList;
@@ -14,11 +13,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,47 +25,50 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
+ * Pruebas de persistencia de Administrador
  *
- * @author j.barbosaj 201717575
+ * @author g.cubillosb
  */
 @RunWith(Arquillian.class)
-public class AdministradorPersistenceTest 
-{
+public class AdministradorPersistenceTest {
     
-     /**
-     * Inyección de la dependencia a la clase AdministradorPersistence cuyos métodos
-     * se van a probar.
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
+
+    /**
+     * Inyecta la dependencia de AdministradorPersistence.
      */
     @Inject
     private AdministradorPersistence administradorPersistence;
-    
-     /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
+
+    /**
+     * Contexto de persistencia que se va a utilizar para acceder a la base
+     * de datos.
      */
-    @PersistenceContext 
+    @PersistenceContext
     private EntityManager em;
-    
-     /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
+
+    /**
+     * Variable para marcar las transacciones del "em" (Entity Manager) cuando
+     * se crean/borran datos.
      */
     @Inject
     UserTransaction utx;
-    
-     /**
-     * Lista que tiene los datos de prueba.
+
+    /**
+     * Lista de los datos de prueba.
      */
-    private List<AdministradorEntity> data = new ArrayList<AdministradorEntity>();
+    private List<AdministradorEntity> data = new ArrayList<>();
     
-    
-    
-     /**
-     *
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Administrador, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -76,8 +78,7 @@ public class AdministradorPersistenceTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -98,7 +99,7 @@ public class AdministradorPersistenceTest
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
@@ -119,24 +120,23 @@ public class AdministradorPersistenceTest
             data.add(entity);
         }
     }
-    
+
     /**
-     * Prueva el crear
+     * Prueba para crear un Administrador.
      */
     @Test
-    public void createAdministradorTest()
-    {
+    public void createAdministradorTest() {
         PodamFactory factory = new PodamFactoryImpl();
         AdministradorEntity newEntity = factory.manufacturePojo(AdministradorEntity.class);
         AdministradorEntity result = administradorPersistence.create(newEntity);
-        
-         Assert.assertNotNull(result);
-         
-         AdministradorEntity entity = em.find(AdministradorEntity.class, result.getId());
+
+        Assert.assertNotNull(result);
+
+        AdministradorEntity entity = em.find(AdministradorEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
-    
+
     /**
      * Prueba para consultar la lista de Administradores.
      */
@@ -165,7 +165,7 @@ public class AdministradorPersistenceTest
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
         Assert.assertEquals(entity.getContrasenia(), newEntity.getContrasenia());
-       }
+    }
 
     /**
      * Prueba para actualizar un Administrador.
@@ -182,8 +182,7 @@ public class AdministradorPersistenceTest
 
         AdministradorEntity resp = em.find(AdministradorEntity.class, entity.getId());
         
-        Assert.assertEquals(resp.getId(), newEntity.getId());
-        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());      
+        Assert.assertEquals(resp.getNombre(), newEntity.getNombre());
         Assert.assertEquals(resp.getContrasenia(), newEntity.getContrasenia());
     }
 
@@ -199,7 +198,7 @@ public class AdministradorPersistenceTest
     }
     
     /**
-     * Prueba para consultasr un Administrador por nombre.
+     * Prueba para consultar un Administrador por nombre.
      */
     @Test
     public void findAdministradorByNameTest() {
@@ -214,3 +213,4 @@ public class AdministradorPersistenceTest
         Assert.assertNull(newEntity);
     }
 }
+
