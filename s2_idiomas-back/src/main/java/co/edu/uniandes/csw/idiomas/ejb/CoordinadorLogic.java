@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.idiomas.ejb;
 
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.idiomas.persistence.CoordinadorPersistence;
@@ -15,39 +16,61 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Clase que implementa la conexion con la persistencia para la entidad de
+ * Coordinador.
  *
- * @author j.barbosaj 201717575
+ * @author g.cubillosb
  */
 @Stateless
 public class CoordinadorLogic {
-     private static final Logger LOGGER = Logger.getLogger(CoordinadorLogic.class.getName());
 
+    // -------------------------------------------------------------------------
+    // Atributos
+    // -------------------------------------------------------------------------
+    /**
+     * Logger para las acciones de la clase.
+     */
+    private static final Logger LOGGER = Logger.getLogger(CoordinadorLogic.class.getName());
+
+    /**
+     * Variable para acceder a la persistencia de la aplicación. Es una
+     * inyección de dependencias.
+     */
     @Inject
-    private CoordinadorPersistence persistence; // Variable para acceder a la persistencia de la aplicación. Es una inyección de dependencias.
+    private CoordinadorPersistence persistence;
 
+    // -------------------------------------------------------------------------
+    // Métodos
+    // -------------------------------------------------------------------------
     /**
      * Crea una coordinador en la persistencia.
      *
      * @param coordinadorEntity La entidad que representa la coordinador a
      * persistir.
-     * @return La entiddad de la coordinador luego de persistirla.
+     * @return La entidad de la coordinador luego de persistirla.
      * @throws BusinessLogicException Si la coordinador a persistir ya existe.
      */
     public CoordinadorEntity createCoordinador(CoordinadorEntity coordinadorEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la coordinador");
-        // Verifica la regla de negocio que dice que no puede haber un coordinador con el nombre vacio
-        if(coordinadorEntity.getNombre().compareTo("")==0)
-        {
-            throw new BusinessLogicException("El Coordinador no tiene nombre");
+
+        // Verifica la regla de negocio que dice que el nombre de la coordinador no puede ser vacío.
+        if (!validateName(coordinadorEntity.getNombre())) {
+            throw new BusinessLogicException("El nombre es inválido.");
         }
-        // Verifica la regla de negocio que dice que no puede haber un coordinador con contraseña vacio
-        else if(coordinadorEntity.getContrasenia()==null)
-        {
-            throw new BusinessLogicException("El Coordinador no tiene contraseña");
+        // Verifica la regla de negocio que dice que la contrasenia de la coordinador no puede ser vacío.
+        if (!validateName(coordinadorEntity.getContrasenia())) {
+            throw new BusinessLogicException("La contrasenia es inválido.");
         }
-        // Verifica la regla de negocio que dice que no puede haber dos coordinador con el mismo nombre
-        if (persistence.findByName(coordinadorEntity.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe una Coordinador con el nombre \"" + coordinadorEntity.getNombre() + "\"");
+        // Verifica la regla de negocio que dice que la contrasenia de la coordinador no puede ser menor a
+        //ocho caracteres.
+        if (coordinadorEntity.getContrasenia().length() < 8 ) {
+            throw new BusinessLogicException("La longitud no es válida.");
+        }
+        // Verifica la regla de negocio que dice que un coordinador no puede ser idéntico a otro coordinador.
+        if (persistence.findByName(coordinadorEntity.getNombre()) != null
+                &&persistence.findByName(coordinadorEntity.getNombre()).equals(coordinadorEntity))
+        {
+            throw new BusinessLogicException("El coordinador ya existe.");         
         }
         // Invoca la persistencia para crear la coordinador
         persistence.create(coordinadorEntity);
@@ -57,33 +80,33 @@ public class CoordinadorLogic {
 
     /**
      *
-     * Obtener todas las coordinador existentes en la base de datos.
+     * Obtener todas las coordinadores existentes en la base de datos.
      *
-     * @return una lista de coordinador.
+     * @return una lista de coordinadores.
      */
-    public List<CoordinadorEntity> getCoordinadors() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las coordinador");
+    public List<CoordinadorEntity> getCoordinadores() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las coordinadores");
         // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
-        List<CoordinadorEntity> coordinador = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las coordinador");
-        return coordinador;
+        List<CoordinadorEntity> coordinadores = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las coordinadores");
+        return coordinadores;
     }
 
     /**
      *
      * Obtener una coordinador por medio de su id.
      *
-     * @param coordinadorId: id de la coordinador para ser buscada.
+     * @param coordinadoresId: id de la coordinador para ser buscada.
      * @return la coordinador solicitada por medio de su id.
      */
-    public CoordinadorEntity getCoordinador(Long coordinadorId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la coordinador con id = {0}", coordinadorId);
+    public CoordinadorEntity getCoordinador(Long coordinadoresId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la coordinador con id = {0}", coordinadoresId);
         // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
-        CoordinadorEntity coordinadorEntity = persistence.find(coordinadorId);
+        CoordinadorEntity coordinadorEntity = persistence.find(coordinadoresId);
         if (coordinadorEntity == null) {
-            LOGGER.log(Level.SEVERE, "La coordinador con el id = {0} no existe", coordinadorId);
+            LOGGER.log(Level.SEVERE, "La coordinador con el id = {0} no existe", coordinadoresId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la coordinador con id = {0}", coordinadorId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la coordinador con id = {0}", coordinadoresId);
         return coordinadorEntity;
     }
 
@@ -91,33 +114,35 @@ public class CoordinadorLogic {
      *
      * Actualizar una coordinador.
      *
-     * @param coordinadorId: id de la coordinador para buscarla en la base de
+     * @param pCoordinadoresId: id de la coordinador para buscarla en la base de
      * datos.
      * @param coordinadorEntity: coordinador con los cambios para ser actualizada,
      * por ejemplo el nombre.
      * @return la coordinador con los cambios actualizados en la base de datos.
      */
-    public CoordinadorEntity updateCoordinador(Long coordinadorId, CoordinadorEntity coordinadorEntity) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la coordinador con id = {0}", coordinadorId);
-       //verifica que el Coordinador que se va a actualizar existe
-        CoordinadorEntity ecoodinadorEntity = persistence.find(coordinadorId);
-        if (ecoodinadorEntity == null) {
-            throw new BusinessLogicException( "La coodinador con el id = {0} no existe" + coordinadorId);
+    public CoordinadorEntity updateCoordinador(Long pCoordinadoresId, CoordinadorEntity coordinadorEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la coordinador con id = {0}", pCoordinadoresId);
+        
+        // Verifica la regla de negocio que dice que el nombre de la coordinador no puede ser vacío.
+        if (!validateName(coordinadorEntity.getNombre())) {
+            throw new BusinessLogicException("El nombre es inválido.");
         }
-         // Verifica la regla de negocio que dice que no puede haber un coodinador con el nombre vacio
-        else if(coordinadorEntity.getNombre().compareTo("")==0)
+        // Verifica la regla de negocio que dice que la contrasenia de la coordinador no puede ser vacío.
+        if (!validateName(coordinadorEntity.getContrasenia())) {
+            throw new BusinessLogicException("La contrasenia es inválido.");
+        }
+        // Verifica la regla de negocio que dice que la contrasenia de la coordinador no puede ser menor a
+        //ocho caracteres.
+        if (coordinadorEntity.getContrasenia().length() < 8 ) {
+            throw new BusinessLogicException("La longitud no es válida.");
+        }
+        // Verifica la regla de negocio que dice que un coordinador no puede ser idéntico a otro coordinador.
+        if (persistence.findByName(coordinadorEntity.getNombre()) != null
+                &&persistence.findByName(coordinadorEntity.getNombre()).equals(coordinadorEntity))
         {
-            throw new BusinessLogicException("El Coordinador no tiene nombre");
+            throw new BusinessLogicException("El coordinador ya existe.");         
         }
-        // Verifica la regla de negocio que dice que no puede haber un coodinador con contraseña vacio
-        else if(coordinadorEntity.getContrasenia()==null)
-        {
-            throw new BusinessLogicException("El Coordinador no tiene contraseña");
-        }
-        // Verifica la regla de negocio que dice que no puede haber dos coodinador con el mismo nombre
-        else if (persistence.findByName(coordinadorEntity.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe una Coordinador con el nombre \"" + coordinadorEntity.getNombre() + "\"");
-        }
+        
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
         CoordinadorEntity newEntity = persistence.update(coordinadorEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la coordinador con id = {0}", coordinadorEntity.getId());
@@ -127,16 +152,29 @@ public class CoordinadorLogic {
     /**
      * Borrar un coordinador
      *
-     * @param coordinadorId: id de la coordinador a borrar
+     * @param pCoordinadoresId: id de la coordinador a borrar
      * @throws BusinessLogicException Si la coordinador a eliminar tiene libros.
      */
-    public void deleteCoordinador(Long coordinadorId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la coordinador con id = {0}", coordinadorId);    
-        if(persistence.find(coordinadorId)== null)
-        {
-            throw new BusinessLogicException("el coordinador no existe");
+    public void deleteCoordinador(Long pCoordinadoresId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la coordinador con id = {0}", pCoordinadoresId);
+        // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
+        List<ActividadEntity> actividades = getCoordinador(pCoordinadoresId).getActividades();
+        if (actividades != null && !actividades.isEmpty()) {
+            throw new BusinessLogicException("No se puede borrar la coordinador con id = " + pCoordinadoresId + " porque tiene actividades asociados");
         }
-        persistence.delete(coordinadorId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la coordinador con id = {0}", coordinadorId);
+        
+        persistence.delete(pCoordinadoresId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la coordinador con id = {0}", pCoordinadoresId);
     }
+
+    /**
+     * Verifica que el nombre no sea invalido.
+     *
+     * @param pNombre a verificar
+     * @return true si el nombre es valido.
+     */
+    private boolean validateName(String pNombre) {
+        return !(pNombre == null || pNombre.isEmpty());
+    }
+
 }
