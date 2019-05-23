@@ -44,7 +44,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios"
 					]
@@ -91,7 +91,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios"
 					]
@@ -132,7 +132,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios"
 					]
@@ -173,7 +173,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"{{new_id_a}}"
@@ -214,7 +214,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"0"
@@ -261,7 +261,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"{{new_id_a}}"
@@ -307,7 +307,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"0"
@@ -347,7 +347,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"{{new_id_a}}"
@@ -387,7 +387,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"{{new_id_a2}}"
@@ -428,7 +428,7 @@
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s2_idiomas-api",
 						"api",
 						"usuarios",
 						"0"

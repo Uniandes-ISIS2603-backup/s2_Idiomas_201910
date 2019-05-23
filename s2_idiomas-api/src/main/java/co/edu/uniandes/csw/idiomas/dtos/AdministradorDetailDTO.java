@@ -1,26 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.idiomas.dtos;
 
+import co.edu.uniandes.csw.idiomas.entities.ActividadEntity;
 import co.edu.uniandes.csw.idiomas.entities.AdministradorEntity;
+import co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Josealejandro Barbosa
+ * Clase que extiende de {@link AdministradorDTO} para manejar las relaciones entre
+ * AdministradorDTO y otros DTOs. Para el contenido de una administrador ir a la
+ * documentación de {@link AdministradorDTO}
+ * @author g.cubillosb
  */
-public class AdministradorDetailDTO  extends AdministradorDTO implements Serializable{
+public class AdministradorDetailDTO extends AdministradorDTO implements Serializable 
+{
     
+    // ------------------------------------------------------------------------
+    // Atributos
+    // ------------------------------------------------------------------------
     
-    private List<GrupoDeInteresDTO> gruposAdministrados;
+    /**
+     * Lista de tipo GrupoDeInteresDTO contiene los grupos que están asociados con
+     * esta administrador.
+     */
+    private List<GrupoDeInteresDTO> gruposDeInteres;
     
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
     
-    
-    public AdministradorDetailDTO()
+    /**
+     * Constructor vacío
+     */
+    public AdministradorDetailDTO () 
     {
         super();
     }
-    
+
     /**
      * Crea un objeto AdministradorDetailDTO a partir de un objeto AdministradorEntity
      * incluyendo los atributos de AdministradorDTO.
@@ -31,11 +53,12 @@ public class AdministradorDetailDTO  extends AdministradorDTO implements Seriali
      */
     public AdministradorDetailDTO(AdministradorEntity administradorEntity) {
         super(administradorEntity);
-        if (administradorEntity != null) {
-            gruposAdministrados = new ArrayList<>();           
-        }
     }
     
+    // ------------------------------------------------------------------------
+    // Métodos
+    // ------------------------------------------------------------------------
+
     /**
      * Convierte un objeto AdministradorDetailDTO a AdministradorEntity incluyendo los
      * atributos de AdministradorDTO.
@@ -44,23 +67,30 @@ public class AdministradorDetailDTO  extends AdministradorDTO implements Seriali
      *
      */
     @Override
-    public AdministradorEntity toEntity() {
+    public AdministradorEntity toEntity() 
+    {
         AdministradorEntity administradorEntity = super.toEntity();
-        if (gruposAdministrados != null) {
-            //falta grupo Entity y la relacion
-//            administradorEntity.set
+        if (getGruposDeInteres()!= null) {
+            List<GrupoDeInteresEntity> gruposDeInteresEntity = new ArrayList<>();
+            for (GrupoDeInteresDTO dtoGruposDeInteres : getGruposDeInteres()) {
+                gruposDeInteresEntity.add(dtoGruposDeInteres.toEntity());
+            }
+            administradorEntity.setGruposDeInteres(gruposDeInteresEntity);
         }
-       
         return administradorEntity;
     }
-    
-     public List<GrupoDeInteresDTO> getGruposAdministrados() 
-    {
-        return gruposAdministrados;
+
+    /**
+     * @return the gruposDeInteres
+     */
+    public List<GrupoDeInteresDTO> getGruposDeInteres() {
+        return gruposDeInteres;
     }
 
-    public void setGruposAdministrados(List<GrupoDeInteresDTO> gruposAdministrados) 
-    {
-        this.gruposAdministrados = gruposAdministrados;
-    }
-            }
+    /**
+     * @param gruposDeInteres the gruposDeInteres to set
+     */
+    public void setGruposDeInteres(List<GrupoDeInteresDTO> gruposDeInteres) {
+        this.gruposDeInteres = gruposDeInteres;
+    }    
+}

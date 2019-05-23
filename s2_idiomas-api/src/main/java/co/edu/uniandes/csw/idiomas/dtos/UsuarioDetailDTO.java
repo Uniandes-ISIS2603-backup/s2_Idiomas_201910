@@ -135,8 +135,5 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable
      */
     public void setGruposDeInteres(List<GrupoDeInteresDTO> gruposDeInteres) {
         this.gruposDeInteres = gruposDeInteres;
-    }
-    
-
-    
+    }    
 }

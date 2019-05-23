@@ -24,12 +24,13 @@ SOFTWARE.
 package co.edu.uniandes.csw.idiomas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -64,7 +65,7 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
      * Atributo que representa el administrador del grupo.
      */
     @PodamExclude
-    @OneToOne
+    @ManyToOne
     private AdministradorEntity administrador;
 
     /**
@@ -79,7 +80,7 @@ public class GrupoDeInteresEntity extends BaseEntity implements Serializable
      */
     @PodamExclude
     @OneToMany(mappedBy = "grupoDeInteres", cascade = CascadeType.ALL)
-    private List<ActividadEntity> actividades;
+    private List<ActividadEntity> actividades = new ArrayList<ActividadEntity>();
     
     /**
      * Atributo que representa los comentarios asociados con el grupo de interés.

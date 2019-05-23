@@ -15,31 +15,45 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
+ * Clase que maneja la persistencia para Administrador. Se conecta a través Entity
+ * Manager de javax.persistance con la base de datos SQL.
  *
- * @author j.barbosaj 201717575
+ * @author g.cubillosb
  */
 @Stateless
 public class AdministradorPersistence {
-     
-    private static final Logger LOGGER = Logger.getLogger(AdministradorEntity.class.getName());
 
+    // ----------------------------------------------------------------------
+    // Atributos 
+    // ----------------------------------------------------------------------
+    
+    /**
+     * Logger para las acciones de la clase.
+     */
+    private static final Logger LOGGER = Logger.getLogger(AdministradorPersistence.class.getName());
+
+    /**
+     * Entity manager para la clase.
+     */
     @PersistenceContext(unitName = "idiomasPU")
     protected EntityManager em;
 
+    // ----------------------------------------------------------------------
+    // Métodos
+    // ----------------------------------------------------------------------
+    
     /**
-     * Crea un administrador en la base de datos
+     * Método para persistir la entidad en la base de datos.
      *
-     * @param administradorEntity objeto author que se creará en la base de datos
-     * @return devuelve la entidad creada con un id dado por la base de datos.
+     * @param pAdministradorEntity Objeto administrador que se creará en la base de
+     * datos.
+     * @return Devuelve la administrador creada con un id dado por la base de datos.
      */
-    public AdministradorEntity create(AdministradorEntity administradorEntity) {
-        LOGGER.log(Level.INFO, "Creando un administrador nuevo");
-        /* Note que hacemos uso de un método propio de EntityManager para persistir la author en la base de datos.
-        Es similar a "INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);" en SQL.
-         */
-        em.persist(administradorEntity);
-        LOGGER.log(Level.INFO, "Autor creado");
-        return administradorEntity;
+    public AdministradorEntity create(AdministradorEntity pAdministradorEntity) {
+        LOGGER.log(Level.INFO, "Creando una administrador nueva");
+        em.persist(pAdministradorEntity);
+        LOGGER.log(Level.INFO, "Saliendo de crear una administrador nueva");
+        return pAdministradorEntity;
     }
 
     /**
@@ -50,86 +64,89 @@ public class AdministradorPersistence {
      * AdministradorEntity;" - "SELECT * FROM table_name" en SQL.
      */
     public List<AdministradorEntity> findAll() {
-        LOGGER.log(Level.INFO, "Consultando todos los administradores");
+        LOGGER.log(Level.INFO, "Consultando todas las administradores");
         // Se crea un query para buscar todas las administradores en la base de datos.
         TypedQuery query = em.createQuery("select u from AdministradorEntity u", AdministradorEntity.class);
-        // Note que en el query se hace uso del método getResultList() que obtiene una lista de administradores.
+        // Se hace uso del método getResultList() que obtiene una lista de administradores.
         return query.getResultList();
     }
 
     /**
-     * Busca si hay alguna author con el id que se envía de argumento
+     * Busca si hay alguna administrador con el id que se envía de argumento
      *
-     * @param authorsId: id correspondiente a la author buscada.
-     * @return un author.
+     * @param pAdministradorId: id correspondiente a la administrador buscada.
+     * @return una administrador.
      */
-    public AdministradorEntity find(Long authorsId) {
-        LOGGER.log(Level.INFO, "Consultando el administrador con id={0}", authorsId);
+    public AdministradorEntity find(Long pAdministradorId) {
+        LOGGER.log(Level.INFO, "Consultando administrador con id = {0}", pAdministradorId);
         /* Note que se hace uso del metodo "find" propio del EntityManager, el cual recibe como argumento 
         el tipo de la clase y el objeto que nos hara el filtro en la base de datos en este caso el "id"
         Suponga que es algo similar a "select * from AdministradorEntity where id=id;" - "SELECT * FROM table_name WHERE condition;" en SQL.
          */
-        return em.find(AdministradorEntity.class, authorsId);
+        return em.find(AdministradorEntity.class, pAdministradorId);
     }
 
     /**
-     * Actualiza una author.
+     * Actualiza una administrador.
      *
-     * @param administradorEntity: la author que viene con los nuevos cambios. Por
-     * ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
+     * @param pAdministradorEntity: la administrador que viene con los nuevos cambios.
+     * Por ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
      * update.
-     * @return una author con los cambios aplicados.
+     * @return una administrador con los cambios aplicados.
      */
-    public AdministradorEntity update(AdministradorEntity administradorEntity) {
-        LOGGER.log(Level.INFO, "Actualizando el author con id={0}", administradorEntity.getId());
+    public AdministradorEntity update(AdministradorEntity pAdministradorEntity) {
+        LOGGER.log(Level.INFO, "Actualizando administrador con id = {0}", pAdministradorEntity.getId());
         /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
-        la author con los cambios, esto es similar a 
+        la administrador con los cambios, esto es similar a 
         "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
          */
-        return em.merge(administradorEntity);
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la administrador con id = {0}", pAdministradorEntity.getId());
+        return em.merge(pAdministradorEntity);
     }
 
     /**
-     * Borra una author de la base de datos recibiendo como argumento el id de
-     * la author
      *
-     * @param authorsId: id correspondiente a la author a borrar.
+     * Borra una administrador de la base de datos recibiendo como argumento el id
+     * de la administrador.
+     *
+     * @param pAdministradorId: id correspondiente a la administrador a borrar.
      */
-    public void delete(Long authorsId) {
-
-        LOGGER.log(Level.INFO, "Borrando el author con id={0}", authorsId);
-        // Se hace uso de mismo método que esta explicado en public AdministradorEntity find(Long id) para obtener la author a borrar.
-        AdministradorEntity administradorEntity = em.find(AdministradorEntity.class, authorsId);
-        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
-        EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-        Es similar a "delete from AdministradorEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
-        em.remove(administradorEntity);
+    public void delete(Long pAdministradorId) {
+        LOGGER.log(Level.INFO, "Borrando administrador con id = {0}", pAdministradorId);
+        // Se hace uso de mismo método que esta explicado en public AdministradorEntity 
+        // find(Long id) para obtener la administrador a borrar.
+        AdministradorEntity entity = em.find(AdministradorEntity.class, pAdministradorId);
+        /* Note que una vez obtenido el objeto desde la base de datos llamado 
+         "entity", volvemos hacer uso de un método propio del
+         EntityManager para eliminar de la base de datos el objeto que 
+         encontramos y queremos borrar.
+         Es similar a "delete from EditorialEntity where id=id;" - "DELETE FROM 
+         table_name WHERE condition;" en SQL.*/
+        em.remove(entity);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la administrador con id = {0}", pAdministradorId);
     }
 
-   /**
-     * Busca si hay alguna editorial con el nombre que se envía de argumento
+    /**
+     * Busca si hay alguna administrador con el nombre que se envía de argumento.
      *
-     * @param nombre: Nombre de la editorial que se está buscando
-     * @return null si no existe ninguna editorial con el nombre del argumento.
+     * @param pName: Nombre de la administrador que se está buscando
+     * @return null si no existe ninguna administrador con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
-    public AdministradorEntity findByName(String nombre) {
-        LOGGER.log(Level.INFO, "Consultando editorial por nombre ", nombre);
-        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
+    public AdministradorEntity findByName(String pName) {
+        LOGGER.log(Level.INFO, "Consultando administrador por nombre = {0}", pName);
+        // Se crea un query para buscar administradores con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
         TypedQuery query = em.createQuery("Select e From AdministradorEntity e where e.nombre = :nombre", AdministradorEntity.class);
-        // Se remplaza el placeholder ":nombre" con el valor del argumento 
-        query = query.setParameter("nombre", nombre);
+        // Se remplaza el placeholder ":name" con el valor del argumento 
+        query = query.setParameter("nombre", pName);
         // Se invoca el query se obtiene la lista resultado
         List<AdministradorEntity> sameName = query.getResultList();
-        AdministradorEntity result;
-        if (sameName == null) {
-            result = null;
-        } else if (sameName.isEmpty()) {
-            result = null;
-        } else {
+        AdministradorEntity result = null;
+        if (!(sameName == null || sameName.isEmpty())) {
             result = sameName.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar editorial por nombre ", nombre);
-        return result;
+            LOGGER.log(Level.INFO, "Saliendo de consultar administrador por nombre = {0}", pName);
+            return result;
+        }
     }
-}
+

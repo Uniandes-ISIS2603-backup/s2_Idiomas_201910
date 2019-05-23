@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.idiomas.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.idiomas.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.idiomas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.idiomas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.idiomas.mappers.BusinessLogicExceptionMapper;
+import co.edu.uniandes.csw.idiomas.mappers.WebApplicationExceptionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -179,12 +181,34 @@ public class UsuarioResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la usuario.
      */
-    @Path("{usuariosId: \\d+}/comentarios")
-    public Class<ComentarioResource> getUsuarioComentarioResource(@PathParam("usuariosId") Long usuariosId) {
+    @Path("{usuariosId: \\d+}/actividades")
+    public Class<UsuariosActividadesResource> getUsuariosActividadesResource(@PathParam("usuariosId") Long usuariosId) {
         if (usuarioLogic.getUsuario(usuariosId) == null) {
             throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
         }
-        return ComentarioResource.class;
+        return UsuariosActividadesResource.class;
+    }
+    
+    /**
+     * Conexión con el servicio de comentarios para una usuario.
+     * {@link UsuarioComentarioResourceResource}
+     *
+     * Este método conecta la ruta de /usuarios con las rutas de /comentarios que
+     * dependen de la usuario, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de los comentarios de una usuario.
+     *
+     * @param usuariosId El ID de la usuario con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de comentarios para esta usuario en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la usuario.
+     */
+    @Path("{usuariosId: \\d+}/gruposDeInteres")
+    public Class<UsuariosGruposDeInteresResource> getUsuariosGruposDeInteresResource(@PathParam("usuariosId") Long usuariosId) {
+        if (usuarioLogic.getUsuario(usuariosId) == null) {
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+        }
+        return UsuariosGruposDeInteresResource.class;
     }
 
     /**
