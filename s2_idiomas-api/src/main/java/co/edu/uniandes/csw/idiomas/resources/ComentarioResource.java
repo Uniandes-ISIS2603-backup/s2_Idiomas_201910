@@ -79,15 +79,17 @@ public class ComentarioResource {
      * Error de lógica que se genera cuando ya existe la Comentario.
      */
     @POST
-    public ComentarioDTO createComentario(ComentarioDTO Comentario) throws BusinessLogicException, ParseException {
+    public ComentarioDetailDTO createComentario(ComentarioDetailDTO Comentario) throws BusinessLogicException, ParseException {
         LOGGER.log(Level.INFO, "ComentarioResource createComentario: input: {0}", Comentario);
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        System.out.println(Comentario.getAutor());
         ComentarioEntity ComentarioEntity = Comentario.toEntity();
+        System.out.println(ComentarioEntity.getAutor());
         ComentarioEntity.setFecha(now.getTime());
         // Invoca la lógica para crear la Comentario nueva
         ComentarioEntity nuevoComentarioEntity = ComentarioLogic.createComment(ComentarioEntity);
         // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
-        ComentarioDTO nuevoComentarioDTO = new ComentarioDTO(nuevoComentarioEntity);
+        ComentarioDetailDTO nuevoComentarioDTO = new ComentarioDetailDTO(nuevoComentarioEntity);
         LOGGER.log(Level.INFO, "ComentarioResource createComentario: output: {0}", nuevoComentarioDTO);
         return nuevoComentarioDTO;
     }
