@@ -5,13 +5,11 @@
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
     <class>co.edu.uniandes.csw.idiomas.entities.ActividadEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.AdministradorEntity</class>
-    <class>co.edu.uniandes.csw.idiomas.entities.AnfitrionEntity</class>
-    <class>co.edu.uniandes.csw.idiomas.entities.CalificacionEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.ChatEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.ComentarioEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.CoordinadorEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.EncuentroEntity</class>
-    <class>co.edu.uniandes.csw.idiomas.entities.EstadiaEntity</class>
+    <class>co.edu.uniandes.csw.idiomas.entities.GrupoDeInteresEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.OtroEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.PersonaEntity</class>
     <class>co.edu.uniandes.csw.idiomas.entities.UsuarioEntity</class>
