@@ -1,20 +1,21 @@
 {
 	"info": {
-		"_postman_id": "a23dec1f-ad97-46fc-93ed-736d225ca1e2",
-		"name": "Coordinador-tests-collection",
+		"_postman_id": "7b866b79-9ec6-4b7a-9cc4-6f9729d7ced3",
+		"name": "Coordinador Tests",
+		"description": "Colección de pruebas sobre el recurso Coordinador",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "crear 1",
+			"name": "Crear un coordinador",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "042f58b5-7741-476c-b98a-eea2314b179d",
+						"id": "694741e6-4794-48fd-b32b-d790963ac9b0",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_coordinadores1\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -27,14 +28,12 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"nuevo\"\n\t,\"contrasenia\": 1234\n}"
+					"raw": "    {\n        \"nombre\": \"El nombre\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
@@ -49,20 +48,20 @@
 						"coordinadores"
 					]
 				},
-				"description": "post"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo coordinador. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "crear 2",
+			"name": "Crear un coordinador 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "042f58b5-7741-476c-b98a-eea2314b179d",
+						"id": "edca8864-fbb2-420c-a95d-fe433ad517cc",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_coordinadores2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -75,60 +74,12 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"nuevo2\"\n\t,\"contrasenia\": 1234\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores"
-					]
-				},
-				"description": "post"
-			},
-			"response": []
-		},
-		{
-			"name": "crear sin nobre",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "042f58b5-7741-476c-b98a-eea2314b179d",
-						"exec": [
-							"tests[\"genera error\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El Coordinador no tiene nombre\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
 						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"\"\n\t,\"contrasenia\": 1234\n}"
+					"raw": "    {\n        \"nombre\": \"El nombrea\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
@@ -143,137 +94,75 @@
 						"coordinadores"
 					]
 				},
-				"description": "post"
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo coordinador. El Id es inicializado por la BD y se debe ver en la respuesta.\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "crear sin contraseña",
+			"name": "Obtener todos los coordinadores",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "042f58b5-7741-476c-b98a-eea2314b179d",
+						"id": "ffc24813-89a3-47fa-9d38-241d31b1e7c3",
+						"type": "text/javascript",
 						"exec": [
-							"tests[\"genera error\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El Coordinador no tiene contraseña\");"
-						],
-						"type": "text/javascript"
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							"tests[\"coordinadores count\"] = data.length >= 1;"
+						]
 					}
 				}
 			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"nuevo\"\n\t,\"contrasenia\": null\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores"
-					]
-				},
-				"description": "post"
-			},
-			"response": []
-		},
-		{
-			"name": "crear duplicado",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "042f58b5-7741-476c-b98a-eea2314b179d",
-						"exec": [
-							"tests[\"genera error\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe una Coordinador con el nombre \");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"nuevo\"\n\t,\"contrasenia\": 1122\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores"
-					]
-				},
-				"description": "post"
-			},
-			"response": []
-		},
-		{
-			"name": "obtener uno",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "922f1fb8-7566-45bd-9442-03161cfb2486",
-						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_coordinadores1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"coordinadores"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta todos los coordinadores de la aplicacion. \r\nLa petición no tiene cuerpo.\r\n\r\nPara la prueba, se verifica que el conjunto de coordinadores en la respuesta tenga mas de uno.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un coordinador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20acc8ea-cadf-4ea4-b92e-f4d8218ce963",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -283,91 +172,31 @@
 						"s2_idiomas-api",
 						"api",
 						"coordinadores",
-						"{{new_id_coordinadores1}}"
+						"{{new_id_a}}"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "todos",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "00a1cc7a-9fe3-48f6-9d7a-190a55e665b6",
-						"exec": [
-							"var data= JSON.parse(responseBody);",
-							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
-							"tests[\"authors count\"] = data.length >= 1;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores"
-					]
-				}
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un coordinador de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del coordinador deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "obtener un inexistente",
+			"name": "Obtener un coordinador que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "922f1fb8-7566-45bd-9442-03161cfb2486",
+						"id": "39dc353d-ae0a-41c6-99a5-89218360c4d3",
+						"type": "text/javascript",
 						"exec": [
-							"console.log(responseBody);",
-							"",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 404;",
+							"tests[\"No se deberia obtener un coordinador con un id que no existe\"] = responseCode.code === 404;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /coordinadores/0 no existe.\");"
-						],
-						"type": "text/javascript"
+						]
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -385,17 +214,18 @@
 						"coordinadores",
 						"0"
 					]
-				}
+				},
+				"description": "**Release: Paso-5**\r\n\r\nConsulta un coordinador que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /coordinadores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "modificar",
+			"name": "Editar un coordinador",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c418a1b7-9fc3-4c57-8e81-eb044cca1cdc",
+						"id": "68dc8b6c-6d16-40b8-8f51-b61db7113074",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
@@ -410,17 +240,15 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"cabio con el put del nuevo\"\n\t,\"contrasenia\": 56789\n}"
+					"raw": "    {\n        \"nombre\": \"El nombrea\",\n        \"contrasenia\": \"La contrasenia\"\n    }"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_coordinadores1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -430,70 +258,25 @@
 						"s2_idiomas-api",
 						"api",
 						"coordinadores",
-						"{{new_id_coordinadores1}}"
+						"{{new_id_a}}"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modificar sin nombre",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c418a1b7-9fc3-4c57-8e81-eb044cca1cdc",
-						"exec": [
-							"tests[\"No genera error en el Put\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El Coordinador no tiene nombre\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"\"\n\t,\"contrasenia\": 56789\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_coordinadores1}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores",
-						"{{new_id_coordinadores1}}"
-					]
-				}
+				"description": "**Release: Paso-5**\r\n\r\nActualiza un coordinador existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
 			},
 			"response": []
 		},
 		{
-			"name": "modificar inexistente",
+			"name": "Editar un coordinador que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c418a1b7-9fc3-4c57-8e81-eb044cca1cdc",
+						"id": "15a70f62-2a66-469a-9ca6-d1125b0c8774",
+						"type": "text/javascript",
 						"exec": [
-							"tests[\"No genera error en el Put\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /Coordinadores/0 no existe.\");"
-						],
-						"type": "text/javascript"
+							"tests[\"No se deberia actualizar un coordinador con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /coordinadores/0 no existe.\");"
+						]
 					}
 				}
 			],
@@ -502,14 +285,12 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
 						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\" : \"x\"\n\t,\"contrasenia\": 56789\n}"
+					"raw": "    {\n        \"birthDate\": \"1927-03-03T00:00:00-05:00\",\n        \"description\": \"Fue un escritor, guionista, editor y periodista colombiano. En 1982 recibió el Premio Nobel de Literatura. Vivio gran parte de su vida en Mexico\",\n        \"image\": \"https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg\",\n        \"name\": \"Gabriel José de la Concordia García Márquez\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/0",
@@ -524,22 +305,22 @@
 						"coordinadores",
 						"0"
 					]
-				}
+				},
+				"description": "**Release: Paso-5**\r\nActualiza un coordinador que no existe. \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /coordinadores/0 no existe.\".\r\n\r\n**Código HTTP esperado: 404**"
 			},
 			"response": []
 		},
 		{
-			"name": "borrar un inexistente",
+			"name": "Borrar un coordinador",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c4fa2826-e976-4660-84c5-5c5d06aa864f",
+						"id": "d403e21b-3da3-4bbc-9b8a-9a2285ec0292",
+						"type": "text/javascript",
 						"exec": [
-							"tests[\" genera error en el delete\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /coordinadores/0 no existe.\");"
-						],
-						"type": "text/javascript"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
 					}
 				}
 			],
@@ -551,59 +332,123 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/s2_idiomas-api/api/coordinadores/0",
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"coordinadores",
+						"{{new_id_a}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un coordinador. Se envía el id del coordinador creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar el coordinador 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7db5b212-04c0-43a8-b627-44b62f4b9852",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/{{new_id_a2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_idiomas-api",
+						"api",
+						"coordinadores",
+						"{{new_id_a2}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un coordinador. Se envía el id del coordinador creado anteriormente.\n\n**Código HTTP esperado: 204**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un coordinador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c0905623-e468-4838-b24e-56e8402ea65c",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No se deberia borrar un coordinador con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /coordinadores/0 no existe.\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_idiomas-api/api/coordinadores/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
 					"path": [
 						"s2_idiomas-api",
 						"api",
 						"coordinadores",
 						"0"
 					]
-				}
+				},
+				"description": "**Release: Paso-5**\r\n\r\nBorra un coordinador que no existe en la aplicación.  \r\n\r\nPara la prueba se verifica que se genera el error y el mensaje \"El recurso /coordinadores/0 no existe.\".\r\n\r\n**Código http esperado: 404**"
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9f629ffc-3644-4dca-a8af-f28ae4a4e739",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "borrar uno",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "706f944e-d103-41ac-baa2-a6488b8f0bfe",
-						"exec": [
-							"tests[\"No genera error en el delete\"] = responseCode.code === 204;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:8080/s2_idiomas-api/api/coordinadores/{{new_id_coordinadores1}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"s2_idiomas-api",
-						"api",
-						"coordinadores",
-						"{{new_id_coordinadores1}}"
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"id": "b1e97bf7-3232-412f-96bc-7ac233e25ab5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
